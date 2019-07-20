@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="假定现在有一个传送机器，它可以将你身上所有的基本粒子打散，然后将这些信息以光速传送到另外一个地方，再将这些基本粒子重新组合起来。你会坐这个传送机器吗？有些人认为，既然传送前后构成自身的粒子及其排列方式完全一样，那么传送前后的两个人就是同一个人，也有人认为，原来的人在打散的过程中就死掉了，后来重新组合而成的，只不过是一个一模一样的复制体。">
+<meta name="keywords" content="coder &amp; student">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从传送机器说开去">
+<meta property="og:url" content="https://flr.me/posts/5bd9d7f9/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="假定现在有一个传送机器，它可以将你身上所有的基本粒子打散，然后将这些信息以光速传送到另外一个地方，再将这些基本粒子重新组合起来。你会坐这个传送机器吗？有些人认为，既然传送前后构成自身的粒子及其排列方式完全一样，那么传送前后的两个人就是同一个人，也有人认为，原来的人在打散的过程中就死掉了，后来重新组合而成的，只不过是一个一模一样的复制体。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-26T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从传送机器说开去">
+<meta name="twitter:description" content="假定现在有一个传送机器，它可以将你身上所有的基本粒子打散，然后将这些信息以光速传送到另外一个地方，再将这些基本粒子重新组合起来。你会坐这个传送机器吗？有些人认为，既然传送前后构成自身的粒子及其排列方式完全一样，那么传送前后的两个人就是同一个人，也有人认为，原来的人在打散的过程中就死掉了，后来重新组合而成的，只不过是一个一模一样的复制体。">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://flr.me/posts/5bd9d7f9/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>从传送机器说开去 | dearfl</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">dearfl</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://flr.me/posts/5bd9d7f9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从传送机器说开去
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-04-17 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-17T00:00:00+00:00">2017-04-17</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-26 00:00:00" itemprop="dateModified" datetime="2018-05-26T00:00:00+00:00">2018-05-26</time>
+              </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>假定现在有一个传送机器，它可以将你身上所有的基本粒子打散，然后将这些信息以光速传送到另外一个地方，再将这些基本粒子重新组合起来。你会坐这个传送机器吗？有些人认为，既然传送前后构成自身的粒子及其排列方式完全一样，那么传送前后的两个人就是同一个人，也有人认为，原来的人在打散的过程中就死掉了，后来重新组合而成的，只不过是一个一模一样的复制体。</p>
+<a id="more"></a>
+
+<p>更进一步的，假如机器出了问题，并没有将原来的人分解，但仍然将信息传送到了远处而重新组合出了另外一个人呢？那么这个人是谁，和你是什么关系呢？对于第二个问题，物理学家有个非常简单取巧的答案，根据量子不可克隆原理，这样对一个未知的量子态进行复制是不可能实现的，也就是说，不可能出现两个一模一样的个体。这当然在某种程度上算是解决了我们的问题，但是简单的规避这个情境其实并不能真正让我们满意，因为我们关心的其实是这里的哲学思考，而并非是技术上的可行性。而这里的哲学思考，则是个体的本质，简单来说，一个人是由一些基本粒子组成的，但人是否仅仅是这些基本粒子的组合。人是否还有某些非物质的东西，比如灵魂。</p>
+<p>对这个问题的讨探古已有之，古希腊有个哲学家普鲁塔克曾经提出一个哲学问题：忒修斯之船。许多哲学家认为即使这艘船的所有部件都被替换了，这艘船仍然是原来的船，因为事物不仅仅是组成元素之和，而有其更加本质的本因。如果认为事物仅仅是组成元素之和，那么万事万物时时都在变化，如赫拉克利特的河流一般，人不可能两次踏入同一条河流，就会引发事物的同一性的危机。</p>
+<p>虽然这个问题在古代就提出了，但在现代则有了进一步的发展，随着近代科学的发展，人们逐渐认识到事物都是由基本粒子构成的，而构成事物的基本粒子，是完全等同的，同类的粒子之间本质上是不可区分的。这世上有数不清的电子，这些电子的属性是完全一模一样的，所不同的是这些电子所处的状态。这就将这个问题在理论上推上了一个新的高度。在古代，假如一个人和你谈论这个问题，你可以辩称构成自己的元素和构成他人的元素是不一样的，而身处现代的我们则失去了这一武器。如果说在古代这个哲学问题还仅仅是个思想实验，那在现代，则已经是一个实实在在的具有可行性的实验了，说不定在未来还会有人专门去做实验验证。</p>
+<p>作为一个简单的思考，我们不妨先考虑一些容易的，可思辨的情景，比如同卵双胞胎，理论上说，同卵双胞胎的基因是几乎完全一样的，进一步的，他们的相貌、器官、特征几乎都完全一样，但是我们并不能认为他们是同一个人，因为显然他们的意识存在于两个不同的身体里，有着各自的时空连续性。同卵双胞胎的例子并不能进一步得到传送机器问题的答案，这是由于同卵双胞胎之间还是有区别的，并非完全一致，但是这有助于我们对这个问题进一步的思考，既然同卵双胞胎之间几乎完全一样的身体能容纳两个不同的意识，那么是否说明意识与身体之间毕竟不是完全等同的呢，或者说意识并不是完全由物质决定的呢？如果是这样，那么会有所谓的灵魂吗？</p>
+<p>所谓灵魂，在我们看来就是一种非常特殊的东西，它不依附于物质而存在，甚至可以说是永存不灭的，它构成了我们意识的核心，是我们身份最本质的东西。遗憾的是，灵魂说目前并未被证实或者证伪，而且由于目前对于大脑的研究尚浅，估计有生之年也看不到被证实或证伪的希望了。而马克思认为，物质是意识的基础，物质决定意识，反过来意识对物质有能动作用。这里，马克思肯定了物质对意识的决定作用，也肯定了人类改造世界的能力，但并没有认同灵魂论，马克思认为意识依附于物质而存在，是无法脱离物质的。从自然科学的观点来看则很容易看待这个问题，我们可以做一些简单的思辨，比如：人类大脑的结构是非常复杂的，这正是意识产生的物质基础，从一方面来说，人类产生意识的原因就是大脑的复杂结构，而其他生物无法产生意识就是因为大脑结构不够复杂、容量不够大。另一方面来说，假如认同灵魂论，那么任何事物都能有意识产生，一块石头，只要有灵魂依附，就可以产生意识，这显然是不符合我们的经验的。自然科学有一原则，也可以对这个问题做一些指导。这就是奥卡姆剃刀原理：“如无必要，勿增实体。”假如同一现象可以由两种不同的理论解释，那么我们应该相信那种更简单的。在这里，灵魂就是两种观点不同的地方，灵魂作为一种我们无法认识和解释的事物，是我们原则上应该予以避免的。即如果我们无需灵魂就能解释意识，那么我们应当认为灵魂不存在。假如有一天我们彻底的认识了大脑的机理，知道了意识形成的原理，如果这和灵魂无关，那么我们也就不再需要灵魂了。</p>
+<p>从自然科学的角度解释意识是更为简单而时髦的，但这同样会带来问题，一个例子就是著名的拉普拉斯妖，这是拉普拉斯假想的一个全知的妖魔，它能根据宇宙过往的状态计算出将来任意时刻的状态，人类在它面前毫无自由意志可言，因为我们的任何行动甚至是思想都是可预测的，彻彻底底的摧毁了自由意志这一说。同样，随着近代量子力学的发展，这一问题也有了新的发展，人们不再认同牛顿时代的决定论，不再认为从宇宙的初始状态可以计算出任意时刻的状态，而是由于量子的随机性，我们无法预测未来。混沌理论有个经典的蝴蝶效应一说，指在一个动力系统中，初始条件下微小的变化能引起整个系统长期而巨大的连锁反应，弗罗里达州的一只蝴蝶扇动一下翅膀，可以在德克萨斯州引起一场龙卷风。这当然解决了决定论的问题，至少我们知道我们的未来不是完全确定的了，但这仍然没有完全的解决我们的问题。从某种角度上说，这只是将我们的选择从物理规则丢给了一个扔骰子的“上帝”，所以我们其实仍然无法自主的作出决定，似乎只有承认灵魂的存在才能解决这个问题。对我个人而言，这其实是个非常痛苦的决定，一边是自己信奉的带给人类长足进步的自然科学，另一边则是自己的自由意志，仿佛自己的存在和自己信仰的东西是冲突的，两者之间存在无法协调的矛盾，处境堪比电视剧里处在婆媳斗争之间的男人。</p>
+<p>作为我个人而言，我其实是认为灵魂不存在的，很不负责任的说，一个我们无法认识也无法理解的东西，其实跟我们没什么关系，我们也可以根本不关心它是否到底存在。目前来看，我们也的确没有必要为了解释意识而假定灵魂存在，随着脑科学的发展，我们会逐步加深对意识的认识，从而解释这个问题。从另一方面讲，我个人认为灵魂这个概念和宗教一样，其产生的原因是人类对于死亡的未知和恐惧。作为生物，为了更好的生存繁衍，我们有着刻在基因里的对死亡的恐惧，这既是我们前进的动力，也是我们的局限。作为一个唯物主义者，我看待这个问题其实是挺悲观的，因为在我看来，我们既无灵魂也无自由意志，也就没有改造这个世界的能力。应该来说，我的这些看法还是很幼稚不成熟的，随着以后科学的发展，应该可以对这些问题作出更好的回答。</p>
+<p>最后回到我们一开始的问题，假如有这样一台传送机器，那么我是肯定不会用的，虽然我们假定有可能存在这样跟自己一模一样的个体，但毕竟从过程上来说，分解原来的自己就是杀死了自己。从这一点上来说，电影《致命魔术》里，其中一位魔术师的做法就显得尤为疯狂。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/f419f85b/" rel="next" title="Fibonacci">
+                <i class="fa fa-chevron-left"></i> Fibonacci
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/534b516d/" rel="prev" title="第一个SKSE插件">
+                第一个SKSE插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

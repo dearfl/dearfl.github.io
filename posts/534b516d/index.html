@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。 老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。">
+<meta name="keywords" content="coder &amp; student">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一个SKSE插件">
+<meta property="og:url" content="https://flr.me/posts/534b516d/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。 老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-29T02:26:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一个SKSE插件">
+<meta name="twitter:description" content="最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。 老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://flr.me/posts/534b516d/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>第一个SKSE插件 | dearfl</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">dearfl</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://flr.me/posts/534b516d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第一个SKSE插件
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-02 15:00:00" itemprop="dateCreated datePublished" datetime="2018-07-02T15:00:00+00:00">2018-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-29 02:26:00" itemprop="dateModified" datetime="2018-07-29T02:26:00+00:00">2018-07-29</time>
+              </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。</p>
+<p>老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。</p>
+<a id="more"></a>
+
+<p>老滚（或者说B社）官方支持mod，提供mod支持的同时，还提供MOD制作的工具CK，将游戏内容开放给所有玩家。但是既然开放，这样怎么会够呢，虽然mod能做出很强大的效果，但毕竟有限，就算是支持脚本编程，API也是有诸多限制的。这时候就轮到skse上场了，skse是国外的一个团队开发维护的，主要目的是拓展老滚的脚本API，例如缺失的键盘响应。skse还逆向了老滚里的不少class，当然不是完全逆向，而是识别了很多成员变量和函数的作用。另外skse提供了统一的插件接口，这使得所有程序员可以方便的为老滚编写插件，假如老滚有什么地方让你觉得不满意，你只需要定位到你要修改的代码，简单的修改或是hook它，来改变老滚的引擎的行为，最终你只需要编译成一个dll，放在指定的目录，skse会自动加载你的插件，从而使得你获得修改游戏引擎的能力，而且不会对老滚的程序本身有任何影响（不会修改老滚的可执行程序，而是运行的时候动态修改在内存里的机器指令）。这使得几乎每个老滚mod玩家都离不开skse，因为现今，许多mod直接以skse为前置，比如SkyUI这样的N网endorses排第一的基础mod，更多的mod以包含skse插件的形式间接的依赖于skse，比如几乎是老滚物理插件唯一选择的hdt物理插件，改变第一人称视角（为第一人称视角添加身体）的Enhanced Camera。</p>
+<p>16年重置版发布之后，由于整个游戏从32位变为64位，SKSE团队不得不重新构建SKSE，这个过程花了将近一年，终于在去年9月份发布了第一个Alpha版本。此后大量的skse插件被移植到重置版。</p>
+<p>skse为mod作者提供了许多接口，包括注册自己的papyrus函数、存档支持、Scaleform接口、消息接口等，一个skse插件需要至少实现并导出两个函数，一个用来判断版本是否合法（由于其特殊性，skse本身只支持一个版本，而mod可以支持多个版本，区别是实现会复杂一些），一个用来加载插件、hook函数、注册papyrus函数等。做一个skse插件你需要一些基础的c++知识，比较熟悉汇编语言，再通过ida分析老滚的汇编代码，找到你想要修改的代码，在加载插件时修改，编译成相应的dll，再通过skse加载好自己的插件，就完成了skse插件的制作。</p>
+<p>由于Real Flying的作者在三年前就弃坑了自己的mod，这个mod一直没有被完整的移植到重置版，关键就是没人写出SKSE64插件支持飞行功能。通过看源代码，我了解到这个插件是通过hook一个处理Actor物理的函数（这个函数每帧会调用一次，改变Actor的位置速度等物理状态）来实现飞行的。简而言之，hook掉这个函数，通过一个全局变量fJumpHeightMin的值判断飞行状态，再根据不同的状态，在实际调用这个函数之前，修改不同方向的速度，来达到上升下降滑翔的效果，再通过FNIS播放一个Idle动画和自带骨骼和behaviour的翅膀模型，来使角色做出相应的动作。由于使用的是简单的idle动画，无法在飞行时攻击，也不支持第一人称（因为第一人称没有身体）。</p>
+<p>整个插件实际上比较简单直接，移植并不需要修改多少东西，主要的工作还是重新确定函数地址、变量偏移量。skse64本身逆向了一些类和地址，所以其实真正需要找的已经不多了。另外就是64位程序的基地址不再是一个确定的值，涉及到地址的代码均需要简单修改。此外，之前用的hook库在64位下不再能用，还需要换一个hook库（或者手写汇编，还是别为难自己了- -），总之这些工作做完，再把程序编译成64位dll就可以了。</p>
+<p>后来我还联系作者要了权限，感觉其实不应该要这个权限的，因为我对动画什么的一窍不通- -暂时也只能这样了，还好脚本还是可以改改的。这篇主要还是关于skse插件的，别的碰到的问题也就不多提了。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/5bd9d7f9/" rel="next" title="从传送机器说开去">
+                <i class="fa fa-chevron-left"></i> 从传送机器说开去
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/52b9d5e6/" rel="prev" title="内脏暴击">
+                内脏暴击 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
