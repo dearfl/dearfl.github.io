@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装GentooLinux。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Vultr上安装Gentoo Linux">
+<meta property="og:url" content="http://flr.me/p/9876491/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装GentooLinux。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png">
+<meta property="article:published_time" content="2020-04-02T20:01:16.000Z">
+<meta property="article:modified_time" content="2020-04-02T20:06:00.557Z">
+<meta property="article:author" content="dearfl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png">
+
+<link rel="canonical" href="http://flr.me/p/9876491/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>在Vultr上安装Gentoo Linux | dearfl</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dearfl</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flr.me/p/9876491/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在Vultr上安装Gentoo Linux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-03 04:01:16 / Modified: 04:06:00" itemprop="dateCreated datePublished" datetime="2020-04-03T04:01:16+08:00">2020-04-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近Google/YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频/推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo<br>Linux。</p>
+<a id="more"></a>
+
+<p>基本的步骤可以在下面这个链接找到</p>
+<p><a href="https://www.vultr.com/docs/installing-gentoo-linux-on-a-vultr-server" target="_blank" rel="noopener">Installing gentoo linux on a vultr<br>server</a></p>
+<p>最好是多参照官方安装文档：</p>
+<p><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64" target="_blank" rel="noopener">Gentoo Handbook</a></p>
+<p>安装好的Gentoo Linux VPS</p>
+<p><img src="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png" alt="neofetch"></p>
+<p>我只所以选择Gentoo<br>Linux，主要还是因为其源代码分发带来的高度可定制性，举个例子，Gentoo可以让你用libressl替换openssl库，大部分二进制分发的发行版是做不到的。当然，这不代表这是个好选择或者是必要的选择。</p>
+<p>gentoo的包管理总体来说还是相当不错的，比较好的特性主要有：</p>
+<ul>
+<li>使用USE变量来选择需要的特性，比如说cmake可以有qt5的用户界面，也可以没有。</li>
+<li>slot支持在同一个系统上安装统一软件的多个版本，比如python:2和python:3。</li>
+<li>支持并行安装，同时进行多个安装</li>
+<li>滚动更新，当然这个仁者见仁智者见智</li>
+<li>包管理附带的各类工具非常齐全，比如equery,eselect,flaggie,repoman,genlop,etc-update等</li>
+<li>打包很方便，基本只要有一些bash基础就可以自己打包，而且很多时候改一下版本号就可以适用于新版本了</li>
+<li>文档丰富详细</li>
+<li>很稳定，随便折腾都不会挂</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>编译时间是真的长，尤其是桌面</li>
+</ul>
+<p>当然这只是我个人的看法，肯定不客观</p>
+<p>要安装gentoo之前，首先要做一些决定，比如</p>
+<ul>
+<li>uefi/bios</li>
+<li>openRC/systemd</li>
+<li>multilib/nomultilib</li>
+<li>分区方案</li>
+<li>等等</li>
+</ul>
+<p>我个人有点“洁癖”，不管是自己的笔记本还是服务器都选择了openRC和nomultilib的组合，甚至会在内核选项里关闭32位程序模拟。目前用下来是还没碰到大问题。总之这不代表这是一个好选择。</p>
+<p>接下来我们就来说一下怎么安装gentoo，这里是在vultr上安装gentoo的步骤，所以并不代表适用其他情况。基本上这篇文章可以看作是上面链接的“翻译”，同时最好也看一边官方的安装文档。</p>
+<p>注：命令里被<code>&lt;&gt;</code>扩起来的部分都需要整体替换为相应的内容</p>
+<h2 id="创建实例开启ssh服务"><a href="#创建实例开启ssh服务" class="headerlink" title="创建实例开启ssh服务"></a>创建实例开启ssh服务</h2><p>创建实例的时候选择custom<br>iso，复制一个gentoo官方的最小化安装live链接，创建实例之后启动VNC窗口，由于VNC窗口不方便复制粘贴，因此推荐使用ssh远程安装，如果不介意，也可以直接用VNC窗口进行安装。建议使用<code>passwd</code>先修改root用户的密码。</p>
+<p>启动ssh服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/sshd start</span><br><span class="line"><span class="comment"># passwd</span></span><br></pre></td></tr></table></figure>
+
+<p>启动之后就可以在本地使用ssh来进行远程安装了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@&lt;server_ip&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h2><p>分区我使用了最简单的方案，2个分区，在自己的笔记本上，我是选择了复杂一点的方案，但也区别不大，主要是多了boot分区以及efi分区(UEFI启动)，以下是分区方案，依次是大小、设备名、挂载点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">23GB /dev/vda1     /</span><br><span class="line">2GB  /dev/vda2     swap</span><br></pre></td></tr></table></figure>
+
+<p>默认的磁盘设备是/dev/vda，这一步可以使用cfdisk或者parted或者其他工具进行，如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cfdisk /dev/vda</span><br></pre></td></tr></table></figure>
+
+<p>文件系统我选择了xfs，虽然ext4是Linux官方文件系统，但是需要保留少量额外的空间，所以。。。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.xfs /dev/vda1</span><br></pre></td></tr></table></figure>
+
+<p>创建并启用swap分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkswap /dev/vda2</span><br><span class="line">swapon /dev/vda2</span><br></pre></td></tr></table></figure>
+
+<p>挂载主分区，把主系统的根目录挂载至live系统的/mnt/gentoo路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/vda1 /mnt/gentoo</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装基础系统"><a href="#安装基础系统" class="headerlink" title="安装基础系统"></a>安装基础系统</h2><p>获取最新的stage3<br>tarball，stage3其实有不少不同的版本，如nomultilib，harden等等，需要选择相应的stage3文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /mnt/gentoo</span><br><span class="line">wget &lt;stage3_tarball_url&gt;</span><br><span class="line">tar xpfj &lt;stage3_tarball_file&gt; --xattrs</span><br></pre></td></tr></table></figure>
+
+<p>编辑主系统的<code>/etc/portage/make.conf</code>文件，当然在live系统里实际位置是在<code>/mnt/gentoo/etc/portage/make.conf</code>，配置好源，编译选项，这一部分最好参照官方安装文档。</p>
+<p>配置portage的主仓库，即gentoo仓库，可以更改里面的sync-uri，以达到比较快的同步速度</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mnt/gentoo/etc/portage/repos.conf</span><br><span class="line">cp /mnt/gentoo/usr/share/portage/config/repos.conf</span><br><span class="line">/mnt/gentoo/etc/portage/repos.conf/gentoo.conf</span><br><span class="line"><span class="comment"># nano -w /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>把live系统的DNS配置文件复制到主系统上，否则之后chroot到主系统后，无法解析域名，也就无法同步</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -L /etc/resolv.conf /mnt/gentoo/etc/</span><br></pre></td></tr></table></figure>
+
+<p>挂载必要的文件系统，其中被注释的命令是使用systemd必须要执行的命令，如果使用openRC就无需执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mount -t proc proc /mnt/gentoo/proc</span><br><span class="line">mount --rbind /sys /mnt/gentoo/sys</span><br><span class="line"><span class="comment"># mount --make-rslave /mnt/gentoo/sys</span></span><br><span class="line">mount --rbind /dev /mnt/gentoo/dev</span><br><span class="line"><span class="comment"># mount --make-rslave /mnt/gentoo/dev</span></span><br></pre></td></tr></table></figure>
+
+<p>chroot进入主系统</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chroot /mnt/gentoo /bin/bash</span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">"(chroot) <span class="variable">$PS1</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>获取portage树的快照</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge-webrsync</span><br></pre></td></tr></table></figure>
+
+<p>读取portage的消息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eselect news list</span><br><span class="line">eselect news <span class="built_in">read</span></span><br></pre></td></tr></table></figure>
+
+<p>选择profile，这里需要说一下，profile是gentoo提供的一种特性，不同的profile针对不同的使用环境/选择，会有不同的USE变量/默认的包等不同配置，比如kde桌面用户，就可以选择带plasma的profile，如果是systemd的用户，就可以选择带systemd的profile，切换profile是比较难的，因此这里需要谨慎选择。我们由于选择了nomultilib，因此这里也要选择nomultilib的profile</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eselect profile list</span><br><span class="line">eselect profile <span class="built_in">set</span> &lt;profile&gt;</span><br></pre></td></tr></table></figure>
+
+<p>选择了profile之后就可以更新系统了，下面的选项a是ask，即需要自己确认是否执行操作，v是verbose，即详细信息，q是quiet，即减少输出，u是upgrade升级，D是指deep，是指检查依赖的更新，N是指new<br>use，指如果一个包有新加的默认启用的USE变量，就重新编译这个包。world是一个组，包含系统里的所有（？）包，这一步和内核编译都是耗时比较久的过程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avquDN @world</span><br></pre></td></tr></table></figure>
+
+<p>设置时区,area比如说Asia/Shanghai</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"&lt;area&gt;"</span> &gt; /etc/timezone</span><br><span class="line">emerge --config sys-libs/timezone-data</span><br></pre></td></tr></table></figure>
+
+<p>设置locale</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/locale.gen</span><br><span class="line">locale-gen</span><br><span class="line">eselect locale list</span><br><span class="line">eselect locale <span class="built_in">set</span> en_US.UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>重新载入shell环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env-update &amp;&amp; <span class="built_in">source</span> /etc/profile &amp;&amp; <span class="built_in">export</span> PS1=<span class="string">"(chroot) <span class="variable">$PS1</span>"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h2><p>安装Linux内核，这里我选择的gentoo官方内核，这一步也是最难的地方，总体来说一点一点手动配置内核实在是比较麻烦，我基本没怎么配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avq sys-kernel/gentoo-sources</span><br></pre></td></tr></table></figure>
+
+<p>安装完了之后，先切换至内核源文件目录，再进行配置，我用的单核VPS用genkernel工具太慢，就手动配置了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/src/linux</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+
+<p>配置内核方面，在VPS上，最主要要启用virtio系列的选项，主要有以下4个，当然最好关于virtio的选项都启用一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONFIG_VIRTIO_PCI</span><br><span class="line">CONFIG_VIRTIO_MMIO</span><br><span class="line">CONFIG_VIRTIO_BLK</span><br><span class="line">CONFIG_VIRTIO_NET</span><br></pre></td></tr></table></figure>
+
+<p>另外就是文件系统，比如之前我使用了xfs的文件系统，那么就必须在内核配置里启用xfs文件系统支持，否则无法启动。</p>
+<p>如果你需要使用docker之类的程序，那么还需要启用一些docker指定的选项，具体不表</p>
+<p>配置完成之后就可以编译安装内核了。<code>-j2</code>指使用2个进程(还是线程？我不清楚)编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j2 &amp;&amp; make modules_install</span><br></pre></td></tr></table></figure>
+
+<p>安装内核镜像至<code>/boot</code>目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h2><p>编辑fstab文件，fstab文件是系统启动时自动挂载的配置，这里我们需要配置主分区和swap分区，具体请参照官方安装文档，推荐使用UUID区分不同的分区（上次被win10坑了）。</p>
+<p>配置hostname，不赘述</p>
+<p>配置网络，这里我目前也不是很懂，基本上照着做，大体上就是增加了一个启动项来处理网络连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -a --noreplace net-misc/netifrc</span><br></pre></td></tr></table></figure>
+
+<p>新建文件<code>/etc/conf.d/net</code>，写入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config_eth0=<span class="string">"dhcp"</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的eth0是你的网络设备名，vps上默认eth0，笔记本上自然不一样，笔记本上我选择了networkmanager，懒</p>
+<p>网络启动项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d</span><br><span class="line">ln -s net.lo net.eth0</span><br><span class="line">rc-update add net.eth0 default</span><br></pre></td></tr></table></figure>
+
+<p>编辑hosts，不赘述</p>
+<p>更改root用户密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+
+<p>安装并启用一些系统工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">emerge -avq sysklogd logrotate cronie dhcpcd</span><br><span class="line"></span><br><span class="line">rc-update add sshd default</span><br><span class="line">rc-update add cronie default</span><br><span class="line">rc-update add sysklogd default</span><br></pre></td></tr></table></figure>
+
+<p>安装grub:2，基本上bootloader大家都会选择grub2吧</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avq sys-boot/grub:2</span><br></pre></td></tr></table></figure>
+
+<p>安装bootloader并生成开机选项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grub-install /dev/vda</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>建议新建普通用户，并加入wheel,portage等用户组，具体请参照官方安装文档</p>
+<p>建议安装常用工具，配置好普通用户的sudo权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">emerge -avq dev-vcs/git sudo vim tmux gentoolkit eselect-repository strace lrzsz</span><br><span class="line">nstats aria2 inxi htop lsof</span><br></pre></td></tr></table></figure>
+
+<p>建议配置好ssh登录选项</p>
+<p>退出重启，移除ISO文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/c2245241/" rel="prev" title="修固态这件小事">
+      <i class="fa fa-chevron-left"></i> 修固态这件小事
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建实例开启ssh服务"><span class="nav-number">1.</span> <span class="nav-text">创建实例开启ssh服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区"><span class="nav-number">2.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装基础系统"><span class="nav-number">3.</span> <span class="nav-text">安装基础系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Linux内核"><span class="nav-number">4.</span> <span class="nav-text">安装Linux内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置系统"><span class="nav-number">5.</span> <span class="nav-text">配置系统</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
