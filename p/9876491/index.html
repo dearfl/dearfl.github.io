@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装GentooLinux。">
+  <meta name="description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo Linux。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Vultr上安装Gentoo Linux">
 <meta property="og:url" content="http://flr.me/p/9876491/index.html">
 <meta property="og:site_name" content="dearfl">
-<meta property="og:description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装GentooLinux。">
+<meta property="og:description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo Linux。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png">
 <meta property="article:published_time" content="2020-04-02T20:01:16.000Z">
-<meta property="article:modified_time" content="2020-04-02T23:03:21.572Z">
+<meta property="article:modified_time" content="2020-04-04T14:57:39.998Z">
 <meta property="article:author" content="dearfl">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png">
@@ -174,10 +174,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-03 04:01:16 / Modified: 07:03:21" itemprop="dateCreated datePublished" datetime="2020-04-03T04:01:16+08:00">2020-04-03</time>
+              <time title="Created: 2020-04-03 04:01:16" itemprop="dateCreated datePublished" datetime="2020-04-03T04:01:16+08:00">2020-04-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-04 22:57:39" itemprop="dateModified" datetime="2020-04-04T22:57:39+08:00">2020-04-04</time>
+              </span>
 
           
 
@@ -190,7 +196,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>最近Google/YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频/推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo<br>Linux。</p>
+        <p>最近Google/YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频/推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo Linux。</p>
 <a id="more"></a>
 
 <p>基本的步骤可以在下面这个链接找到</p>
@@ -249,7 +255,7 @@
 <p>挂载主分区，把主系统的根目录挂载至live系统的/mnt/gentoo路径</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/vda1 /mnt/gentoo</span><br></pre></td></tr></table></figure>
 
-<h2 id="安装基础系统"><a href="#安装基础系统" class="headerlink" title="安装基础系统"></a>安装基础系统</h2><p>获取最新的stage3<br>tarball，stage3其实有不少不同的版本，如nomultilib，harden等等，需要选择相应的stage3文件</p>
+<h2 id="安装基础系统"><a href="#安装基础系统" class="headerlink" title="安装基础系统"></a>安装基础系统</h2><p>获取最新的stage3<br>tarball，stage3其实有不少不同的版本，如nomultilib，harden等等，需要选择相应的stage3文件，比如我选择纯64位环境，就要选择nomultilib的</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /mnt/gentoo</span><br><span class="line">wget &lt;stage3_tarball_url&gt;</span><br><span class="line">tar xpfj &lt;stage3_tarball_file&gt; --xattrs</span><br></pre></td></tr></table></figure>
 
 <p>编辑主系统的<code>/etc/portage/make.conf</code>文件，当然在live系统里实际位置是在<code>/mnt/gentoo/etc/portage/make.conf</code>，配置好源，编译选项，这一部分最好参照官方安装文档。</p>
@@ -274,7 +280,7 @@
 <p>选择profile，这里需要说一下，profile是gentoo提供的一种特性，不同的profile针对不同的使用环境/选择，会有不同的USE变量/默认的包等不同配置，比如kde桌面用户，就可以选择带plasma的profile，如果是systemd的用户，就可以选择带systemd的profile，切换profile是比较难的，因此这里需要谨慎选择。我们由于选择了nomultilib，因此这里也要选择nomultilib的profile</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eselect profile list</span><br><span class="line">eselect profile <span class="built_in">set</span> &lt;profile&gt;</span><br></pre></td></tr></table></figure>
 
-<p>选择了profile之后就可以更新系统了，下面的选项a是ask，即需要自己确认是否执行操作，v是verbose，即详细信息，q是quiet，即减少输出，u是upgrade升级，D是指deep，是指检查依赖的更新，N是指new use，指如果一个包有新加的默认启用的USE变量，就重新编译这个包。world是一个组，包含系统里的所有（？）包，这一步和内核编译都是耗时比较久的过程</p>
+<p>选择了profile之后就可以更新系统了，下面的选项a是ask，即需要自己确认是否执行操作，v是verbose，即详细信息，q是quiet，即减少输出，u是upgrade升级，D是指deep，是指检查依赖的更新，N是指new use，指如果一个包有新加的默认启用的USE变量，就重新编译这个包（？）。world是一个组，包含系统里的所有（？）包，这一步和内核编译都是耗时比较久的过程</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avquDN @world</span><br></pre></td></tr></table></figure>
 
 <p>设置时区,area比如说Asia/Shanghai</p>
@@ -286,10 +292,10 @@
 <p>重新载入shell环境</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env-update &amp;&amp; <span class="built_in">source</span> /etc/profile &amp;&amp; <span class="built_in">export</span> PS1=<span class="string">"(chroot) <span class="variable">$PS1</span>"</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h2><p>安装Linux内核，这里我选择的gentoo官方内核，这一步也是最难的地方，总体来说一点一点手动配置内核实在是比较麻烦，我基本没怎么配置</p>
+<h2 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h2><p>安装Linux内核，这里我选择的gentoo官方内核</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avq sys-kernel/gentoo-sources</span><br></pre></td></tr></table></figure>
 
-<p>安装完了之后，先切换至内核源文件目录，再进行配置，我用的单核VPS用genkernel工具太慢，就手动配置了</p>
+<p>安装完了之后，先切换至内核源文件目录，再进行配置，我用的单核VPS用genkernel工具编译太慢，就手动配置了，这一步也是最难的地方，总体来说一点一点手动配置内核实在是比较麻烦，我基本没怎么配置</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/src/linux</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 
 <p>配置内核方面，在VPS上，最主要要启用virtio系列的选项，主要有以下4个，当然最好关于virtio的选项都启用一下</p>
@@ -355,7 +361,10 @@
     <a href="/p/c2245241/" rel="prev" title="修固态这件小事">
       <i class="fa fa-chevron-left"></i> 修固态这件小事
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/p/f05761b1/" rel="next" title="<mc源码分析>20w46a潜影贝生成">
+      <mc源码分析>20w46a潜影贝生成 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -428,7 +437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

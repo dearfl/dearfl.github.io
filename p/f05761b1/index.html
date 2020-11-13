@@ -20,28 +20,34 @@
     var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="dearfl">
-<meta property="og:url" content="http://flr.me/index.html">
+  <meta name="description" content="这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。 之所以开这个坑，一是因为最近玩MC比较多，被MC独特的游戏方式所吸引，碰到很多问题比如刷铁机、刷怪塔、物品分类的时候，会很想深入研究里面的原理。而MC虽然并不是开源软件，但是多年来玩家对MC的解包反编译工作已经非常成熟，甚至官方还自己提供了用于反编译的mapping，因此只需要懂一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;mc源码分析&gt;20w46a潜影贝生成">
+<meta property="og:url" content="http://flr.me/p/f05761b1/index.html">
 <meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。 之所以开这个坑，一是因为最近玩MC比较多，被MC独特的游戏方式所吸引，碰到很多问题比如刷铁机、刷怪塔、物品分类的时候，会很想深入研究里面的原理。而MC虽然并不是开源软件，但是多年来玩家对MC的解包反编译工作已经非常成熟，甚至官方还自己提供了用于反编译的mapping，因此只需要懂一">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/11/14/S3l6bpNdnDVXako.png">
+<meta property="article:published_time" content="2020-11-13T16:45:00.000Z">
+<meta property="article:modified_time" content="2020-11-13T18:34:26.838Z">
 <meta property="article:author" content="dearfl">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/14/S3l6bpNdnDVXako.png">
 
-<link rel="canonical" href="http://flr.me/">
+<link rel="canonical" href="http://flr.me/p/f05761b1/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>dearfl</title>
+  <title><mc源码分析>20w46a潜影贝生成 | dearfl</title>
   
 
 
@@ -139,9 +145,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -157,10 +164,9 @@
       <meta itemprop="name" content="dearfl">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/f05761b1/" class="post-title-link" itemprop="url"><mc源码分析>20w46a潜影贝生成</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          <mc源码分析>20w46a潜影贝生成
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -184,7 +190,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。</p>
+        <p>这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。</p>
 <p>之所以开这个坑，一是因为最近玩MC比较多，被MC独特的游戏方式所吸引，碰到很多问题比如刷铁机、刷怪塔、物品分类的时候，会很想深入研究里面的原理。而MC虽然并不是开源软件，但是多年来玩家对MC的解包反编译工作已经非常成熟，甚至官方还自己提供了用于反编译的mapping，因此只需要懂一点java，就可以深入了解游戏内的各种机制。二是因为最近刚刚宣布1.17版本，前几天出了第一个snapshot，其中有一个特性让我觉得有点怪，就是潜影贝在被其他潜影贝的子弹攻击后，有几率生成一只新的潜影贝。虽然我并不是要在MC里讲科学，但这个改动本身确实有点“不太合常理”，而且这一改动意味着将来玩家会有稳定的潜影盒获取途径，从而很大程度上影响玩家之后的游戏体验，可能会导致潜影盒“掉价”。当然我不觉得这是一件坏事，毕竟在末地到处找潜影贝的痛苦我还是感同身受的。从这一点上来说，潜影贝农场以后会是玩家必做农场，没有之一，什么女巫塔、凋零骷髅塔、刷铁机全都靠边站。当然我不是专业的java程序员，对java的了解仅限于能大概看懂代码而已，所以可能文章会有错漏，如果你发现了任何错漏，或者单纯的想和我在这方面交流，都欢迎与我联系。 <a href="mailto:i@flr.me">邮箱</a></p>
 <p>多说几句，MC彻底的高自由度决定了，任何游戏机制或是特性、BUG，都会被玩家利用到极致，以刷铁机为例，本身是一种村民的保护机制，在检测到危险的时候主动召唤铁傀儡来保护村庄，但是因为铁傀儡死掉会掉落铁锭，从而导致这一机制几乎只是为了玩家刷铁锭而存在的。我对这一现象其实颇为不满，我认为要么官方不要提供这样会被玩家滥用的机制，要么官方能提供更加优雅的机制。当然这不是今天的重点，因此就不展开谈了，我之后还会针对刷铁机进行分析，到时候再讨论这个问题吧。</p>
 <p>言归正传，我对比了20w46a和1.16.3的服务端代码中有关潜影贝的部分，这是他们的diff结果</p>
@@ -220,521 +226,30 @@
 <p>下图展示了传送成功概率随可传送位置数量变化的曲线，可以看到，可传送位置越多，提升就越不明显，当概率高于0.8以上时，就明显不值得在这里付出精力了。而且范围内总共也就4913个方块，要在一定条件下满足这么多可传送位置并不容易。即使按照每个方块提供6个可传送位置来算，范围内最多可传送位置也仅有4200个。而实际上这是根本不可能做到的事情，因为还需要做处死或者转移潜影贝的装置。</p>
 <p><img src="https://i.loli.net/2020/11/14/S3l6bpNdnDVXako.png" alt="传送成功概率随可传送位置数量的函数"></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/9876491/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/9876491/" class="post-title-link" itemprop="url">在Vultr上安装Gentoo Linux</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-04-03 04:01:16" itemprop="dateCreated datePublished" datetime="2020-04-03T04:01:16+08:00">2020-04-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-04 22:57:39" itemprop="dateModified" datetime="2020-04-04T22:57:39+08:00">2020-04-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近Google/YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频/推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo Linux。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/9876491/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/c2245241/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/c2245241/" class="post-title-link" itemprop="url">修固态这件小事</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-19 01:37:00" itemprop="dateCreated datePublished" datetime="2019-07-19T01:37:00+08:00">2019-07-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-03 07:03:21" itemprop="dateModified" datetime="2020-04-03T07:03:21+08:00">2020-04-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我的这块固态是刚买电脑时，贪便宜在淘宝上买的。型号是东芝XG3，256g容量，m.2接口，PCIE X4总线，支持nvme协议，大小2280。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/c2245241/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/9876491/" rel="prev" title="在Vultr上安装Gentoo Linux">
+      <i class="fa fa-chevron-left"></i> 在Vultr上安装Gentoo Linux
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/85919f93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/85919f93/" class="post-title-link" itemprop="url">Farewell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-29 22:43:49" itemprop="dateCreated datePublished" datetime="2019-03-29T22:43:49+08:00">2019-03-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-03 07:03:21" itemprop="dateModified" datetime="2020-04-03T07:03:21+08:00">2020-04-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Farewell, I’m glad for you.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/52b9d5e6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/52b9d5e6/" class="post-title-link" itemprop="url">内脏暴击</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-18 06:54:00" itemprop="dateCreated datePublished" datetime="2019-02-18T06:54:00+08:00">2019-02-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-02-20 00:48:00" itemprop="dateModified" datetime="2019-02-20T00:48:00+08:00">2019-02-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在写这篇文章之前，我用了些时间做了关于血源内脏暴击的一些测试，得出了一些相对以往的测试来说更为准确的结论。在本文中，我主要介绍一些血源(或者说魂系列)的基础概念、说明基于这些事实如何设计这些测试、又如何处理测试得到的数据以及最后得到了什么样的结论。本文较长，假如没耐心看完，可以只看我给出的结论。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/52b9d5e6/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/534b516d/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/534b516d/" class="post-title-link" itemprop="url">第一个SKSE插件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-07-02 15:00:00" itemprop="dateCreated datePublished" datetime="2018-07-02T15:00:00+08:00">2018-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-07-29 02:26:00" itemprop="dateModified" datetime="2018-07-29T02:26:00+08:00">2018-07-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。</p>
-<p>老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/534b516d/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/5bd9d7f9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/5bd9d7f9/" class="post-title-link" itemprop="url">从传送机器说开去</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-04-17 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-17T00:00:00+08:00">2017-04-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-05-26 00:00:00" itemprop="dateModified" datetime="2018-05-26T00:00:00+08:00">2018-05-26</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>假定现在有一个传送机器，它可以将你身上所有的基本粒子打散，然后将这些信息以光速传送到另外一个地方，再将这些基本粒子重新组合起来。你会坐这个传送机器吗？有些人认为，既然传送前后构成自身的粒子及其排列方式完全一样，那么传送前后的两个人就是同一个人，也有人认为，原来的人在打散的过程中就死掉了，后来重新组合而成的，只不过是一个一模一样的复制体。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/5bd9d7f9/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flr.me/p/f419f85b/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dearfl">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dearfl">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/p/f419f85b/" class="post-title-link" itemprop="url">Fibonacci</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-02-20 14:03:44" itemprop="dateCreated datePublished" datetime="2017-02-20T14:03:44+08:00">2017-02-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-05-24 23:37:02" itemprop="dateModified" datetime="2018-05-24T23:37:02+08:00">2018-05-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>算了，今天不想动那只笨鸟了，写点别的吧。</p>
-<p>大名鼎鼎的斐波那契数列，定义非常简单:</p>
-<p>$$f(x)=\begin{cases} &amp; 1, \text{ if } x \lt 3  \\ &amp;  f(x-1)+f(x-2), \text{ if } x \gt 2 \end{cases}$$</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/p/f419f85b/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
