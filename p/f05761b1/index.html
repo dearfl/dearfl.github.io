@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。 之所以开这个坑，一是因为最近玩MC比较多，被MC独特的游戏方式所吸引，碰到很多问题比如刷铁机、刷怪塔、物品分类的时候，会很想深入研究里面的原理。而MC虽然并不是开源软件，但是多年来玩家对MC的解包反编译工作已经非常成熟，甚至官方还自己提供了用于反编译的mapping，因此只需要懂一">
+  <meta name="description" content="这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="&lt;mc源码分析&gt;20w46a潜影贝生成">
 <meta property="og:url" content="http://flr.me/p/f05761b1/index.html">
 <meta property="og:site_name" content="dearfl">
-<meta property="og:description" content="这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。 之所以开这个坑，一是因为最近玩MC比较多，被MC独特的游戏方式所吸引，碰到很多问题比如刷铁机、刷怪塔、物品分类的时候，会很想深入研究里面的原理。而MC虽然并不是开源软件，但是多年来玩家对MC的解包反编译工作已经非常成熟，甚至官方还自己提供了用于反编译的mapping，因此只需要懂一">
+<meta property="og:description" content="这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/11/14/S3l6bpNdnDVXako.png">
 <meta property="article:published_time" content="2020-11-13T16:45:00.000Z">
-<meta property="article:modified_time" content="2020-11-13T18:34:26.838Z">
+<meta property="article:modified_time" content="2020-11-13T18:39:55.039Z">
 <meta property="article:author" content="dearfl">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/11/14/S3l6bpNdnDVXako.png">
@@ -176,7 +176,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-11-14 00:45:00 / Modified: 02:34:26" itemprop="dateCreated datePublished" datetime="2020-11-14T00:45:00+08:00">2020-11-14</time>
+              <time title="Created: 2020-11-14 00:45:00 / Modified: 02:39:55" itemprop="dateCreated datePublished" datetime="2020-11-14T00:45:00+08:00">2020-11-14</time>
             </span>
 
           
@@ -191,6 +191,7 @@
 
       
         <p>这个是我新开的一个系列，&lt;MC源码分析&gt;，说是分析，其实就是简单的看下源码，比较仔细的了解一下游戏机制。</p>
+<a id="more"></a>
 <p>之所以开这个坑，一是因为最近玩MC比较多，被MC独特的游戏方式所吸引，碰到很多问题比如刷铁机、刷怪塔、物品分类的时候，会很想深入研究里面的原理。而MC虽然并不是开源软件，但是多年来玩家对MC的解包反编译工作已经非常成熟，甚至官方还自己提供了用于反编译的mapping，因此只需要懂一点java，就可以深入了解游戏内的各种机制。二是因为最近刚刚宣布1.17版本，前几天出了第一个snapshot，其中有一个特性让我觉得有点怪，就是潜影贝在被其他潜影贝的子弹攻击后，有几率生成一只新的潜影贝。虽然我并不是要在MC里讲科学，但这个改动本身确实有点“不太合常理”，而且这一改动意味着将来玩家会有稳定的潜影盒获取途径，从而很大程度上影响玩家之后的游戏体验，可能会导致潜影盒“掉价”。当然我不觉得这是一件坏事，毕竟在末地到处找潜影贝的痛苦我还是感同身受的。从这一点上来说，潜影贝农场以后会是玩家必做农场，没有之一，什么女巫塔、凋零骷髅塔、刷铁机全都靠边站。当然我不是专业的java程序员，对java的了解仅限于能大概看懂代码而已，所以可能文章会有错漏，如果你发现了任何错漏，或者单纯的想和我在这方面交流，都欢迎与我联系。 <a href="mailto:i@flr.me">邮箱</a></p>
 <p>多说几句，MC彻底的高自由度决定了，任何游戏机制或是特性、BUG，都会被玩家利用到极致，以刷铁机为例，本身是一种村民的保护机制，在检测到危险的时候主动召唤铁傀儡来保护村庄，但是因为铁傀儡死掉会掉落铁锭，从而导致这一机制几乎只是为了玩家刷铁锭而存在的。我对这一现象其实颇为不满，我认为要么官方不要提供这样会被玩家滥用的机制，要么官方能提供更加优雅的机制。当然这不是今天的重点，因此就不展开谈了，我之后还会针对刷铁机进行分析，到时候再讨论这个问题吧。</p>
 <p>言归正传，我对比了20w46a和1.16.3的服务端代码中有关潜影贝的部分，这是他们的diff结果</p>
@@ -218,7 +219,7 @@
 <p>理论上来说，生成效率主要取决于潜影贝的攻击频率，攻击频率越高，可能的效率就越高，类似ilmango的设计应该是相当高效的。总的来说，提高效率的思路无非是以下几点：</p>
 <ol>
 <li>尽量快速清除生成的/传送走的潜影贝，最好使周围17x17x17范围内的仅存在一个潜影贝</li>
-<li>尽量提高潜影贝成功传送的概率，需设计17x17x17范围内排布方式，假设该范围内有n个位置可传送，则传送成功的概率为 $p=1-((17x17x17-n)/17x17x17)^5$</li>
+<li>尽量提高潜影贝成功传送的概率，需设计17x17x17范围内排布方式，假设该范围内有n个位置可传送，则传送成功的概率为 $p=1-((17^3-n)/17^3)^5$</li>
 <li>尽量保持潜影贝的血量在50%以上，这条影响不是很大，如果不满足，大约会降低20%的效率</li>
 <li>尽量使潜影贝子弹成功击中</li>
 </ol>
