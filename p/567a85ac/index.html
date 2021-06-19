@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. Two SumQ: Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode 刷题笔记 1">
+<meta property="og:url" content="http://flr.me/p/567a85ac/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="1. Two SumQ: Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-19T04:56:00.000Z">
+<meta property="article:modified_time" content="2021-06-19T17:09:59.310Z">
+<meta property="article:author" content="dearfl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://flr.me/p/567a85ac/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Leetcode 刷题笔记 1 | dearfl</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dearfl</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flr.me/p/567a85ac/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.ico">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Leetcode 刷题笔记 1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-06-19 00:56:00 / Modified: 13:09:59" itemprop="dateCreated datePublished" datetime="2021-06-19T00:56:00-04:00">2021-06-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1-Two-Sum"><a href="#1-Two-Sum" class="headerlink" title="1. Two Sum"></a>1. Two Sum</h3><p>Q: Given an array of integers <code>nums</code> and an integer <code>target</code>, return <code>indices</code> of the two numbers such that they add up to <code>target</code>.</p>
+<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+<p>You can return the answer in any order.</p>
+<span id="more"></span>
+
+<p>第一反应自然是暴力</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">    vector&lt;int&gt; res;</span><br><span class="line">    for (int i = 0; i &lt; nums.size(); i++) &#123;</span><br><span class="line">        for (int j = i + 1; j &lt; nums.size(); j++) &#123;</span><br><span class="line">            if (nums[i] + nums[j] == target) &#123;</span><br><span class="line">                return &#123;i, j&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;-1, -1&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但这样做显然不够好，我们可以使用键值对来存储&lt;&lt;value, index&gt;&gt;对，一边遍历一边查找键值对内是否有匹配的值。具体的数据结构可以选择哈希表，因为哈希表的插入/查找都是o(1)操作，因此我们可以将总体的复杂度降至o(n)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">    vector&lt;int&gt; res;</span><br><span class="line">    unordered_map&lt;int, int&gt; indices;</span><br><span class="line">    for (auto it = nums.begin(); it != nums.end(); ++it) &#123;</span><br><span class="line">        if (indices.find(target - *it) != indices.end()) &#123;</span><br><span class="line">            res.push_back(indices[target - *it]);</span><br><span class="line">            res.push_back(it - nums.begin());</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        indices[*it] = it - nums.begin();</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-Add-Two-Numbers"><a href="#2-Add-Two-Numbers" class="headerlink" title="2. Add Two Numbers"></a>2. Add Two Numbers</h3><p>Q: You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p>这个题不算难，就是写起来有点别扭，我自己写的非常丑，贴一个别人写的吧。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) &#123;</span><br><span class="line">    ListNode dummy(0), *p = &amp;dummy;</span><br><span class="line">    int carry = 0;</span><br><span class="line">    while (l1 || l2 || carry) &#123;</span><br><span class="line">        int sum = (l1 ? l1-&gt;val : 0) + (l2 ? l2-&gt;val : 0) + carry;</span><br><span class="line">        carry = sum / 10;</span><br><span class="line">        p-&gt;next = new ListNode(sum % 10);</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        l1 = l1 ? l1-&gt;next : l1;</span><br><span class="line">        l2 = l2 ? l2-&gt;next : l2;</span><br><span class="line">    &#125;</span><br><span class="line">    return dummy.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-Longest-Substring-without-Repeating-Characters"><a href="#3-Longest-Substring-without-Repeating-Characters" class="headerlink" title="3. Longest Substring without Repeating Characters"></a>3. Longest Substring without Repeating Characters</h3><p>Q: Given a string <code>s</code>, find the length of the longest substring without repeating characters.</p>
+<p>简单的思路自然还是o(n^2)的，写起来也很简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">    int ans = 0;</span><br><span class="line">    for (int first = 0, last = 0; last &lt; s.length(); last++) &#123;</span><br><span class="line">        for (int i = last - 1; i &gt;= first; i--) &#123;</span><br><span class="line">            if (s[i] == s[last]) &#123;</span><br><span class="line">                first = i + 1;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans = max(res, last - first + 1);</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是效率堪忧，容易想到保存字母最后出现的位置，在遍历的同时即可判断当前范围内是否有重复字符，因而只需要遍历一次即可解决，时间复杂度为o(n)，本题只有字母，因而使用数组就可以保存下标，如果碰到数字等范围较大的数据，则可以考虑哈希表，下面的代码是别人的实现，<code>index</code>数组里实际存储的不是最后出现的位置，而是最后出现的位置+1，每次遇到重复字符时，将first设置为该重复字符最后出现的位置+1，即可使范围内不再存在重复字符。只能说这个实现实在是非常精炼。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">    int ans = 0, index[256] = &#123;0&#125;;</span><br><span class="line">    for (int first = 0, last = 0; last &lt; s.length(); last++) &#123;</span><br><span class="line">        first = max(index[s[last]], first);</span><br><span class="line">        ans = max(ans, last - first + 1);</span><br><span class="line">        index[s[last]] = last + 1; //index + 1, because index[] is init&#x27;d to all 0.</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-Longest-Palindrome-Substring"><a href="#5-Longest-Palindrome-Substring" class="headerlink" title="5. Longest Palindrome Substring"></a>5. Longest Palindrome Substring</h3><p>Q: Given a string <code>s</code>, return the longest palindromic substring in <code>s</code>.</p>
+<p>给一个字符串s，返回该字符串的最长回文子字符串。同样可以笨办法解决，思路也很简单，遍历所有可能的情况。对于每一个位置，都考虑奇数/偶数长度回文字符串向两个方向搜索，直到碰到不匹配的字符或者到达字符串边缘。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">string longestPalindrome(string s) &#123;</span><br><span class="line">    int len = s.length(), max_len = 0, first = 0;</span><br><span class="line">    for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        //odd length</span><br><span class="line">        for (int j = i, k = i; j &lt; len &amp;&amp; k &gt;= 0 &amp;&amp; s[j] == s[k]; j++, k--) &#123;</span><br><span class="line">            if (j - k + 1 &gt; max_len) &#123;</span><br><span class="line">                max_len = j - k + 1;</span><br><span class="line">                first = k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //even length</span><br><span class="line">        for (int j = i + 1, k = i; j &lt; len &amp;&amp; k &gt;= 0 &amp;&amp; s[j] == s[k]; j++, k--) &#123;</span><br><span class="line">            if (j - k + 1 &gt; max_len) &#123;</span><br><span class="line">                max_len = j - k + 1;</span><br><span class="line">                first = k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return s.substr(first, max_len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个问题有个o(n)的算法Manacher’s Algorithm，不过比较复杂，我就不献丑了。</p>
+<hr>
+<h3 id="6-ZigZag-Conversion"><a href="#6-ZigZag-Conversion" class="headerlink" title="6. ZigZag Conversion"></a>6. ZigZag Conversion</h3><p>Q: The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">P   A   H   N</span><br><span class="line">A P L S I I G</span><br><span class="line">Y   I   R</span><br></pre></td></tr></table></figure>
+<p>And then read line by line: “PAHNAPLSIIGYIR”</p>
+<p>Write the code that will take a string and make this conversion given a number of rows:</p>
+<p><code>string convert(string s, int numRows);</code></p>
+<p>这题要求实现一个字符串转换的函数，也是写起来比较烦的类型。总之我就不献丑了，抄了一个别人的代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">string convert(string s, int numRows) &#123;</span><br><span class="line">    if (numRows == 1) return s;</span><br><span class="line">    vector&lt;string&gt; rows(numRows);</span><br><span class="line">    int curRow = 0, delta = -1;</span><br><span class="line">    for (char c : s) &#123;</span><br><span class="line">        rows[curRow] += c;</span><br><span class="line">        (curRow == 0 || curRow == numRows - 1) &amp;&amp; (delta = -delta);</span><br><span class="line">        curRow += delta;</span><br><span class="line">    &#125;</span><br><span class="line">    string ret;</span><br><span class="line">    for (string row : rows) &#123;</span><br><span class="line">        ret += row;</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="7-Reverse-Integer"><a href="#7-Reverse-Integer" class="headerlink" title="7. Reverse Integer"></a>7. Reverse Integer</h3><p>Q: Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range $[-2^{31}, 2^{31} - 1]$, then return 0.</p>
+<p>Assume the environment does not allow you to store 64-bit integers (signed or unsigned).</p>
+<p>这是个有点意思也有点烦的题目，要求在不支持64位int的条件下实现翻转int的十进制位，如果可以使用64位整数，这个题目其实非常基础。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int reverse(int x) &#123;</span><br><span class="line">    long long res = x &lt; 0 ? -1 : 1;</span><br><span class="line">    long long sum = 0, tmp = labs(x);</span><br><span class="line">    if (x == 0) return 0;</span><br><span class="line">    while (tmp) &#123;</span><br><span class="line">        sum *= 10;</span><br><span class="line">        sum += tmp % 10;</span><br><span class="line">        tmp /= 10;</span><br><span class="line">    &#125;</span><br><span class="line">    if (INT_MIN &lt;= res * sum &amp;&amp; res * sum &lt;= INT_MAX)</span><br><span class="line">        return res * sum;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果限制64位数据，则需要仔细考虑溢出的问题，举个例子，一个8bit整数127翻转会变为721，原本不会溢出翻转之后就溢出了。本身这个题目就比较烦，主要考察的是底层的int范围，这里贴一个当时抄的代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int reverse(int x) &#123;</span><br><span class="line">    int rev = 0;</span><br><span class="line">    while (x != 0) &#123;</span><br><span class="line">        int pop = x % 10;</span><br><span class="line">        x /= 10;</span><br><span class="line">        if (rev &gt; INT_MAX/10 || (rev == INT_MAX / 10 &amp;&amp; pop &gt; 7)) return 0;</span><br><span class="line">        if (rev &lt; INT_MIN/10 || (rev == INT_MIN / 10 &amp;&amp; pop &lt; -8)) return 0;</span><br><span class="line">        rev = rev * 10 + pop;</span><br><span class="line">    &#125;</span><br><span class="line">    return rev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="8-String-to-Integer-atoi"><a href="#8-String-to-Integer-atoi" class="headerlink" title="8. String to Integer (atoi)"></a>8. String to Integer (atoi)</h3><p>Q: Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++’s atoi function).</p>
+<p>The algorithm for myAtoi(string s) is as follows:</p>
+<ol>
+<li>Read in and ignore any leading whitespace.</li>
+<li>Check if the next character (if not already at the end of the string) is ‘-‘ or ‘+’. Read this character in if it is either. This determines if the final result is negative or positive respectively. Assume the result is positive if neither is present.</li>
+<li>Read in next the characters until the next non-digit charcter or the end of the input is reached. The rest of the string is ignored.</li>
+<li>Convert these digits into an integer (i.e. “123” -&gt; 123, “0032” -&gt; 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).</li>
+<li>If the integer is out of the 32-bit signed integer range $[-2^{31}, 2^{31} - 1]$, then clamp the integer so that it remains in the range. Specifically, integers less than $-2^{31}$ should be clamped to $-2^{31}$, and integers greater than $2^{31} - 1$ should be clamped to $2^{31} - 1$.</li>
+<li>Return the integer as the final result.</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>Only the space character ‘ ‘ is considered a whitespace character.</li>
+<li>Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.</li>
+</ul>
+<p>这题要求实现自己的atoi函数，比较麻烦，所以也不多说了，直接贴代码吧。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">int myAtoi(string str) &#123;</span><br><span class="line">    int idx = 0, sign = 1, res = 0, tmp;</span><br><span class="line">    while (str[idx] == &#x27; &#x27;) &#123; idx++; &#125;</span><br><span class="line">    if (str[idx] == &#x27;-&#x27; || str[idx] == &#x27;+&#x27;) &#123;</span><br><span class="line">        if (str[idx] == &#x27;-&#x27;) &#123;</span><br><span class="line">            sign = -1;</span><br><span class="line">        &#125;</span><br><span class="line">        idx++;</span><br><span class="line">    &#125;</span><br><span class="line">    if (!isdigit(str[idx])) &#123; return 0; &#125;</span><br><span class="line">    while (isdigit(str[idx])) &#123;</span><br><span class="line">        tmp = str[idx] - &#x27;0&#x27;;</span><br><span class="line">        if (res &gt; INT_MAX / 10) &#123;</span><br><span class="line">            return sign == 1 ? INT_MAX : INT_MIN;</span><br><span class="line">        &#125;</span><br><span class="line">        if (res == INT_MAX / 10) &#123;</span><br><span class="line">            if (sign == 1 &amp;&amp; tmp &gt; 6) return INT_MAX;</span><br><span class="line">            if (sign == -1 &amp;&amp; tmp &gt; 7) return INT_MIN;</span><br><span class="line">        &#125;</span><br><span class="line">        res = res * 10 + tmp;</span><br><span class="line">        idx++;</span><br><span class="line">    &#125;</span><br><span class="line">    return sign * res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/f05761b1/" rel="prev" title="<mc源码分析>20w46a潜影贝生成">
+      <i class="fa fa-chevron-left"></i> <mc源码分析>20w46a潜影贝生成
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Two-Sum"><span class="nav-number">1.</span> <span class="nav-text">1. Two Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">2.</span> <span class="nav-text">2. Add Two Numbers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Longest-Substring-without-Repeating-Characters"><span class="nav-number">3.</span> <span class="nav-text">3. Longest Substring without Repeating Characters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Longest-Palindrome-Substring"><span class="nav-number">4.</span> <span class="nav-text">5. Longest Palindrome Substring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-ZigZag-Conversion"><span class="nav-number">5.</span> <span class="nav-text">6. ZigZag Conversion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Reverse-Integer"><span class="nav-number">6.</span> <span class="nav-text">7. Reverse Integer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-String-to-Integer-atoi"><span class="nav-number">7.</span> <span class="nav-text">8. String to Integer (atoi)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
