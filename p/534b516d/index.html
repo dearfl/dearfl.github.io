@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
-  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -27,8 +27,8 @@
 <meta property="og:site_name" content="dearfl">
 <meta property="og:description" content="最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。 老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2018-07-02T07:00:00.000Z">
-<meta property="article:modified_time" content="2018-07-28T18:26:00.000Z">
+<meta property="article:published_time" content="2018-07-02T19:00:00.000Z">
+<meta property="article:modified_time" content="2018-07-29T06:26:00.000Z">
 <meta property="article:author" content="dearfl">
 <meta name="twitter:card" content="summary">
 
@@ -111,15 +111,15 @@
 
 
 <nav class="site-nav">
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -153,7 +153,7 @@
     <link itemprop="mainEntityOfPage" href="http://flr.me/p/534b516d/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/favicon.ico">
       <meta itemprop="name" content="dearfl">
       <meta itemprop="description" content="">
     </span>
@@ -173,14 +173,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-07-02 15:00:00" itemprop="dateCreated datePublished" datetime="2018-07-02T15:00:00+08:00">2018-07-02</time>
+              <time title="Created: 2018-07-02 15:00:00" itemprop="dateCreated datePublished" datetime="2018-07-02T15:00:00-04:00">2018-07-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-07-29 02:26:00" itemprop="dateModified" datetime="2018-07-29T02:26:00+08:00">2018-07-29</time>
+                <time title="Modified: 2018-07-29 02:26:00" itemprop="dateModified" datetime="2018-07-29T02:26:00-04:00">2018-07-29</time>
               </span>
 
           
@@ -196,7 +196,7 @@
       
         <p>最近也是花了点时间研究了一下老滚，主要还是在开发方面，也花了点时间玩了一会。</p>
 <p>老滚这游戏确实有自己独特的魅力，游戏本体本身非常开放，有非常广阔的世界、丰富的任务、多样的NPC、剧情也很多。任务虽然一直在指引你，但是你大部分时间都可以随时停止随时开始，所以不会有很多游戏大部分时间都被任务牵着走或者说线性的感觉。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>老滚（或者说B社）官方支持mod，提供mod支持的同时，还提供MOD制作的工具CK，将游戏内容开放给所有玩家。但是既然开放，这样怎么会够呢，虽然mod能做出很强大的效果，但毕竟有限，就算是支持脚本编程，API也是有诸多限制的。这时候就轮到skse上场了，skse是国外的一个团队开发维护的，主要目的是拓展老滚的脚本API，例如缺失的键盘响应。skse还逆向了老滚里的不少class，当然不是完全逆向，而是识别了很多成员变量和函数的作用。另外skse提供了统一的插件接口，这使得所有程序员可以方便的为老滚编写插件，假如老滚有什么地方让你觉得不满意，你只需要定位到你要修改的代码，简单的修改或是hook它，来改变老滚的引擎的行为，最终你只需要编译成一个dll，放在指定的目录，skse会自动加载你的插件，从而使得你获得修改游戏引擎的能力，而且不会对老滚的程序本身有任何影响（不会修改老滚的可执行程序，而是运行的时候动态修改在内存里的机器指令）。这使得几乎每个老滚mod玩家都离不开skse，因为现今，许多mod直接以skse为前置，比如SkyUI这样的N网endorses排第一的基础mod，更多的mod以包含skse插件的形式间接的依赖于skse，比如几乎是老滚物理插件唯一选择的hdt物理插件，改变第一人称视角（为第一人称视角添加身体）的Enhanced Camera。</p>
 <p>16年重置版发布之后，由于整个游戏从32位变为64位，SKSE团队不得不重新构建SKSE，这个过程花了将近一年，终于在去年9月份发布了第一个Alpha版本。此后大量的skse插件被移植到重置版。</p>
@@ -289,6 +289,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
   <p class="site-author-name" itemprop="name">dearfl</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -297,7 +299,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -325,9 +327,9 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">dearfl</span>
 </div>

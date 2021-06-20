@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本周Leetcode刷题笔记 345. Reverse Vowels of a StringQ: Given a string s, reverse only all the vowels in the string and return it. The vowels are &#39;a&#39;, &#39;e&#39;, &#39;i&#39;, &#39;o&#39;, and &#39;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode 刷题笔记 2">
+<meta property="og:url" content="http://flr.me/p/50d2ef79/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="本周Leetcode刷题笔记 345. Reverse Vowels of a StringQ: Given a string s, reverse only all the vowels in the string and return it. The vowels are &#39;a&#39;, &#39;e&#39;, &#39;i&#39;, &#39;o&#39;, and &#39;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-20T05:22:04.000Z">
+<meta property="article:modified_time" content="2021-06-20T08:44:12.747Z">
+<meta property="article:author" content="dearfl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://flr.me/p/50d2ef79/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Leetcode 刷题笔记 2 | dearfl</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dearfl</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flr.me/p/50d2ef79/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.ico">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Leetcode 刷题笔记 2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-06-20 01:22:04 / Modified: 04:44:12" itemprop="dateCreated datePublished" datetime="2021-06-20T01:22:04-04:00">2021-06-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本周Leetcode刷题笔记</p>
+<h3 id="345-Reverse-Vowels-of-a-String"><a href="#345-Reverse-Vowels-of-a-String" class="headerlink" title="345. Reverse Vowels of a String"></a>345. Reverse Vowels of a String</h3><p>Q: Given a string <code>s</code>, reverse only all the vowels in the string and return it.</p>
+<p>The vowels are <code>&#39;a&#39;</code>, <code>&#39;e&#39;</code>, <code>&#39;i&#39;</code>, <code>&#39;o&#39;</code>, and <code>&#39;u&#39;</code>, and they can appear in both cases.</p>
+<span id="more"></span>
+
+<p>从两边向中间遍历，都碰到元音之后就交换继续遍历即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">bool isVowels(char c) &#123;</span><br><span class="line">    c = tolower(c);</span><br><span class="line">    return c == &#x27;a&#x27; || c == &#x27;e&#x27; || c == &#x27;i&#x27; || c == &#x27;o&#x27; || c == &#x27;u&#x27;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">string reverseVowels(string s) &#123;</span><br><span class="line">    int l = 0, r = s.length() - 1;</span><br><span class="line">    while (l &lt; r) &#123;</span><br><span class="line">        while (l &lt; r &amp;&amp; !isVowels(s[l])) l++;</span><br><span class="line">        while (l &lt; r &amp;&amp; !isVowels(s[r])) r--;</span><br><span class="line">        swap(s[l++], s[r--]);</span><br><span class="line">    &#125;</span><br><span class="line">    return s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1091-Shortest-Path-in-Binary-Matrix"><a href="#1091-Shortest-Path-in-Binary-Matrix" class="headerlink" title="1091. Shortest Path in Binary Matrix"></a>1091. Shortest Path in Binary Matrix</h3><p>Q: Given an <code>n x n</code> binary matrix <code>grid</code>, return the length of the shortest clear path in the matrix. If there is no clear path, return <code>-1</code>.</p>
+<p>A clear path in a binary matrix is a path from the top-left cell (i.e., <code>(0, 0)</code>) to the bottom-right cell (i.e., <code>(n - 1, n - 1)</code>) such that:</p>
+<p>All the visited cells of the path are <code>0</code>.<br>All the adjacent cells of the path are 8-directionally connected (i.e., they are different and they share an edge or a corner).<br>The length of a clear path is the number of visited cells of this path.</p>
+<p>这个题可以简单的使用DFS做，也可以考虑寻路算法，我第一想法是寻路，就糊了一个简单的实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">int shortestPathBinaryMatrix(vector&lt;vector&lt;int&gt;&gt;&amp; grid) &#123;</span><br><span class="line">    int n = grid.size();</span><br><span class="line">    priority_queue&lt;pair&lt;int, pair&lt;int, int&gt;&gt;, vector&lt;pair&lt;int, pair&lt;int, int&gt;&gt;&gt;, greater&lt;pair&lt;int, pair&lt;int, int&gt;&gt;&gt;&gt; oq;</span><br><span class="line">    set&lt;pair&lt;int, int&gt;&gt; open, close;</span><br><span class="line">    vector&lt;pair&lt;int, int&gt;&gt; direction&#123;&#123;1, 1&#125;, &#123;1, 0&#125;, &#123;0, 1&#125;, &#123;-1, 1&#125;, &#123;1, -1&#125;, &#123;0, -1&#125;, &#123;-1, 0&#125;, &#123;-1, -1&#125;&#125;;</span><br><span class="line">    if (grid[0][0] == 0) &#123;</span><br><span class="line">        oq.emplace(1, pair&lt;int, int&gt;&#123;0, 0&#125;);</span><br><span class="line">        open.emplace(0, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    while (!oq.empty()) &#123;</span><br><span class="line">        auto [v, pos] = oq.top();</span><br><span class="line">        auto &amp;[a, b] = pos;</span><br><span class="line">        oq.pop();</span><br><span class="line">        open.erase(pos);</span><br><span class="line">        if (a == n - 1 &amp;&amp; b == n - 1) &#123;</span><br><span class="line">            return v;</span><br><span class="line">        &#125;</span><br><span class="line">        if (close.find(pos) == close.end()) &#123;</span><br><span class="line">            close.insert(pos);</span><br><span class="line">            for (auto &amp;[i, j] : direction) &#123;</span><br><span class="line">                int x = a + i, y = b + j;</span><br><span class="line">                if (0 &lt;= x &amp;&amp; x &lt; n &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; n &amp;&amp; grid[x][y] == 0 &amp;&amp; close.find(&#123;x, y&#125;) == close.end()  &amp;&amp; open.find(&#123;x, y&#125;) == open.end()) &#123;</span><br><span class="line">                    open.emplace(x, y);</span><br><span class="line">                    oq.emplace(v + 1, pair&lt;int, int&gt;&#123;x, y&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是一份别人实现的DFS，用两个队列依次遍历的做法我好像还是第一次见，感觉不明觉厉。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">int shortestPathBinaryMatrix(vector&lt;vector&lt;int&gt;&gt;&amp; g, int steps = 0) &#123;</span><br><span class="line">    int n = g.size();</span><br><span class="line">    queue&lt;pair&lt;int, int&gt;&gt; q;</span><br><span class="line">    vector&lt;pair&lt;int, int&gt;&gt; direction&#123;&#123;1, 1&#125;,&#123;0, 1&#125;,&#123;1, 0&#125;,&#123;-1, 1&#125;,&#123;1, -1&#125;,&#123;0, -1&#125;,&#123;-1, 0&#125;,&#123;-1, -1&#125;&#125;;</span><br><span class="line">    q.emplace(0, 0); // we won&#x27;t return steps if g[0][0] == 1, so we just push &#123;0, 0&#125; here</span><br><span class="line">    while (!q.empty()) &#123;</span><br><span class="line">        steps++;</span><br><span class="line">        queue&lt;pair&lt;int, int&gt;&gt; q1;</span><br><span class="line">        // for every pos we can reach</span><br><span class="line">        while (!q.empty()) &#123;</span><br><span class="line">            auto [x, y] = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            // mark pos as visited</span><br><span class="line">            if (exchange(g[x][y], 1) == 1) &#123;</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">            if (x == n - 1 &amp;&amp; y == n - 1) &#123;</span><br><span class="line">                return steps;</span><br><span class="line">            &#125;</span><br><span class="line">            for (auto &amp;[i, j] : direction) &#123;</span><br><span class="line">                int r = x + i, t = y + j;</span><br><span class="line">                if (0 &lt;= r &amp;&amp; r &lt; n &amp;&amp; 0 &lt;= t &amp;&amp; t &lt; n &amp;&amp; !g[r][t]) &#123;</span><br><span class="line">                    q1.emplace(r, t);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // swap queues means we take a extra step</span><br><span class="line">        swap(q, q1);</span><br><span class="line">    &#125;</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="740-Delete-and-Earn"><a href="#740-Delete-and-Earn" class="headerlink" title="740. Delete and Earn"></a>740. Delete and Earn</h3><p>Q: Given an array <code>nums</code> of integers, you can perform operations on the array.</p>
+<p>In each operation, you pick any <code>nums[i]</code> and delete it to earn <code>nums[i]</code> points. After, you must delete every element equal to <code>nums[i] - 1</code> or <code>nums[i] + 1</code>.</p>
+<p>You start with <code>0</code> points. Return the maximum number of points you can earn by applying such operations.</p>
+<p>从数组中选择一个数<code>n</code>，可以获得对应的<code>n</code>分，但是必须删除所有等于<code>n-1</code>和<code>n+1</code>的数，如果有多个数n，可以获得多个n的分数。求最多可以获得多少分。第一反应我们可以统计不同的数值对应多少分数，然后可以对不同的值进行动态规划。不过我写出来的还是有点繁琐。这里我是先用哈希表存储在将数据移动到vector里，排序再做的，而实际上由于这里数字的范围并不算大，因此可以直接保存到一个大数组内，也不需要排序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int deleteAndEarn(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">    unordered_map&lt;int, int&gt; cnt, dp;</span><br><span class="line">    for (const auto &amp;n : nums) &#123;</span><br><span class="line">        cnt[n] += n;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;pair&lt;int, int&gt;&gt; vec&#123;cnt.begin(), cnt.end()&#125;;</span><br><span class="line">    sort(vec.begin(), vec.end());</span><br><span class="line">    int lastk = 0, sk = 0;</span><br><span class="line">    for (const auto &amp;[k, v] : vec) &#123;</span><br><span class="line">        if (lastk + 1 &lt; k) &#123;</span><br><span class="line">            dp[k] = dp[lastk] + v;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            dp[k] = max(dp[lastk], dp[sk] + v);</span><br><span class="line">        &#125;</span><br><span class="line">        sk = lastk;</span><br><span class="line">        lastk = k;</span><br><span class="line">    &#125;</span><br><span class="line">    int res = 0;</span><br><span class="line">    for (const auto &amp; [k, v] : dp) &#123;</span><br><span class="line">        res = max(res, v);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到别人的做法可以说是简洁多了，对于每一个数字，我们都有take和skip两种选择，问题的限制是如果当前数字选择take，下一个数字就必须skip，这里是状态机的思想去思考，对于每一步，我们都基于上一步的两个最优状态来进行决策，从而更新当前步骤的状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int deleteAndEarn(vector&lt;int&gt; &amp;nums) &#123;</span><br><span class="line">    vector&lt;int&gt; values(10001, 0);</span><br><span class="line">    for (const auto &amp;n : nums) &#123;</span><br><span class="line">        values[n] += n;</span><br><span class="line">    &#125;</span><br><span class="line">    int take = 0, skip = 0;</span><br><span class="line">    for (int i = 0; i &lt; 10001; i++) &#123;</span><br><span class="line">        int tmp = max(skip + values[i], take);</span><br><span class="line">        skip = take;</span><br><span class="line">        take = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    return take;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1665-Minimum-Initial-Energy-to-Finish-Tasks"><a href="#1665-Minimum-Initial-Energy-to-Finish-Tasks" class="headerlink" title="1665. Minimum Initial Energy to Finish Tasks"></a>1665. Minimum Initial Energy to Finish Tasks</h3><p>Q: You are given an array <code>tasks</code> where <code>tasks[i] = [actual_i, minimum_i]</code>:</p>
+<ul>
+<li><code>actual_i</code> is the actual amount of energy you spend to finish the $i_{th}$ task.</li>
+<li><code>minimum_i</code> is the minimum amount of energy you require to begin the $i_{th}$ task.</li>
+</ul>
+<p>For example, if the task is <code>[10, 12]</code> and your current energy is 11, you cannot start this task. However, if your current energy is 13, you can complete this task, and your energy will be 3 after finishing it.</p>
+<p>You can finish the tasks in any order you like.</p>
+<p>Return the minimum initial amount of energy you will need to finish all the tasks.</p>
+<p>这个问题也挺tricky的，每个任务都有最小要求和实际要求，你可以以任意顺序执行任务，求能完成所有任务的初始能量的最小值。提示实际上有点坑爹，因为提示1说我们可以轻易的求出x是否满足要求，因此我们可以用二分法做。实际上我并没有看出这里的<strong>轻易</strong>。</p>
+<p>当时我猜测应该是可以用&lt;minimum - actual&gt;对任务排序，这样的策略是最优的，但是并没有证明。而且如果这样的策略是最优的话，我们根本不需要用二分法做，只需要倒推就可以得到结果了。</p>
+<p>根据别人的解答，我们可以这样理解这个问题，同样是倒推的思维。</p>
+<p>假设你是一家公司的总裁，现在你们公司有n个投资者，每个投资者都有一个门槛&lt;minimum - actual&gt;和一个实际的投资额actual，公司的市值需要达到投资者的最低门槛，投资者才会实际投资，而你的目标是获得所有投资者的投资。当公司的市值达不到一个投资者的要求时，你可以自掏腰包来提升公司的市值，但显然你希望你自己投入的越少越好。因此，你将这些投资者按照各自的门槛排序，从最低门槛的投资者开始，如果不够，就自己补足到符合他的门槛。直到公司获得所有的投资。因为每获得一笔投资，公司的市值都会增加，因此这样是最优策略。而最终公司的市值，就对应题目的答案，即能完成所有任务的最小初始能量。</p>
+<p>现在从正向来考虑这个问题，对于所有的任务来说，完成这些任务所需要的实际能量是固定的，因此要求最小初始能量实质上就是要求最终剩余能量最小。在公司的例子里，这就对应着你自己的投入。</p>
+<p>最后，我当时猜出的代码结果正确，但是一直超时，看样例才知道有组样例的task都是[1, 10000]，可能因此影响了排序算法的效率，换成stable_sort才勉强通过。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int minimumEffort(vector&lt;vector&lt;int&gt;&gt;&amp; tasks) &#123;</span><br><span class="line">    // 按照门槛排序，门槛相同时，实际投资额无所谓</span><br><span class="line">    stable_sort(tasks.begin(), tasks.end(), [](auto v1, auto v2) &#123; return v1[1] - v1[0] &lt; v2[1] - v2[0]; &#125;);</span><br><span class="line">    int res = 0;</span><br><span class="line">    for (const auto &amp;vec : tasks) &#123;</span><br><span class="line">        // 逆推，如果小于门槛则自己补足至门槛</span><br><span class="line">        int actual = vec[0], minimum = vec[1];</span><br><span class="line">        res = max(res + actual, minimum);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="801-Minimum-Swaps-to-Make-Sequences-Increasing"><a href="#801-Minimum-Swaps-to-Make-Sequences-Increasing" class="headerlink" title="801. Minimum Swaps to Make Sequences Increasing"></a>801. Minimum Swaps to Make Sequences Increasing</h3><p>Q: We have two integer sequences <code>nums1</code> and <code>nums2</code> of the same non-zero length.</p>
+<p>We are allowed to swap elements <code>nums1[i]</code> and <code>nums2[i]</code>. Note that both elements are in the same index position in their respective sequences.</p>
+<p>At the end of some number of swaps, <code>nums1</code> and <code>nums2</code> are both strictly increasing. (An array A is strictly increasing if and only if <code>A[0] &lt; A[1] &lt; A[2] &lt; ... &lt; A[A.length - 1]</code>.)</p>
+<p>Given <code>nums1</code> and <code>nums2</code>, return the minimum number of swaps to make both sequences strictly increasing. It is guaranteed that the given input always makes it possible.</p>
+<p>这个题看起来也挺懵的，思考了一阵之后觉得可以用DP，可以用两个状态表示，比如说dp0[i]表示第i位不交换的情况下最小的交换次数，而dp1[i]表示第i位交换的情况下最小的交换次数，初始状态也简单，<code>dp0[0] = 0, dp1[0] = 1;</code> 接下来可以分类讨论:</p>
+<ol>
+<li>如果<code>nums1[i-1] &lt; nums1[i] &amp;&amp; nums2[i-1] &lt; nums2[i] &amp;&amp; nums1[i-1] &lt; nums2[i] &amp;&amp; nums2[i-1] &lt; nums1[i]</code>，那么i-1和i这两位无论交换与否，都满足严格递增的条件，因此：</li>
+</ol>
+<ul>
+<li><code>dp1[i] = min(dp0[i - 1], dp1[i - 1]) + 1;</code></li>
+<li><code>dp0[i] = min(dp0[i - 1], dp1[i - 1]);</code></li>
+</ul>
+<ol start="2">
+<li>如果只满足<code>nums1[i-1] &lt; nums1[i] &amp;&amp; nums2[i-1] &lt; nums2[i]</code>，则说明i-1和i要么都交换，要么都不交换，才能满足严格单调递增的条件，因此：</li>
+</ol>
+<ul>
+<li><code>dp1[i] = dp1[i - 1] + 1;</code></li>
+<li><code>dp0[i] = dp0[i - 1];</code></li>
+</ul>
+<ol start="3">
+<li>如果只满足<code>nums1[i-1] &lt; nums2[i] &amp;&amp; nums2[i-1] &lt; nums1[i]</code>则与情况2相反，i-1和i这两位只能恰好有1位交换，才能满足严格单调递增的条件，因此：</li>
+</ol>
+<ul>
+<li><code>dp1[i] = dp0[i - 1] + 1;</code></li>
+<li><code>dp0[i] = dp1[i - 1];</code></li>
+</ul>
+<p>理清了这些关系，代码就好写了，同时可以注意到我们并不需要一个数组来存储dp的结果，每一步的结果，都只依赖于上一步的结果，因此可以这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int minSwap(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;</span><br><span class="line">    int n = nums1.size();</span><br><span class="line">    int swap = 1, skip = 0;</span><br><span class="line">    for (int i = 1; i &lt; n; i++) &#123;</span><br><span class="line">        int preSwap = swap, preSkip = skip;</span><br><span class="line">        if (nums1[i-1] &lt; nums1[i] &amp;&amp; nums2[i-1] &lt; nums2[i] &amp;&amp; nums1[i-1] &lt; nums2[i] &amp;&amp; nums2[i-1] &lt; nums1[i]) &#123;</span><br><span class="line">            swap = min(preSkip, preSwap) + 1;</span><br><span class="line">            skip = min(preSkip, preSwap);</span><br><span class="line">        &#125; else if (nums1[i-1] &lt; nums1[i] &amp;&amp; nums2[i-1] &lt; nums2[i]) &#123;</span><br><span class="line">            swap = preSwap + 1;</span><br><span class="line">            skip = preSkip;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            swap = preSkip + 1;</span><br><span class="line">            skip = preSwap;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return min(skip, swap);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="89-Gray-Code"><a href="#89-Gray-Code" class="headerlink" title="89. Gray Code"></a>89. Gray Code</h3><p>Q: An n-bit gray code sequence is a sequence of $2^n$ integers where:</p>
+<ul>
+<li>Every integer is in the inclusive range $[0, 2^n - 1]$,</li>
+<li>The first integer is 0,</li>
+<li>An integer appears no more than once in the sequence,</li>
+<li>The binary representation of every pair of adjacent integers differs by exactly one bit, and</li>
+<li>The binary representation of the first and last integers differs by exactly one bit.</li>
+</ul>
+<p>Given an integer <code>n</code>, return any valid n-bit gray code sequence.</p>
+<p>初看也有点懵，关键是相邻的数之间只能有一个位不同，而且必须包含$[0, 2^n-1]$之间所有的整数。</p>
+<p>不过很快意识到这个题可以用递归做，如果我有一组n=i时的数组，那么我只需要先遍历一次这个数组，然后将i+1位取反再&lt;反向/循环&gt;遍历一次即可得到n=i+1时对应的数组。而且这里可以比较简单的写成循环的形式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; grayCode(int n) &#123;</span><br><span class="line">    vector&lt;int&gt; res(1 &lt;&lt; n, 0);</span><br><span class="line">    for (int i = 0, k = 1; i &lt; n; i++) &#123;</span><br><span class="line">        for (int j = 0; j &lt; k; j++) &#123;</span><br><span class="line">            res[k + j] = res[k - j - 1] | k;</span><br><span class="line">        &#125;</span><br><span class="line">        k = k &lt;&lt; 1;</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看讨论时，看到了另一种简单的做法如下，也就是 <code>f(x) = x ^ (x &gt;&gt; 1)</code>，具体就不证明了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; grayCode(int n) &#123;</span><br><span class="line">    vector&lt;int&gt; res(1 &lt;&lt; n, 0);</span><br><span class="line">    for (int i = 0; i &lt; (1 &lt;&lt; n); i++) &#123;</span><br><span class="line">        res[i] = i ^ (i &gt;&gt; 1);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1513-Number-of-Substring-with-only-1s"><a href="#1513-Number-of-Substring-with-only-1s" class="headerlink" title="1513. Number of Substring with only 1s"></a>1513. Number of Substring with only 1s</h3><p>Q: Given a binary string s (a string consisting only of <code>&#39;0&#39;</code> and <code>&#39;1&#39;</code>s).</p>
+<p>Return the number of substrings with all characters 1’s.</p>
+<p>Since the answer may be too large, return it modulo $10^9 + 7$.</p>
+<p>这个题目相对比较简单，可以想到，每“组”相邻的n个1，都可以增加$\frac{n \times (n + 1)}{2}$个合理的子串。实际写的时候，可以写成这样比较简洁的形式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int numSub(string s) &#123;</span><br><span class="line">    int res = 0, count = 0;</span><br><span class="line">    for (const auto c : s) &#123;</span><br><span class="line">        count = c == &#x27;1&#x27; ? count + 1 : 0;</span><br><span class="line">        res = (res + count) % 1000000007;</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>接下来是这周的周赛，我做出来三个，只能说这周相对比较简单吧，其实回头看第四题也不算难，不过缺少经验，确实比较难做出来。</p>
+<hr>
+<h3 id="1903-Largest-Odd-Number-in-String"><a href="#1903-Largest-Odd-Number-in-String" class="headerlink" title="1903. Largest Odd Number in String"></a>1903. Largest Odd Number in String</h3><p>Q: You are given a string num, representing a large integer. Return the largest-valued odd integer (as a string) that is a non-empty substring of num, or an empty string “” if no odd integer exists.</p>
+<p>A substring is a contiguous sequence of characters within a string.</p>
+<p>翻译：找出字符串的最后一个奇数字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string largestOddNumber(string num) &#123;</span><br><span class="line">    int i;</span><br><span class="line">    for (i = num.length() - 1; i &gt;= 0; i--) &#123;</span><br><span class="line">        if ((num[i] - &#x27;0&#x27;) % 2 == 1) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return num.substr(0, i + 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1904-The-Number-of-Full-Rounds-You-Have-Played"><a href="#1904-The-Number-of-Full-Rounds-You-Have-Played" class="headerlink" title="1904. The Number of Full Rounds You Have Played"></a>1904. The Number of Full Rounds You Have Played</h3><p>Q: A new online video game has been released, and in this video game, there are 15-minute rounds scheduled every quarter-hour period. This means that at <code>HH:00</code>, <code>HH:15</code>, <code>HH:30</code> and <code>HH:45</code>, a new round starts, where HH represents an integer number from 00 to 23. A 24-hour clock is used, so the earliest time in the day is <code>00:00</code> and the latest is <code>23:59</code>.</p>
+<p>Given two strings startTime and finishTime in the format “HH:MM” representing the exact time you started and finished playing the game, respectively, calculate the number of full rounds that you played during your game session.</p>
+<p>For example, if startTime = “05:20” and finishTime = “05:59” this means you played only one full round from 05:30 to 05:45. You did not play the full round from 05:15 to 05:30 because you started after the round began, and you did not play the full round from 05:45 to 06:00 because you stopped before the round ended.<br>If finishTime is earlier than startTime, this means you have played overnight (from startTime to the midnight and from midnight to finishTime).</p>
+<p>Return the number of full rounds that you have played if you had started playing at startTime and finished at finishTime.</p>
+<p>也不难，问特定时间段内有多少个整刻，刻应该是表示15分钟吧。anyway：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int numberOfRounds(string startTime, string finishTime) &#123;</span><br><span class="line">    int sh = atoi(startTime.substr(0, 2).c_str()), sm = atoi(startTime.substr(3).c_str());</span><br><span class="line">    int fh = atoi(finishTime.substr(0, 2).c_str()), fm = atoi(finishTime.substr(3).c_str());</span><br><span class="line">    if (sh &gt; fh || (sh == fh &amp;&amp; sm &gt; fm)) &#123;</span><br><span class="line">        fh += 24;</span><br><span class="line">    &#125;</span><br><span class="line">    return (fh - sh) * 4 + fm / 15 - (sm + 14) / 15;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1905-Count-Sub-Islands"><a href="#1905-Count-Sub-Islands" class="headerlink" title="1905. Count Sub Islands"></a>1905. Count Sub Islands</h3><p>Q: You are given two m x n binary matrices grid1 and grid2 containing only 0’s (representing water) and 1’s (representing land). An island is a group of 1’s connected 4-directionally (horizontal or vertical). Any cells outside of the grid are considered water cells.</p>
+<p>An island in grid2 is considered a sub-island if there is an island in grid1 that contains all the cells that make up this island in grid2.</p>
+<p>Return the number of islands in grid2 that are considered sub-islands.</p>
+<p>也不算难，就是写起来有点烦，我当时有点懵，写的比较复杂， 实际上完全没有必要向我这样先把island的坐标提取出来再判断，边提取坐标边DFS判断应该也是ok的，只能说，能过就行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">void helper(vector&lt;vector&lt;int&gt;&gt;&amp; grid, vector&lt;pair&lt;int, int&gt;&gt;&amp; island, int x, int y) &#123;</span><br><span class="line">    int direction[4][2] = &#123;&#123;-1, 0&#125;, &#123;0, -1&#125;, &#123;0, 1&#125;, &#123;1, 0&#125;&#125;;</span><br><span class="line">    if (0 &lt;= x &amp;&amp; x &lt; grid.size() &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; grid[0].size() &amp;&amp; grid[x][y] == 1) &#123;</span><br><span class="line">        grid[x][y] = 0;</span><br><span class="line">        island.emplace_back(x, y);</span><br><span class="line">        for (auto &amp;[m, n] : direction) &#123;</span><br><span class="line">            helper(grid, island, x + m, y + n);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; getIslands(vector&lt;vector&lt;int&gt;&gt;&amp; grid) &#123;</span><br><span class="line">    vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; ans;</span><br><span class="line"></span><br><span class="line">    int count = -1;</span><br><span class="line">    for (int i = 0; i &lt; grid.size(); i++) &#123;</span><br><span class="line">        for (int j = 0; j &lt; grid[i].size(); j++) &#123;</span><br><span class="line">            if (grid[i][j] == 1) &#123;</span><br><span class="line">                vector&lt;pair&lt;int, int&gt;&gt; island;</span><br><span class="line">                helper(grid, island, i, j);</span><br><span class="line">                ans.push_back(island);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int countSubIslands(vector&lt;vector&lt;int&gt;&gt;&amp; grid1, vector&lt;vector&lt;int&gt;&gt;&amp; grid2) &#123;</span><br><span class="line">    int count = 0;</span><br><span class="line">    for (auto &amp;vec : getIslands(grid2)) &#123;</span><br><span class="line">        bool flag = true;</span><br><span class="line">        for (const auto &amp;[x, y] : vec) &#123;</span><br><span class="line">            flag &amp;= grid1[x][y];</span><br><span class="line">        &#125;</span><br><span class="line">        count += flag;</span><br><span class="line">    &#125;</span><br><span class="line">    return count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="1906-Minimum-Absolute-Difference-Queries"><a href="#1906-Minimum-Absolute-Difference-Queries" class="headerlink" title="1906. Minimum Absolute Difference Queries"></a>1906. Minimum Absolute Difference Queries</h4><p>Q: The minimum absolute difference of an array a is defined as the minimum value of |a[i] - a[j]|, where 0 &lt;= i &lt; j &lt; a.length and a[i] != a[j]. If all elements of a are the same, the minimum absolute difference is -1.</p>
+<ul>
+<li>For example, the minimum absolute difference of the array [5,2,3,7,2] is |2 - 3| = 1. Note that it is not 0 because a[i] and a[j] must be different.</li>
+</ul>
+<p>You are given an integer array nums and the array queries where queries[i] = [li, ri]. For each query i, compute the minimum absolute difference of the subarray nums[li…ri] containing the elements of nums between the 0-based indices li and ri (inclusive).</p>
+<p>Return an array ans where ans[i] is the answer to the ith query.</p>
+<p>A subarray is a contiguous sequence of elements in an array.</p>
+<p>The value of <code>|x|</code> is defined as:</p>
+<ul>
+<li>x if x &gt;= 0.</li>
+<li>-x if x &lt; 0.</li>
+</ul>
+<p>应该是我参加以来第一道不是hard的压轴题了，难度也是Medium，可惜我当时没有很好的思路，我当时的思路是DP把所有子串的结果都求出来，然而日常超时。实际上因为题目限制数值范围在1-100之间，因此，我们可以一个数组<code>count[n][k]</code>统计每个数字出现的次数，即<code>count[i][k]</code>表示<code>[0...i]</code>之间<code>k</code>出现的次数，因此我们可以更容易的获取<code>[i...j]</code>之间各个数字出现的次数，然后求出所有出现的数字的最小间隔即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; minDifference(vector&lt;int&gt;&amp; nums, vector&lt;vector&lt;int&gt;&gt;&amp; queries) &#123;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; preSum(nums.size() + 1, vector&lt;int&gt;(101, 0));</span><br><span class="line">    vector&lt;int&gt; cnt(101), ans;</span><br><span class="line">    for (int i = 1; i &lt;= nums.size(); i++) &#123;</span><br><span class="line">        for (int j = 1; j &lt; 101; j++) &#123;</span><br><span class="line">            preSum[i][j] = preSum[i - 1][j];</span><br><span class="line">        &#125;</span><br><span class="line">        preSum[i][nums[i - 1]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    for (auto &amp;vec : queries) &#123;</span><br><span class="line">        int l = vec[0], r = vec[1] + 1;</span><br><span class="line">        for (int i = 1; i &lt; 101; i++) &#123;</span><br><span class="line">            cnt[i] = preSum[r][i] - preSum[l][i];</span><br><span class="line">        &#125;</span><br><span class="line">        int m = INT_MAX, pre = -1;</span><br><span class="line">        for (int i = 0; i &lt; 101; i++) &#123;</span><br><span class="line">            if (cnt[i] == 0) continue;</span><br><span class="line">            if (pre != -1) m = min(m, abs(i - pre));</span><br><span class="line">            pre = i;</span><br><span class="line">        &#125;</span><br><span class="line">        ans.push_back(m == INT_MAX ? -1 : m);</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>小结： 总的来说这周的周赛还行吧，虽然比较简单，但毕竟我开始刷题参赛也不久，慢慢来吧，相比前几次也算是有一点点进步。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/567a85ac/" rel="prev" title="Leetcode 刷题笔记 1">
+      <i class="fa fa-chevron-left"></i> Leetcode 刷题笔记 1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#345-Reverse-Vowels-of-a-String"><span class="nav-number">1.</span> <span class="nav-text">345. Reverse Vowels of a String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1091-Shortest-Path-in-Binary-Matrix"><span class="nav-number">2.</span> <span class="nav-text">1091. Shortest Path in Binary Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#740-Delete-and-Earn"><span class="nav-number">3.</span> <span class="nav-text">740. Delete and Earn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1665-Minimum-Initial-Energy-to-Finish-Tasks"><span class="nav-number">4.</span> <span class="nav-text">1665. Minimum Initial Energy to Finish Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#801-Minimum-Swaps-to-Make-Sequences-Increasing"><span class="nav-number">5.</span> <span class="nav-text">801. Minimum Swaps to Make Sequences Increasing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#89-Gray-Code"><span class="nav-number">6.</span> <span class="nav-text">89. Gray Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1513-Number-of-Substring-with-only-1s"><span class="nav-number">7.</span> <span class="nav-text">1513. Number of Substring with only 1s</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1903-Largest-Odd-Number-in-String"><span class="nav-number">8.</span> <span class="nav-text">1903. Largest Odd Number in String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1904-The-Number-of-Full-Rounds-You-Have-Played"><span class="nav-number">9.</span> <span class="nav-text">1904. The Number of Full Rounds You Have Played</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1905-Count-Sub-Islands"><span class="nav-number">10.</span> <span class="nav-text">1905. Count Sub Islands</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1906-Minimum-Absolute-Difference-Queries"><span class="nav-number">10.1.</span> <span class="nav-text">1906. Minimum Absolute Difference Queries</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

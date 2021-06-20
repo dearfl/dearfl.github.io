@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
-  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -35,8 +35,8 @@
 <meta property="og:image" content="https://i.loli.net/2019/07/21/5d336384363fb65178.png">
 <meta property="og:image" content="https://i.loli.net/2019/07/21/5d3363843582a90768.png">
 <meta property="og:image" content="https://i.loli.net/2019/07/21/5d3363843571f94836.png">
-<meta property="article:published_time" content="2019-02-17T22:54:00.000Z">
-<meta property="article:modified_time" content="2020-11-14T03:41:00.000Z">
+<meta property="article:published_time" content="2019-02-18T11:54:00.000Z">
+<meta property="article:modified_time" content="2020-11-14T16:41:00.000Z">
 <meta property="article:author" content="dearfl">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2019/07/21/5d3363843593f67287.png">
@@ -120,15 +120,15 @@
 
 
 <nav class="site-nav">
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -162,7 +162,7 @@
     <link itemprop="mainEntityOfPage" href="http://flr.me/p/52b9d5e6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/favicon.ico">
       <meta itemprop="name" content="dearfl">
       <meta itemprop="description" content="">
     </span>
@@ -182,14 +182,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-02-18 06:54:00" itemprop="dateCreated datePublished" datetime="2019-02-18T06:54:00+08:00">2019-02-18</time>
+              <time title="Created: 2019-02-18 06:54:00" itemprop="dateCreated datePublished" datetime="2019-02-18T06:54:00-05:00">2019-02-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-14 11:41:00" itemprop="dateModified" datetime="2020-11-14T11:41:00+08:00">2020-11-14</time>
+                <time title="Modified: 2020-11-14 11:41:00" itemprop="dateModified" datetime="2020-11-14T11:41:00-05:00">2020-11-14</time>
               </span>
 
           
@@ -204,10 +204,10 @@
 
       
         <p>在写这篇文章之前，我用了些时间做了关于血源内脏暴击的一些测试，得出了一些相对以往的测试来说更为准确的结论。在本文中，我主要介绍一些血源(或者说魂系列)的基础概念、说明基于这些事实如何设计这些测试、又如何处理测试得到的数据以及最后得到了什么样的结论。本文较长，假如没耐心看完，可以只看我给出的结论。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>此外，本文的测试和结论基于某些以往的测试和结论以及攻略本，所以同样可能有不准确以及不完善之处。虽然我已经尽量排除这些因素，但不可避免会有疏漏，假如你发现了任何不准确之处或者单纯想交流一下，都可以与我联系。由于本人多少写过一点代码，所以本文里多少会有些代码，不过不理解的话其实也没有关系，忽略即可。</p>
-<p>2020-11-14 update: 今天来更新这篇文章也是因为最近看到索尼在B站发了对up主谷歌的纠错视频，这篇文章测试几乎是在两年前做的，而写的时候大部分测试已经做完了不少时间了，而且写着写着发现有一些遗漏，还补做了一些测试，因此总体来说文章不是很通畅，希望各位见谅。我写这篇文章时，血源wiki给出的内脏暴击机制还不准确，是简单的技巧的倍率，而时隔两年，<a href="https://www.bloodborne-wiki.com/2015/03/visceral-attacks.html" target="_blank" rel="noopener">血源wiki</a>已经给出了比我的文章更加准确的机制描述，而且这应该是通过直接解包游戏文件得来的。wiki里将两段伤害视作是武器的不同招式，而且第二段伤害针对不同触发方式有着不同的招式倍率。这种描述比我的更加简洁，显然也更正确。大家了解内脏暴击机制时，还是应以wiki为准。我在做测试之前，已经根据一些游戏现象怀疑内脏暴击的本质是武器，这个测试严格来说只是做了一些验证，严格来说，这篇文章并没有多少技术含量，而大都是“苦力活“，主要难点主要在分开测试属性和等级，我技术一般，而且本身偏向于枪反打法，只加力量拿到所有继承人符文并且成功使用失败者bug就是我最主要做的事也是最难的事了。做这些测试、写这篇文章的初衷之一也是因为之前各处关于血源的内脏暴击机制解释，大都不是很准确也不完整，对于一个热爱血源的玩家来说，还是一件挺遗憾的事情，总之能对大家有用，还是挺开心的，血源也要登录PS5了，希望到时候能畅享60帧的流畅血源。<del>FS社垃圾优化，还爱疯狂塞粒子特效，会不会掉帧自己心里没点B数嘛</del></p>
+<p>2020-11-14 update: 今天来更新这篇文章也是因为最近看到索尼在B站发了对up主谷歌的纠错视频，这篇文章测试几乎是在两年前做的，而写的时候大部分测试已经做完了不少时间了，而且写着写着发现有一些遗漏，还补做了一些测试，因此总体来说文章不是很通畅，希望各位见谅。我写这篇文章时，血源wiki给出的内脏暴击机制还不准确，是简单的技巧的倍率，而时隔两年，<a target="_blank" rel="noopener" href="https://www.bloodborne-wiki.com/2015/03/visceral-attacks.html">血源wiki</a>已经给出了比我的文章更加准确的机制描述，而且这应该是通过直接解包游戏文件得来的。wiki里将两段伤害视作是武器的不同招式，而且第二段伤害针对不同触发方式有着不同的招式倍率。这种描述比我的更加简洁，显然也更正确。大家了解内脏暴击机制时，还是应以wiki为准。我在做测试之前，已经根据一些游戏现象怀疑内脏暴击的本质是武器，这个测试严格来说只是做了一些验证，严格来说，这篇文章并没有多少技术含量，而大都是“苦力活“，主要难点主要在分开测试属性和等级，我技术一般，而且本身偏向于枪反打法，只加力量拿到所有继承人符文并且成功使用失败者bug就是我最主要做的事也是最难的事了。做这些测试、写这篇文章的初衷之一也是因为之前各处关于血源的内脏暴击机制解释，大都不是很准确也不完整，对于一个热爱血源的玩家来说，还是一件挺遗憾的事情，总之能对大家有用，还是挺开心的，血源也要登录PS5了，希望到时候能畅享60帧的流畅血源。~~~FS社垃圾优化，还爱疯狂塞粒子特效，会不会掉帧自己心里没点B数嘛~~~</p>
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>内脏暴击是<strong>两把</strong>具有特殊补正曲线的不可附魔的隐藏武器，对应内脏暴击的两段伤害。</p>
 <p>具体来说，内脏暴击是两把特殊武器打出的招式，为突刺属性，和普通武器的招式类似。这两把武器均只有内脏暴击这一个招式(或者说游戏内只能使用这一个招式)，因此我们可以认为其招式倍率为1。</p>
 <p>具体到这两把武器本身，两把武器只有基础攻击力的区别，根据玩家等级，有11种不同的强化等级，同样与普通武器的强化等级类似，只是普通武器直接用血石材料升级，而内脏暴击武器自动随着玩家等级而升级。其不同强化等级对应的基础攻击力、玩家等级如下表所示。作为特殊武器，自带与强化等级无关的1.3(S)技巧补正，但其补正曲线与普通武器不同，我的测试的目的之一，就是确定其补正曲线。此外，其攻击力与伤害还与宝石、符文、兽丸、附魔、部分武器特殊效果加成相关，具体来说，任何装备中的右手武器上的宝石同样可以作用于内脏暴击，但其是否真正有效取决于不可附魔武器与宝石的作用规则，但作用规则这一点，没有做严格的验证。三个爪印符文直接增加10/20/30%的内脏暴击伤害，互相可以乘法叠加，且取整至整数百分比。兽丸可以增加至多70%的内脏暴击攻击力。附魔同样可以增加对应元素的攻击力，相当于对应属性的固伤宝石。特殊效果部分包括锯齿加成、教会加成和部分武器自带的特殊效果。除此之外，其攻击力或伤害与右手武器强化等级、灵视、玩家武器种类、右手武器宝石等因素没有直接关系。</p>
@@ -1630,8 +1630,8 @@
 <p>后记：在我发了这篇文章之后，贴吧的汉尼拔大佬提出来游戏数据中存在不同于我的结论的第二段攻击基础攻击力，貌似是对boss的，具体数值为[300, 375, 440, 620, 690, 770, 790, 810, 820, 830, 840]，相对于我的结论来说，都增加了50。我测试的时候以为各种内脏暴击数值都相同，因此也没有特意去测试boss的伤害。后来粗糙的测试了圣职者怪兽和神父第一阶段，根据数据来说，内脏暴击对圣职者怪兽是有额外攻击的，而对神父一阶段没有。我猜测这可能是因为打出处决的方式不同，一个是肢体破坏，一个是枪反。假如这个结论成立的话，那么内脏暴击就多了一个隐藏武器，也就是说，根据打出处决的方式不同，第二段会使用不同的内脏暴击武器。这一点还需要进一步的测试，这个以后再说吧。懒人你伤不起。。。orz</p>
 <p>ref:</p>
 <ol>
-<li><a href="https://www.ptt.cc/bbs/PlayStation/M.1481856319.A.92E.html" target="_blank" rel="noopener">血源诅咒 内脏暴击</a></li>
-<li><a href="https://www.bloodborne-wiki.com/2015/03/visceral-attacks.html" target="_blank" rel="noopener">Visceral Attacks</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ptt.cc/bbs/PlayStation/M.1481856319.A.92E.html">血源诅咒 内脏暴击</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bloodborne-wiki.com/2015/03/visceral-attacks.html">Visceral Attacks</a></li>
 </ol>
 
     </div>
@@ -1713,12 +1713,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础概念-一般也适用于其他魂系列"><span class="nav-number">2.</span> <span class="nav-text">基础概念(一般也适用于其他魂系列)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等级因素"><span class="nav-number">4.1.</span> <span class="nav-text">等级因素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性因素"><span class="nav-number">4.2.</span> <span class="nav-text">属性因素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#补正曲线"><span class="nav-number">4.2.1.</span> <span class="nav-text">补正曲线</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他因素"><span class="nav-number">4.3.</span> <span class="nav-text">其他因素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#爪痕"><span class="nav-number">4.3.1.</span> <span class="nav-text">爪痕</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#兽丸、宝石、附魔"><span class="nav-number">4.3.2.</span> <span class="nav-text">兽丸、宝石、附魔</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#特殊加成"><span class="nav-number">4.3.3.</span> <span class="nav-text">特殊加成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E4%B8%80%E8%88%AC%E4%B9%9F%E9%80%82%E7%94%A8%E4%BA%8E%E5%85%B6%E4%BB%96%E9%AD%82%E7%B3%BB%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">基础概念(一般也适用于其他魂系列)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%89%E7%BA%A7%E5%9B%A0%E7%B4%A0"><span class="nav-number">4.1.</span> <span class="nav-text">等级因素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%9B%A0%E7%B4%A0"><span class="nav-number">4.2.</span> <span class="nav-text">属性因素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A5%E6%AD%A3%E6%9B%B2%E7%BA%BF"><span class="nav-number">4.2.1.</span> <span class="nav-text">补正曲线</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%9B%A0%E7%B4%A0"><span class="nav-number">4.3.</span> <span class="nav-text">其他因素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%88%AA%E7%97%95"><span class="nav-number">4.3.1.</span> <span class="nav-text">爪痕</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%BD%E4%B8%B8%E3%80%81%E5%AE%9D%E7%9F%B3%E3%80%81%E9%99%84%E9%AD%94"><span class="nav-number">4.3.2.</span> <span class="nav-text">兽丸、宝石、附魔</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%8A%A0%E6%88%90"><span class="nav-number">4.3.3.</span> <span class="nav-text">特殊加成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
   <p class="site-author-name" itemprop="name">dearfl</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -1727,7 +1729,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1755,9 +1757,9 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">dearfl</span>
 </div>

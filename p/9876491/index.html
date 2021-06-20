@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
-  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -28,8 +28,8 @@
 <meta property="og:description" content="最近Google&#x2F;YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频&#x2F;推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo Linux。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png">
-<meta property="article:published_time" content="2020-04-02T20:01:16.000Z">
-<meta property="article:modified_time" content="2020-04-04T14:57:39.998Z">
+<meta property="article:published_time" content="2020-04-03T08:01:16.000Z">
+<meta property="article:modified_time" content="2021-06-19T04:20:38.737Z">
 <meta property="article:author" content="dearfl">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png">
@@ -113,15 +113,15 @@
 
 
 <nav class="site-nav">
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -155,7 +155,7 @@
     <link itemprop="mainEntityOfPage" href="http://flr.me/p/9876491/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/favicon.ico">
       <meta itemprop="name" content="dearfl">
       <meta itemprop="description" content="">
     </span>
@@ -175,14 +175,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-03 04:01:16" itemprop="dateCreated datePublished" datetime="2020-04-03T04:01:16+08:00">2020-04-03</time>
+              <time title="Created: 2020-04-03 04:01:16" itemprop="dateCreated datePublished" datetime="2020-04-03T04:01:16-04:00">2020-04-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-04 22:57:39" itemprop="dateModified" datetime="2020-04-04T22:57:39+08:00">2020-04-04</time>
+                <time title="Modified: 2021-06-19 00:20:38" itemprop="dateModified" datetime="2021-06-19T00:20:38-04:00">2021-06-19</time>
               </span>
 
           
@@ -197,12 +197,12 @@
 
       
         <p>最近Google/YouTuBe把我的vps的ip识别成了阿拉伯联合酋长国ip，结果就是推荐了一堆莫名其妙的视频/推送。总之，很不爽，我就决定在美国地区重新搞一个。由于Vultr支持vps附着一个自定义ISO文件来启动进入live环境，于是就可以用来安装Gentoo Linux。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>基本的步骤可以在下面这个链接找到</p>
-<p><a href="https://www.vultr.com/docs/installing-gentoo-linux-on-a-vultr-server" target="_blank" rel="noopener">Installing gentoo linux on a vultr server</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.vultr.com/docs/installing-gentoo-linux-on-a-vultr-server">Installing gentoo linux on a vultr server</a></p>
 <p>最好是多参照官方安装文档：</p>
-<p><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64" target="_blank" rel="noopener">Gentoo Handbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.gentoo.org/wiki/Handbook:AMD64">Gentoo Handbook</a></p>
 <p>安装好的Gentoo Linux VPS</p>
 <p><img src="https://i.loli.net/2020/04/03/TkxD5h7WoXleLCu.png" alt="neofetch"></p>
 <p>我只所以选择Gentoo Linux，主要还是因为其源代码分发带来的高度可定制性，举个例子，Gentoo可以让你用libressl替换openssl库，大部分二进制分发的发行版是做不到的。当然，这不代表这是个好选择或者是必要的选择。</p>
@@ -269,7 +269,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mount -t proc proc /mnt/gentoo/proc</span><br><span class="line">mount --rbind /sys /mnt/gentoo/sys</span><br><span class="line"><span class="comment"># mount --make-rslave /mnt/gentoo/sys</span></span><br><span class="line">mount --rbind /dev /mnt/gentoo/dev</span><br><span class="line"><span class="comment"># mount --make-rslave /mnt/gentoo/dev</span></span><br></pre></td></tr></table></figure>
 
 <p>chroot进入主系统</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chroot /mnt/gentoo /bin/bash</span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">"(chroot) <span class="variable">$PS1</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chroot /mnt/gentoo /bin/bash</span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;(chroot) <span class="variable">$PS1</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>获取portage树的快照</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge-webrsync</span><br></pre></td></tr></table></figure>
@@ -284,13 +284,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avquDN @world</span><br></pre></td></tr></table></figure>
 
 <p>设置时区,area比如说Asia/Shanghai</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"&lt;area&gt;"</span> &gt; /etc/timezone</span><br><span class="line">emerge --config sys-libs/timezone-data</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&lt;area&gt;&quot;</span> &gt; /etc/timezone</span><br><span class="line">emerge --config sys-libs/timezone-data</span><br></pre></td></tr></table></figure>
 
 <p>设置locale</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/locale.gen</span><br><span class="line">locale-gen</span><br><span class="line">eselect locale list</span><br><span class="line">eselect locale <span class="built_in">set</span> en_US.UTF-8</span><br></pre></td></tr></table></figure>
 
 <p>重新载入shell环境</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env-update &amp;&amp; <span class="built_in">source</span> /etc/profile &amp;&amp; <span class="built_in">export</span> PS1=<span class="string">"(chroot) <span class="variable">$PS1</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env-update &amp;&amp; <span class="built_in">source</span> /etc/profile &amp;&amp; <span class="built_in">export</span> PS1=<span class="string">&quot;(chroot) <span class="variable">$PS1</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h2><p>安装Linux内核，这里我选择的gentoo官方内核</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -avq sys-kernel/gentoo-sources</span><br></pre></td></tr></table></figure>
@@ -315,7 +315,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge -a --noreplace net-misc/netifrc</span><br></pre></td></tr></table></figure>
 
 <p>新建文件<code>/etc/conf.d/net</code>，写入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config_eth0=<span class="string">"dhcp"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config_eth0=<span class="string">&quot;dhcp&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>这里的eth0是你的网络设备名，vps上默认eth0，笔记本上自然不一样，笔记本上我选择了networkmanager，懒</p>
 <p>网络启动项</p>
@@ -423,12 +423,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建实例开启ssh服务"><span class="nav-number">1.</span> <span class="nav-text">创建实例开启ssh服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区"><span class="nav-number">2.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装基础系统"><span class="nav-number">3.</span> <span class="nav-text">安装基础系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Linux内核"><span class="nav-number">4.</span> <span class="nav-text">安装Linux内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置系统"><span class="nav-number">5.</span> <span class="nav-text">配置系统</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B%E5%BC%80%E5%90%AFssh%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">创建实例开启ssh服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8C%BA"><span class="nav-number">2.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">安装基础系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Linux%E5%86%85%E6%A0%B8"><span class="nav-number">4.</span> <span class="nav-text">安装Linux内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">配置系统</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
   <p class="site-author-name" itemprop="name">dearfl</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -437,7 +439,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -465,9 +467,9 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">dearfl</span>
 </div>
