@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Leetcode 每周解题笔记 本周嗓子一直在咳嗽，去医院检查结果是急性呼吸道感染，吃了点药，也只能说好了点，但是没完全好。anyway，总之我就趁机偷懒了一点，基本上多找了点简单题做做，然后这周也没有双周赛，所以总的来说这周做题量比以往小。然后这周也懒得写之前做的题的笔记了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode解题笔记 05">
+<meta property="og:url" content="http://flr.me/p/511741b5/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="Leetcode 每周解题笔记 本周嗓子一直在咳嗽，去医院检查结果是急性呼吸道感染，吃了点药，也只能说好了点，但是没完全好。anyway，总之我就趁机偷懒了一点，基本上多找了点简单题做做，然后这周也没有双周赛，所以总的来说这周做题量比以往小。然后这周也懒得写之前做的题的笔记了。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-04T06:08:15.000Z">
+<meta property="article:modified_time" content="2021-07-04T08:26:28.217Z">
+<meta property="article:author" content="dearfl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://flr.me/p/511741b5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Leetcode解题笔记 05 | dearfl</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dearfl</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flr.me/p/511741b5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.ico">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Leetcode解题笔记 05
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-07-04 02:08:15 / Modified: 04:26:28" itemprop="dateCreated datePublished" datetime="2021-07-04T02:08:15-04:00">2021-07-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Leetcode 每周解题笔记</p>
+<p>本周嗓子一直在咳嗽，去医院检查结果是急性呼吸道感染，吃了点药，也只能说好了点，但是没完全好。anyway，总之我就趁机偷懒了一点，基本上多找了点简单题做做，然后这周也没有双周赛，所以总的来说这周做题量比以往小。然后这周也懒得写之前做的题的笔记了。</p>
+<span id="more"></span>
+
+<h3 id="867-Transpose-Matrix"><a href="#867-Transpose-Matrix" class="headerlink" title="867. Transpose Matrix"></a>867. Transpose Matrix</h3><p>Given a 2D integer array matrix, return the transpose of matrix.</p>
+<p>The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix’s row and column indices.</p>
+<p>矩阵转置，很简单不说了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;int&gt;&gt; transpose(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123;</span><br><span class="line">    int m = matrix.size(), n = matrix.back().size();</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; ans(n, vector&lt;int&gt;(m));</span><br><span class="line">    for (int i = 0; i &lt; m; i++) &#123;</span><br><span class="line">        for (int j = 0; j &lt; n; j++) &#123;</span><br><span class="line">            ans[j][i] = matrix[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="678-Valid-Parenthesis-String"><a href="#678-Valid-Parenthesis-String" class="headerlink" title="678. Valid Parenthesis String"></a>678. Valid Parenthesis String</h3><p>Given a string s containing only three types of characters: ‘(‘, ‘)’ and ‘*’, return true if s is valid.</p>
+<p>The following rules define a valid string:</p>
+<ul>
+<li>Any left parenthesis ‘(‘ must have a corresponding right parenthesis ‘)’.</li>
+<li>Any right parenthesis ‘)’ must have a corresponding left parenthesis ‘(‘.</li>
+<li>Left parenthesis ‘(‘ must go before the corresponding right parenthesis ‘)’.</li>
+<li>‘*’ could be treated as a single right parenthesis ‘)’ or a single left parenthesis ‘(‘ or an empty string “”.</li>
+</ul>
+<p> 这个题挺有意思的，是之前合法括号字符串的进阶版，引入*作为通配符。星号可以作为左括号，右括号或者空。这个题我没有想出特别好的做法，我主要的想法还是暴力，但是这样对于一些星号很多的特殊样例，绝对会超时。因为这个题的括号只有一种，用贪心的想法是比较好解决的，而关键是如何思考到正确的贪心解法。下面介绍两种别人的贪心解法。</p>
+<ol>
+<li><p>数左括号个数。这个做法的思路在于我们数左括号的个数，根据这个数决定我们后续需要多少个右括号配对。问题在于星号的不确定性，因此我们维护一个范围[cmin, cmax]，cmin表示我们最少需要这么多个右括号来匹配，cmax表示我们最多可以匹配这么多个右括号。那么怎么样才是不合法的呢？如果在任意时刻，cmax小于0，则说明我们没有足够的左括号来匹配右括号，因此是不合法的。当我们到达字符串的结尾，此时我们已经没有更多的括号可以匹配了，如果此时cmin不等于0，则说明我们存在没有进行匹配的括号，那么也是不合法的。</p>
+</li>
+<li><p>双栈模拟。双栈模拟的想法是当我们遇到右括号时，我们应当优先使用左括号进行配对，因为星号是通配符，它可以适用于更多情景。双栈模拟的步骤稍微复杂一些，但我个人觉得更加容易理解一点。双栈模拟的思路是用两个栈保存左括号和星号的位置，当我们遇到右括号时，我们优先使用左括号进行配对。如果没有可以配对的左括号，那么再使用星号进行配对。双栈模拟分为2步，第1步是模拟配对过程，第2步是为剩余没有被配对的左括号寻找匹配的星号。</p>
+<ol>
+<li><p>第1步，如果碰到一个右括号时，左括号和星号的栈都为空，则说明这个右括号没有能与之配对的符号，字符串非法。否则优先使用左括号配对，一直到字符串结束。</p>
+</li>
+<li><p>第2步我们进一步检查两个栈里剩余的字符。我们的目的是为每一个左括号都匹配上相应的右括号(使用剩余的星号)。因此这里存在一个要求，每一个左括号必须在对应的星号前面，否则它们是无法进行配对的。这也是为什么我们要使用栈来存储位置的原因。最后如果每一个剩余的左括号都能配对成功，那么整个字符串都是合法的，至于剩余的星号，我们无需关心。</p>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">// 第1种做法</span><br><span class="line">bool checkValidString(string s) &#123;</span><br><span class="line">    int minl = 0, maxl = 0;</span><br><span class="line">    for (const auto c : s) &#123;</span><br><span class="line">        if (c == &#x27;(&#x27;) &#123;</span><br><span class="line">            minl++, maxl++;</span><br><span class="line">        &#125; else if (c == &#x27;)&#x27;) &#123;</span><br><span class="line">            // minl是我们必须匹配的左括号数量，自然大于小于0</span><br><span class="line">            minl = max(minl - 1, 0);</span><br><span class="line">            maxl--;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // 碰到星号时，minl当成右括号，maxl当成左括号</span><br><span class="line">            minl = max(minl - 1, 0);</span><br><span class="line">            maxl++;</span><br><span class="line">        &#125;</span><br><span class="line">        if (maxl &lt; 0) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return minl == 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 双栈模拟</span><br><span class="line">bool checkValidString(string s) &#123;</span><br><span class="line">    vector&lt;int&gt; open, star;</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        if (s[i] == &#x27;(&#x27;) &#123;</span><br><span class="line">            open.push_back(i);</span><br><span class="line">        &#125; else if (s[i] == &#x27;)&#x27;) &#123;</span><br><span class="line">            if (open.empty() &amp;&amp; star.empty()) &#123;</span><br><span class="line">                // 两个栈都为空，false</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">            // 优先匹配左括号</span><br><span class="line">            if (!open.empty()) &#123;</span><br><span class="line">                open.pop_back();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                star.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            star.push_back(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    while (!open.empty()) &#123;</span><br><span class="line">        int idx = open.back();</span><br><span class="line">        open.pop_back();</span><br><span class="line">        // 如果星号栈为空或者栈顶坐标小于左括号坐标，false</span><br><span class="line">        if (star.empty() || star.back() &lt; idx) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        star.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>总的来说其实两种方法都是贪心的思路，这里我也没有严格证明这两种方法都是对的，没办法我实在是太菜了。</p>
+<hr>
+<h3 id="1636-Sort-Array-By-Increasing-Frequency"><a href="#1636-Sort-Array-By-Increasing-Frequency" class="headerlink" title="1636. Sort Array By Increasing Frequency"></a>1636. Sort Array By Increasing Frequency</h3><p>Given an array of integers nums, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.</p>
+<p>Return the sorted array.</p>
+<p>按照数组内元素的出现次数排序，没啥好说的，哈希表统计一下出现次数，再按照哈希表数据排序即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; frequencySort(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">    unordered_map&lt;int, int&gt; cnt;</span><br><span class="line">    for (const auto n : nums) &#123;</span><br><span class="line">        cnt[n]++;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(nums.begin(), nums.end(), [&amp;cnt](int a, int b) &#123; return cnt[a] == cnt[b] ? a &gt; b : cnt[a] &lt; cnt[b]; &#125;);</span><br><span class="line">    return nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="48-Rotate-Image"><a href="#48-Rotate-Image" class="headerlink" title="48. Rotate Image"></a>48. Rotate Image</h3><p>You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).</p>
+<p>You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.</p>
+<p>旋转nxn的图像/Matrix，要求原地旋转不申请另外一块图像/Matrix内存。</p>
+<p>我的想法其实比较笨，类似于每次都旋转四个对应的位置，比如四个角，又或者<code>(1,0),(n-1,1),(n-2,n-1),(0,n-2)</code>，然后循环的选取应该旋转的位置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void rotate(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123;</span><br><span class="line">    int n = matrix.size();</span><br><span class="line">    for (int i = 0; i &lt; n / 2; i++) &#123;</span><br><span class="line">        int k = n - 2 * i;</span><br><span class="line">        for (int j = 0; j &lt; k - 1; j++) &#123;</span><br><span class="line">            swap(matrix[i][i + j], matrix[i + j][i + k - 1]);</span><br><span class="line">            swap(matrix[i][i + j], matrix[i + k - j - 1][i]);</span><br><span class="line">            swap(matrix[i + k - j - 1][i], matrix[i + k - 1][i + k - j - 1]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际上存在更加通用的做法，即先做行反转，再做转置。包括逆时针旋转也有先做列反转，再做转置的做法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void rotate(vector&lt;vector&lt;int&gt; &gt; &amp;matrix) &#123;</span><br><span class="line">    reverse(matrix.begin(), matrix.end());</span><br><span class="line">    for (int i = 0; i &lt; matrix.size(); ++i) &#123;</span><br><span class="line">        for (int j = i + 1; j &lt; matrix[i].size(); ++j)</span><br><span class="line">            swap(matrix[i][j], matrix[j][i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="690-Employee-Importance"><a href="#690-Employee-Importance" class="headerlink" title="690. Employee Importance"></a>690. Employee Importance</h3><p>You have a data structure of employee information, which includes the employee’s unique id, their importance value, and their direct subordinates’ id.</p>
+<p>You are given an array of employees employees where:</p>
+<ul>
+<li>employees[i].id is the ID of the ith employee.</li>
+<li>employees[i].importance is the importance value of the ith employee.</li>
+<li>employees[i].subordinates is a list of the IDs of the subordinates of the ith employee.</li>
+</ul>
+<p>Given an integer id that represents the ID of an employee, return the total importance value of this employee and all their subordinates.</p>
+<p>员工重要度，这个题目没啥好说的，本质上就是构造一个树求子树的和，当然并不需要真的构造一个树的数据结构，只要能表达这个关系即可。分为递归和队列的写法，也都差不多，递归写法这边就懒得写了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int getImportance(vector&lt;Employee*&gt; employees, int id) &#123;</span><br><span class="line">    int ans = 0;</span><br><span class="line">    unordered_map&lt;int, Employee*&gt; m;</span><br><span class="line">    for (const auto em : employees) &#123;</span><br><span class="line">        m[em-&gt;id] = em;</span><br><span class="line">    &#125;</span><br><span class="line">    deque&lt;int&gt; q;</span><br><span class="line">    q.push_back(id);</span><br><span class="line">    while (!q.empty()) &#123;</span><br><span class="line">        id = q.front();</span><br><span class="line">        q.pop_front();</span><br><span class="line">        ans += m[id]-&gt;importance;</span><br><span class="line">        for (const auto k : m[id]-&gt;subordinates) &#123;</span><br><span class="line">            q.push_back(k);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1162-As-Far-from-Land-as-Possible"><a href="#1162-As-Far-from-Land-as-Possible" class="headerlink" title="1162. As Far from Land as Possible"></a>1162. As Far from Land as Possible</h3><p>Given an n x n grid containing only values 0 and 1, where 0 represents water and 1 represents land, find a water cell such that its distance to the nearest land cell is maximized, and return the distance. If no land or water exists in the grid, return -1.</p>
+<p>The distance used in this problem is the Manhattan distance: the distance between two cells (x0, y0) and (x1, y1) is |x0 - x1| + |y0 - y1|.</p>
+<p>求海面离岛屿的最大曼哈顿距离。正常来说这个题的思考是从海面出发，比如做DP啥的，但我也没想出特别好的做法。实际上从岛屿出发还比较容易写，时间复杂度也比较低，为o(n^2)。不过需要使用两个队列的trick。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">int maxDistance(vector&lt;vector&lt;int&gt;&gt;&amp; grid) &#123;</span><br><span class="line">    int ans = -1, n = grid.size();</span><br><span class="line">    vector&lt;pair&lt;int, int&gt;&gt; di = &#123;&#123;-1, 0&#125;, &#123;0, 1&#125;, &#123;1, 0&#125;, &#123;0, -1&#125;&#125;;</span><br><span class="line">    deque&lt;pair&lt;int, int&gt;&gt; dq, tmp;</span><br><span class="line">    for (int i = 0; i &lt; grid.size(); i++) &#123;</span><br><span class="line">        for (int j = 0; j &lt; grid[i].size(); j++) &#123;</span><br><span class="line">            if (grid[i][j]) &#123;</span><br><span class="line">                dq.emplace_back(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    while (!dq.empty()) &#123;</span><br><span class="line">        ans++;</span><br><span class="line">        while (!dq.empty()) &#123;</span><br><span class="line">            auto [y, x] = dq.front();</span><br><span class="line">            dq.pop_front();</span><br><span class="line">            for (const auto &amp;[dy, dx] : di) &#123;</span><br><span class="line">                int nx = x + dx, ny = y + dy;</span><br><span class="line">                if (0 &lt;= nx &amp;&amp; nx &lt; n &amp;&amp; 0 &lt;= ny &amp;&amp; ny &lt; n &amp;&amp; grid[ny][nx] == 0) &#123;</span><br><span class="line">                    grid[ny][nx] = 1;</span><br><span class="line">                    tmp.emplace_back(ny, nx);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(dq, tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    return ans ? ans : -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1041-Robot-Bounded-In-Circle"><a href="#1041-Robot-Bounded-In-Circle" class="headerlink" title="1041. Robot Bounded In Circle"></a>1041. Robot Bounded In Circle</h3><p>On an infinite plane, a robot initially stands at (0, 0) and faces north. The robot can receive one of three instructions:</p>
+<ul>
+<li>“G”: go straight 1 unit;</li>
+<li>“L”: turn 90 degrees to the left;</li>
+<li>“R”: turn 90 degrees to the right.</li>
+</ul>
+<p>The robot performs the instructions given in order, and repeats them forever.</p>
+<p>Return true if and only if there exists a circle in the plane such that the robot never leaves the circle.</p>
+<p>这个题看着好像不是很容易，实际上只需要稍微分析就会发现，机器人行进距离发散的条件有且仅有一种，那就是当机器人走完一遍指令集后，运动方向不变且运动距离不为0。当且仅当这两者同时成立时，机器人的运动距离才不会被限制在一个圈内，或者说发散。于是剩下的就只有一些编程技巧了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">bool isRobotBounded(string instructions) &#123;</span><br><span class="line">    int dire[][2] = &#123;&#123;0, 1&#125;, &#123;1, 0&#125;, &#123;0, -1&#125;, &#123;-1, 0&#125;&#125;;</span><br><span class="line">    int idx = 0;</span><br><span class="line">    int x = 0, y = 0;</span><br><span class="line">    for (const auto c : instructions) &#123;</span><br><span class="line">        switch (c) &#123;</span><br><span class="line">            case &#x27;G&#x27;:</span><br><span class="line">                x += dire[idx][0];</span><br><span class="line">                y += dire[idx][1];</span><br><span class="line">                break;</span><br><span class="line">            case &#x27;L&#x27;:</span><br><span class="line">                idx = (idx + 3) % 4;</span><br><span class="line">                break;</span><br><span class="line">            case &#x27;R&#x27;:</span><br><span class="line">                idx = (idx + 1) % 4;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return !(idx == 0 &amp;&amp; (x != 0 || y != 0)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="566-Reshape-the-Matrix"><a href="#566-Reshape-the-Matrix" class="headerlink" title="566. Reshape the Matrix"></a>566. Reshape the Matrix</h3><p>In MATLAB, there is a handy function called reshape which can reshape an m x n matrix into a new one with a different size r x c keeping its original data.</p>
+<p>You are given an m x n matrix mat and two integers r and c representing the row number and column number of the wanted reshaped matrix.</p>
+<p>The reshaped matrix should be filled with all the elements of the original matrix in the same row-traversing order as they were.</p>
+<p>If the reshape operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output the original matrix.</p>
+<p>实现Reshape函数，没啥好说的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;int&gt;&gt; matrixReshape(vector&lt;vector&lt;int&gt;&gt;&amp; mat, int r, int c) &#123;</span><br><span class="line">    int m = mat.size(), n = mat.back().size();</span><br><span class="line">    if (m * n != r * c) &#123;</span><br><span class="line">        return mat;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; ans(r, vector&lt;int&gt;(c));</span><br><span class="line">    for (int i = 0; i &lt; r * c; i++) &#123;</span><br><span class="line">        ans[i / c][i % c] = mat[i / n][i % n];</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="100-Same-Tree"><a href="#100-Same-Tree" class="headerlink" title="100. Same Tree"></a>100. Same Tree</h3><p>Given the roots of two binary trees p and q, write a function to check if they are the same or not.</p>
+<p>Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.</p>
+<p>判断两颗二叉树是否是相同，也没啥好说的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="line"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">// 递归写法</span><br><span class="line">bool isSameTree(TreeNode* p, TreeNode* q) &#123;</span><br><span class="line">    if (!p &amp;&amp; !q) &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    if (!p || !q) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    if (p-&gt;val != q-&gt;val) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return isSameTree(p-&gt;left, q-&gt;left) &amp;&amp; isSameTree(p-&gt;right, q-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 队列写法</span><br><span class="line">bool isSameTree(TreeNode* p, TreeNode* q) &#123;</span><br><span class="line">    deque&lt;pair&lt;TreeNode*, TreeNode*&gt;&gt; dq;</span><br><span class="line">    dq.emplace_back(p, q);</span><br><span class="line">    while (!dq.empty()) &#123;</span><br><span class="line">        auto [a, b] = dq.front();</span><br><span class="line">        dq.pop_front();</span><br><span class="line">        if (a &amp;&amp; b) &#123;</span><br><span class="line">            if (a-&gt;val != b-&gt;val) &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">            dq.emplace_back(a-&gt;left, b-&gt;left);</span><br><span class="line">            dq.emplace_back(a-&gt;right, b-&gt;right);</span><br><span class="line">        &#125; else if (a || b) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="700-Search-in-a-Binary-Search-Tree"><a href="#700-Search-in-a-Binary-Search-Tree" class="headerlink" title="700. Search in a Binary Search Tree"></a>700. Search in a Binary Search Tree</h3><p>You are given the root of a binary search tree (BST) and an integer val.</p>
+<p>Find the node in the BST that the node’s value equals val and return the subtree rooted with that node. If such a node does not exist, return null.</p>
+<p>在BST上搜索，也很简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="line"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">// 递归写法</span><br><span class="line">TreeNode* searchBST(TreeNode* root, int val) &#123;</span><br><span class="line">    if (!root || root-&gt;val == val) &#123;</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br><span class="line">    return searchBST(root-&gt;val &gt; val ? root-&gt;left : root-&gt;right, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 循环写法</span><br><span class="line">TreeNode* searchBST(TreeNode* root, int val) &#123;</span><br><span class="line">    auto p = root;</span><br><span class="line">    while (p) &#123;</span><br><span class="line">        if (p-&gt;val == val) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125; else if (p-&gt;val &gt; val) &#123;</span><br><span class="line">            p = p-&gt;left;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            p = p-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1816-Truncate-Sentence"><a href="#1816-Truncate-Sentence" class="headerlink" title="1816. Truncate Sentence"></a>1816. Truncate Sentence</h3><p>A sentence is a list of words that are separated by a single space with no leading or trailing spaces. Each of the words consists of only uppercase and lowercase English letters (no punctuation).</p>
+<p>For example, “Hello World”, “HELLO”, and “hello world hello world” are all sentences.<br>You are given a sentence s and an integer k. You want to truncate s such that it contains only the first k words. Return s after truncating it.</p>
+<p>简单不提</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">string truncateSentence(string s, int k) &#123;</span><br><span class="line">    int i = 0;</span><br><span class="line">    while (k &gt; 0 &amp;&amp; i &lt; s.length()) &#123;</span><br><span class="line">        if (s[i] == &#x27; &#x27;) &#123;</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    return i == s.length() ? s.substr(0, i) : s.substr(0, i - 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="46-Permutations"><a href="#46-Permutations" class="headerlink" title="46. Permutations"></a>46. Permutations</h3><p>Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.</p>
+<p>这个题本身其实还是可以的，不过还是建议使用next_permutation，而且作为写完了Next_Permutation那题的人，我个人觉得这并不算作弊。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">    sort(nums.begin(), nums.end());</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; ans;</span><br><span class="line">    do &#123;</span><br><span class="line">        ans.push_back(nums);</span><br><span class="line">    &#125; while (next_permutation(nums.begin(), nums.end()));</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>接下来是本周的周赛，本周周赛也是喜忧参半，喜的是本周周赛应该是我参加以来名次最好的一次了，忧的是这次的第四题也太难了，实在打击自信心。不过这次周赛的难度可以说是两个极端，前三题基本非常简单，最后一题也真的是难得发指。只能说下次加油。</p>
+<h3 id="1920-Build-Array-from-Permutation"><a href="#1920-Build-Array-from-Permutation" class="headerlink" title="1920. Build Array from Permutation"></a>1920. Build Array from Permutation</h3><p>Given a zero-based permutation nums (0-indexed), build an array ans of the same length where ans[i] = nums[nums[i]] for each 0 &lt;= i &lt; nums.length and return it.</p>
+<p>A zero-based permutation nums is an array of distinct integers from 0 to nums.length - 1 (inclusive).</p>
+<p>连题目都没怎么看懂，但是基本上已经把做法写在了题目里，只能说签到题一般不会出现上周双周赛那样的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; buildArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">    vector&lt;int&gt; ans;</span><br><span class="line">    for (const auto i : nums) &#123;</span><br><span class="line">        ans.push_back(nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1921-Eliminate-Maximum-Number-of-Monsters"><a href="#1921-Eliminate-Maximum-Number-of-Monsters" class="headerlink" title="1921. Eliminate Maximum Number of Monsters"></a>1921. Eliminate Maximum Number of Monsters</h3><p>You are playing a video game where you are defending your city from a group of n monsters. You are given a 0-indexed integer array dist of size n, where dist[i] is the initial distance in meters of the ith monster from the city.</p>
+<p>The monsters walk toward the city at a constant speed. The speed of each monster is given to you in an integer array speed of size n, where speed[i] is the speed of the ith monster in meters per minute.</p>
+<p>The monsters start moving at minute 0. You have a weapon that you can choose to use at the start of every minute, including minute 0. You cannot use the weapon in the middle of a minute. The weapon can eliminate any monster that is still alive. You lose when any monster reaches your city. If a monster reaches the city exactly at the start of a minute, it counts as a loss, and the game ends before you can use your weapon in that minute.</p>
+<p>Return the maximum number of monsters that you can eliminate before you lose, or n if you can eliminate all the monsters before they reach the city.</p>
+<p>模拟题，大意是类似植物大战僵尸，每个僵尸有一个距离和速度，它们不停的朝你走来，你有一个远程武器，可以在每分钟开始的时候消灭任意一个僵尸。但是如果任意僵尸靠近到了你身边，则游戏失败。如果一个僵尸在某一分钟开始的时候到达，则你来不及开枪，也算是失败。问你最多可以消灭多少僵尸。</p>
+<p>这个问题其实很简单，我们关注的其实不是僵尸的距离或者速度，我们关注的是僵尸到达我们身边的时间，只不过这个时间不一定是整数的，因此我们可以新建一个double数组表示每个僵尸到达的时间，再对它们排序，最后我们按照顺序击杀僵尸即可。如果第i个僵尸在第i分钟之前到达了，那说明我们无法及时消灭它，即失败了。然后这边注意一下0-index还是1-index之类的细节即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int eliminateMaximum(vector&lt;int&gt;&amp; dist, vector&lt;int&gt;&amp; speed) &#123;</span><br><span class="line">    vector&lt;double&gt; reach;</span><br><span class="line">    for (int i = 0; i &lt; dist.size(); i++) &#123;</span><br><span class="line">        reach.push_back(1.0 * dist[i] / speed[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(reach.begin(), reach.end());</span><br><span class="line">    for (int i = 0; i &lt; reach.size(); i++) &#123;</span><br><span class="line">        if (i &gt;= reach[i]) &#123;</span><br><span class="line">            return i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return reach.size();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1922-Count-Good-Numbers"><a href="#1922-Count-Good-Numbers" class="headerlink" title="1922. Count Good Numbers"></a>1922. Count Good Numbers</h3><p>A digit string is good if the digits (0-indexed) at even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).</p>
+<ul>
+<li>For example, “2582” is good because the digits (2 and 8) at even positions are even and the digits (5 and 2) at odd positions are prime. However, “3245” is not good because 3 is at an even index but is not even.</li>
+</ul>
+<p>Given an integer n, return the total number of good digit strings of length n. Since the answer may be large, return it modulo 109 + 7.</p>
+<p>A digit string is a string consisting of digits 0 through 9 that may contain leading zeros.</p>
+<p>计数题，也很简单，本质上因为0-9范围内，偶数有5个，质数有4个，因此本质上这个题就是求<code>power(5, n / 2) * power(4, n / 2) * power(5, n % 2)</code>，由于n非常大，所以需要实现快速幂，且需要对结果取模，但是这个也没有什么难度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const int mod = 1000000007;</span><br><span class="line"></span><br><span class="line">long long helper(long long n, int k) &#123;</span><br><span class="line">    if (n == 0) &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    if (n == 1) &#123;</span><br><span class="line">        return k;</span><br><span class="line">    &#125;</span><br><span class="line">    long long tmp = helper(n / 2, k) % mod;</span><br><span class="line">    long long s = n % 2 ? k : 1;</span><br><span class="line">    return tmp * tmp % mod * s % mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int countGoodNumbers(long long n) &#123;</span><br><span class="line">    if (n == 1) &#123;</span><br><span class="line">        return 5;</span><br><span class="line">    &#125;</span><br><span class="line">    long long tmp1 = helper(n / 2, 5) % mod;</span><br><span class="line">    long long tmp2 = helper(n / 2, 4) % mod;</span><br><span class="line">    int tmp3 = n % 2 ? 5 : 1;</span><br><span class="line">    return tmp1 * tmp2 % mod * tmp3 % mod;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后一题实在有点超出我的能力范围，所以这里就不写了。总的来说这周虽然名次还ok，但是因为题目本身也比较简单，所以这个名次也没啥含金量，以后加油吧。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/b9b14a4c/" rel="prev" title="Leetcode 刷题笔记 4">
+      <i class="fa fa-chevron-left"></i> Leetcode 刷题笔记 4
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#867-Transpose-Matrix"><span class="nav-number">1.</span> <span class="nav-text">867. Transpose Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#678-Valid-Parenthesis-String"><span class="nav-number">2.</span> <span class="nav-text">678. Valid Parenthesis String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1636-Sort-Array-By-Increasing-Frequency"><span class="nav-number">3.</span> <span class="nav-text">1636. Sort Array By Increasing Frequency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#48-Rotate-Image"><span class="nav-number">4.</span> <span class="nav-text">48. Rotate Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#690-Employee-Importance"><span class="nav-number">5.</span> <span class="nav-text">690. Employee Importance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1162-As-Far-from-Land-as-Possible"><span class="nav-number">6.</span> <span class="nav-text">1162. As Far from Land as Possible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1041-Robot-Bounded-In-Circle"><span class="nav-number">7.</span> <span class="nav-text">1041. Robot Bounded In Circle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#566-Reshape-the-Matrix"><span class="nav-number">8.</span> <span class="nav-text">566. Reshape the Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#100-Same-Tree"><span class="nav-number">9.</span> <span class="nav-text">100. Same Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#700-Search-in-a-Binary-Search-Tree"><span class="nav-number">10.</span> <span class="nav-text">700. Search in a Binary Search Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1816-Truncate-Sentence"><span class="nav-number">11.</span> <span class="nav-text">1816. Truncate Sentence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#46-Permutations"><span class="nav-number">12.</span> <span class="nav-text">46. Permutations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1920-Build-Array-from-Permutation"><span class="nav-number">13.</span> <span class="nav-text">1920. Build Array from Permutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1921-Eliminate-Maximum-Number-of-Monsters"><span class="nav-number">14.</span> <span class="nav-text">1921. Eliminate Maximum Number of Monsters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1922-Count-Good-Numbers"><span class="nav-number">15.</span> <span class="nav-text">1922. Count Good Numbers</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
