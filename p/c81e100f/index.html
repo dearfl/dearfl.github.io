@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flr.me","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Leetcode刷题笔记 本周也是划水的一周，咳嗽断断续续，还忙里抽闲玩游戏，所以基本只随意做了些题目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode0006">
+<meta property="og:url" content="http://flr.me/p/c81e100f/index.html">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="Leetcode刷题笔记 本周也是划水的一周，咳嗽断断续续，还忙里抽闲玩游戏，所以基本只随意做了些题目。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-11T07:50:31.000Z">
+<meta property="article:modified_time" content="2021-07-11T09:07:52.313Z">
+<meta property="article:author" content="dearfl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://flr.me/p/c81e100f/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>leetcode0006 | dearfl</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dearfl</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flr.me/p/c81e100f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.ico">
+      <meta itemprop="name" content="dearfl">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dearfl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          leetcode0006
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-07-11 03:50:31 / Modified: 05:07:52" itemprop="dateCreated datePublished" datetime="2021-07-11T03:50:31-04:00">2021-07-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Leetcode刷题笔记</p>
+<p>本周也是划水的一周，咳嗽断断续续，还忙里抽闲玩游戏，所以基本只随意做了些题目。</p>
+<span id="more"></span>
+
+<h3 id="876-Middle-of-the-Linked-List"><a href="#876-Middle-of-the-Linked-List" class="headerlink" title="876. Middle of the Linked List"></a>876. Middle of the Linked List</h3><p>Given a non-empty, singly linked list with head node head, return a middle node of linked list.</p>
+<p>If there are two middle nodes, return the second middle node.</p>
+<p>获取链表的中点，经典快慢指针</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * struct ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode *next;</span><br><span class="line"> *     ListNode() : val(0), next(nullptr) &#123;&#125;</span><br><span class="line"> *     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span><br><span class="line"> *     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* middleNode(ListNode* head) &#123;</span><br><span class="line">        ListNode *fast = head, *slow = head;</span><br><span class="line">        while (fast &amp;&amp; fast-&gt;next) &#123;</span><br><span class="line">            slow = slow-&gt;next;</span><br><span class="line">            fast = fast-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        return slow;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1582-Special-Positions-in-a-Binary-Matrix"><a href="#1582-Special-Positions-in-a-Binary-Matrix" class="headerlink" title="1582. Special Positions in a Binary Matrix"></a>1582. Special Positions in a Binary Matrix</h3><p>Given a rows x cols matrix mat, where mat[i][j] is either 0 or 1, return the number of special positions in mat.</p>
+<p>A position (i,j) is called special if mat[i][j] == 1 and all other elements in row i and column j are 0 (rows and columns are 0-indexed).</p>
+<p>简单题，我的做法其实比较繁琐</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int numSpecial(vector&lt;vector&lt;int&gt;&gt;&amp; mat) &#123;</span><br><span class="line">        int m = mat.size(), n = mat.back().size(), ans = 0;</span><br><span class="line">        for (int i = 0; i &lt; m; i++) &#123;</span><br><span class="line">            int idx = -1, cnt = 0, s = 0;</span><br><span class="line">            for (int j = 0; j &lt; n; j++) &#123;</span><br><span class="line">                if (mat[i][j]) &#123;</span><br><span class="line">                    idx = j;</span><br><span class="line">                    cnt++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (cnt == 1) &#123;</span><br><span class="line">                for (int k = 0; k &lt; m; k++) &#123;</span><br><span class="line">                    s += mat[k][idx];</span><br><span class="line">                &#125;</span><br><span class="line">                if (s == 1) &#123;</span><br><span class="line">                    ans++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里推荐一个简单的做法，当然是我从讨论里抄来的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int numSpecial(vector&lt;vector&lt;int&gt;&gt;&amp; mat) &#123;</span><br><span class="line">vector&lt;int&gt; rows(mat.size()), cols(mat[0].size());</span><br><span class="line">for (int i = 0; i &lt; rows.size(); ++i)</span><br><span class="line">    for (int j = 0; j &lt; cols.size(); ++j) &#123;</span><br><span class="line">        if (mat[i][j])</span><br><span class="line">            ++rows[i], ++cols[j];</span><br><span class="line">    &#125;</span><br><span class="line">int res = 0;</span><br><span class="line">for (int i = 0; i &lt; rows.size(); ++i)</span><br><span class="line">    for (int j = 0; j &lt; cols.size(); ++j)</span><br><span class="line">        if (mat[i][j] &amp;&amp; rows[i] == 1 &amp;&amp; cols[j] == 1)</span><br><span class="line">            ++res;</span><br><span class="line">return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="236-Lowest-Common-Ancestor-of-a-Binary-Tree"><a href="#236-Lowest-Common-Ancestor-of-a-Binary-Tree" class="headerlink" title="236. Lowest Common Ancestor of a Binary Tree"></a>236. Lowest Common Ancestor of a Binary Tree</h3><p>Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.</p>
+<p>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”</p>
+<p>思考的时候有点问题，以为是个很简单的题目，实际上p和q的父节点是无法直接获取的，因此我们无法轻易的获取整棵树的层次结构。先看代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    TreeNode* helper(TreeNode* root, TreeNode* p, TreeNode* q) &#123;</span><br><span class="line">        if (root == p || root == q || root == nullptr) &#123;</span><br><span class="line">            return root;</span><br><span class="line">        &#125;</span><br><span class="line">        auto l = helper(root-&gt;left, p, q), r = helper(root-&gt;right, p, q);</span><br><span class="line">        if (l &amp;&amp; r) &#123;</span><br><span class="line">            return root;</span><br><span class="line">        &#125;</span><br><span class="line">        return l ? l : r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) &#123;</span><br><span class="line">        return helper(root, p, q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果碰到了p或者q，就返回该节点，其他情况下，我们返回的都是空指针，这样在递归返回之后，我们就可以判断p节点或者q节点是否在该根节点下。对于根节点，我们分别遍历他的左右节点，如果返回的结果均不为空指针，则说明p和q分别在跟节点的左右节点下，因此p和q的最低公共祖先即为根节点本身。如果返回的结果只有一个有效节点，另一个是空指针，则我们只需要返回该结果即可。</p>
+<hr>
+<h3 id="637-Average-of-Levels-in-Binary-Tree"><a href="#637-Average-of-Levels-in-Binary-Tree" class="headerlink" title="637. Average of Levels in Binary Tree"></a>637. Average of Levels in Binary Tree</h3><p>Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.</p>
+<p>层序遍历求每层的平均值，我个人比较喜欢双队列的做法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="line"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;double&gt; averageOfLevels(TreeNode* root) &#123;</span><br><span class="line">        deque&lt;TreeNode *&gt; dq, swp;</span><br><span class="line">        vector&lt;double&gt; ans;</span><br><span class="line">        dq.push_back(root);</span><br><span class="line">        long long sum = 0, cnt = 0;</span><br><span class="line">        while (!dq.empty()) &#123;</span><br><span class="line">            sum = 0, cnt = 0;</span><br><span class="line">            while (!dq.empty()) &#123;</span><br><span class="line">                auto node = dq.front();</span><br><span class="line">                dq.pop_front();</span><br><span class="line">                sum += node-&gt;val;</span><br><span class="line">                cnt++;</span><br><span class="line">                if (node-&gt;left) &#123;</span><br><span class="line">                    swp.push_back(node-&gt;left);</span><br><span class="line">                &#125;</span><br><span class="line">                if (node-&gt;right) &#123;</span><br><span class="line">                    swp.push_back(node-&gt;right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ans.push_back(1.0 * sum / cnt);</span><br><span class="line">            swap(dq, swp);</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="985-Sum-of-Even-Numbers-After-Queries"><a href="#985-Sum-of-Even-Numbers-After-Queries" class="headerlink" title="985. Sum of Even Numbers After Queries"></a>985. Sum of Even Numbers After Queries</h3><p>We have an array nums of integers, and an array queries of queries.</p>
+<p>For the i-th query val = queries[i][0], index = queries[i][1], we add val to nums[index].  Then, the answer to the i-th query is the sum of the even values of A.</p>
+<p>(Here, the given index = queries[i][1] is a 0-based index, and each query permanently modifies the array nums.)</p>
+<p>Return the answer to all queries.  Your answer array should have answer[i] as the answer to the i-th query.</p>
+<p>简单题，根据相应的query更新结果即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public:</span><br><span class="line">        vector&lt;int&gt; sumEvenAfterQueries(vector&lt;int&gt;&amp; nums, vector&lt;vector&lt;int&gt;&gt;&amp; queries) &#123;</span><br><span class="line">            vector&lt;int&gt; ans;</span><br><span class="line">            int s = 0;</span><br><span class="line">            for (const auto n : nums) &#123;</span><br><span class="line">                if (n % 2 == 0) &#123;</span><br><span class="line">                    s += n;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for (const auto query : queries) &#123;</span><br><span class="line">                int val = query[0], idx = query[1];</span><br><span class="line">                int v1 = nums[idx], v2 = v1 + val;</span><br><span class="line">                s -= v1 % 2 == 0 ? v1 : 0;</span><br><span class="line">                s += v2 % 2 == 0 ? v2 : 0;</span><br><span class="line">                nums[idx] += val;</span><br><span class="line">                ans.push_back(s);</span><br><span class="line">            &#125;</span><br><span class="line">            return ans;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="829-Consecutive-Numbers-Sum"><a href="#829-Consecutive-Numbers-Sum" class="headerlink" title="829. Consecutive Numbers Sum"></a>829. Consecutive Numbers Sum</h3><p>Given a positive integer n, how many ways can we write it as a sum of consecutive positive integers?</p>
+<p>某次面试的时候做过这个题，不过当时没有细想，写的非常丑，这次仔细思考了一下，发现其实比较简单。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int consecutiveNumbersSum(int n) &#123;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        for (int i = 1; (i - 1) * i &lt; 2 * n; i++) &#123;</span><br><span class="line">            if ((n - (i - 1) * i / 2) % i == 0) &#123;</span><br><span class="line">                ans++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>假设一共有k个数，第一个数为a，则这些数的总和为$s = \frac{(a + a + k - 1) \times k}{2}$，那么我们可以得到$a = \frac{s - \frac{1}{2}(k-1)k}{k}$，能表示为连续整数之和等价于a为整数，而a为整数等价于<code>(s - k * (k - 1) / 2) % k == 0</code>。我们从k=1开始遍历，直到<code>s - k * (k - 1) / 2</code>小于0为止。</p>
+<hr>
+<p>接下来是本周的双周赛和周赛，本周双周赛我做的还行，虽然最后一题还是不会。周赛因为最后两题都难度很大，所以做的比较差，总之这周还行吧，继续加油。</p>
+<h3 id="1925-Count-Square-Sum-Triples"><a href="#1925-Count-Square-Sum-Triples" class="headerlink" title="1925. Count Square Sum Triples"></a>1925. Count Square Sum Triples</h3><p>A square triple (a,b,c) is a triple where a, b, and c are integers and a2 + b2 = c2.</p>
+<p>Given an integer n, return the number of square triples such that 1 &lt;= a, b, c &lt;= n.</p>
+<p>签到题，o(N^3)算法走起</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int countTriples(int n) &#123;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">            for (int j = i; j &lt;= n; j++) &#123;</span><br><span class="line">                for (int k = i + 1; k &lt;= n; k++) &#123;</span><br><span class="line">                    if (i * i + j * j == k * k) &#123;</span><br><span class="line">                        ans += 2;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1926-Nearest-Exit-from-Entrance-in-Maze"><a href="#1926-Nearest-Exit-from-Entrance-in-Maze" class="headerlink" title="1926. Nearest Exit from Entrance in Maze"></a>1926. Nearest Exit from Entrance in Maze</h3><p>You are given an m x n matrix maze (0-indexed) with empty cells (represented as ‘.’) and walls (represented as ‘+’). You are also given the entrance of the maze, where entrance = [entrancerow, entrancecol] denotes the row and column of the cell you are initially standing at.</p>
+<p>In one step, you can move one cell up, down, left, or right. You cannot step into a cell with a wall, and you cannot step outside the maze. Your goal is to find the nearest exit from the entrance. An exit is defined as an empty cell that is at the border of the maze. The entrance does not count as an exit.</p>
+<p>Return the number of steps in the shortest path from the entrance to the nearest exit, or -1 if no such path exists.</p>
+<p>寻路问题，返回最短路径的长度，简单的BFS即可。这里因为我个人比较喜欢双队列的trick，又有点嫌麻烦，所以写的不是很明白。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int nearestExit(vector&lt;vector&lt;char&gt;&gt;&amp; maze, vector&lt;int&gt;&amp; entrance) &#123;</span><br><span class="line">        int h = maze.size(), w = maze.back().size(), x = entrance[1], y = entrance[0];</span><br><span class="line">        maze[y][x] = &#x27;*&#x27;;</span><br><span class="line">        deque&lt;int&gt; dq, swp;</span><br><span class="line">        int di[][2] = &#123;&#123;0, 1&#125;, &#123;1, 0&#125;, &#123;-1, 0&#125;, &#123;0, -1&#125;&#125;;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        dq.push_back(y * w + x);</span><br><span class="line">        while (!dq.empty()) &#123;</span><br><span class="line">            ans++;</span><br><span class="line">            while (!dq.empty()) &#123;</span><br><span class="line">                int k = dq.front();</span><br><span class="line">                dq.pop_front();</span><br><span class="line">                int m = k / w, n = k % w;</span><br><span class="line">                for (auto [a, b] : di) &#123;</span><br><span class="line">                    int s = m + a, d = n + b;</span><br><span class="line">                    if (0 &lt;= s &amp;&amp; s &lt; h &amp;&amp; 0 &lt;= d &amp;&amp; d &lt; w) &#123;</span><br><span class="line">                        if (maze[s][d] == &#x27;.&#x27;) &#123;</span><br><span class="line">                            maze[s][d] = &#x27;*&#x27;;</span><br><span class="line">                            if (s == 0 || s == h - 1 || d == 0 || d == w - 1) &#123;</span><br><span class="line">                                return ans;</span><br><span class="line">                            &#125;</span><br><span class="line">                            swp.push_back(s * w + d);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            swap(dq, swp);</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1927-Sum-Game"><a href="#1927-Sum-Game" class="headerlink" title="1927. Sum Game"></a>1927. Sum Game</h3><p>Alice and Bob take turns playing a game, with Alice starting first.</p>
+<p>You are given a string num of even length consisting of digits and ‘?’ characters. On each turn, a player will do the following if there is still at least one ‘?’ in num:</p>
+<p>Choose an index i where num[i] == ‘?’.<br>Replace num[i] with any digit between ‘0’ and ‘9’.<br>The game ends when there are no more ‘?’ characters in num.</p>
+<p>For Bob to win, the sum of the digits in the first half of num must be equal to the sum of the digits in the second half. For Alice to win, the sums must not be equal.</p>
+<p>For example, if the game ended with num = “243801”, then Bob wins because 2+4+3 = 8+0+1. If the game ended with num = “243803”, then Alice wins because 2+4+3 != 8+0+3.<br>Assuming Alice and Bob play optimally, return true if Alice will win and false if Bob will win.</p>
+<p>本周做出的最难题目，大意是两人玩游戏，有一个长度为偶数只包含数字或问号的字符串，由AB两人分别将问号替换为具体的数字，A的目的是使字符串前后两半的和不相等，而B的目的则相反。假设A和B都使用最佳策略，问A是否必胜。</p>
+<p>首先很容易想到的一点是，假如问号个数为奇数个，则A必胜。因为此时由A最后操作，而A只需要两边不相等即可，因此A必胜。</p>
+<p>另外一个点则是，如果两边都有问号，则这些问号可以被抵消。这一点没有严格的证明，但是我们可以这样稍微思考一下，作为A来说，他是希望两边的差尽可能大的，因此他可以在和比较大的那边放9，而作为回应，B只能在另外一边同样放9来抵消这个差距。因此这些问号就这样被抵消了。</p>
+<p>当我们抵消完某一边的问号之后，真正的问题就浮出水面了。我们先考虑一个简单例子：<code>52??</code>，这个例子A是必胜的，只要A将某一个问号替换为9，那么无论如何B都失败了。为什么会这样，因为左边的和为7小于9，那么大于9如何呢？<code>99??</code>，A也是必胜的，A只需要将其中某个问号替换为0，则B无论如何也会失败。那么等于9呢，<code>54??</code>，这样的情况则B是必胜的，为什么，因为无论A将某一个问号替换成多少，都存在另一个对应的数，可以让两边相等。到这里我们大致有了一些思路，也就是如果一对问号如果换成两个和为9的数，能让两边的和相等，则B必胜，否则A必胜。如果有多对问号，则每对问号都需要满足这个条件。</p>
+<p>分析到这里，题目就做出来了，当然我的代码写的很差，这里我放上我写的代码和某大佬的代码做对比。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool sumGame(string num) &#123;</span><br><span class="line">        int n = num.length(), half = n / 2;</span><br><span class="line">        int s1 = 0, s2 = 0, cnt1 = 0, cnt2 = 0;</span><br><span class="line">        for (int i = 0; i &lt; half; i++) &#123;</span><br><span class="line">            if (num[i] == &#x27;?&#x27;) &#123;</span><br><span class="line">                cnt1++;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                s1 += num[i] - &#x27;0&#x27;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = half; i &lt; n; i++) &#123;</span><br><span class="line">            if (num[i] == &#x27;?&#x27;) &#123;</span><br><span class="line">                cnt2++;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                s2 += num[i] - &#x27;0&#x27;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (cnt1 + cnt2 == 0) &#123;</span><br><span class="line">            return s1 != s2;</span><br><span class="line">        &#125; </span><br><span class="line">        if ((cnt1 + cnt2) % 2 == 1) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        if (cnt1 == cnt2 &amp;&amp; s1 == s2) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if ((cnt1 &gt; cnt2 &amp;&amp; s1 &gt; s2) || (cnt1 &lt; cnt2 &amp;&amp; s1 &lt; s2)) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return cnt1 &gt; cnt2 ? s2 - s1 != (cnt1 - cnt2) / 2 * 9 : s1 - s2 != (cnt2 - cnt1) / 2 * 9;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool sumGame(string num) &#123;</span><br><span class="line">        int n = num.length(), x = 0, a = 0, b = 0;</span><br><span class="line">        for (int i = 0; i &lt; n / 2; i++) &#123;</span><br><span class="line">            num[i] == &#x27;?&#x27; ? a++ : x += num[i] - &#x27;0&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = n / 2; i &lt; n; i++) &#123;</span><br><span class="line">            num[i] == &#x27;?&#x27; ? b++ : x -= num[i] - &#x27;0&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line">        if (a + b &amp; 1) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return x - 9 * b + (a + b) / 2 * 9;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1929-Concatenation-of-Array"><a href="#1929-Concatenation-of-Array" class="headerlink" title="1929. Concatenation of Array"></a>1929. Concatenation of Array</h3><p>Given an integer array nums of length n, you want to create an array ans of length 2n where ans[i] == nums[i] and ans[i + n] == nums[i] for 0 &lt;= i &lt; n (0-indexed).</p>
+<p>Specifically, ans is the concatenation of two nums arrays.</p>
+<p>Return the array ans.</p>
+<p>周赛签到题，不提。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; getConcatenation(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int n = nums.size();</span><br><span class="line">        for (int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">            nums.push_back(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        return nums;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1930-Unique-Length-3-Palindromic-Subsequences"><a href="#1930-Unique-Length-3-Palindromic-Subsequences" class="headerlink" title="1930. Unique Length-3 Palindromic Subsequences"></a>1930. Unique Length-3 Palindromic Subsequences</h3><p>Given a string s, return the number of unique palindromes of length three that are a subsequence of s.</p>
+<p>Note that even if there are multiple ways to obtain the same subsequence, it is still only counted once.</p>
+<p>A palindrome is a string that reads the same forwards and backwards.</p>
+<p>A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.</p>
+<p>For example, “ace” is a subsequence of “abcde”.</p>
+<p>周赛第二题，求字符串的子序列里长度为3的回文子序列有多少。字符串本身只由26个小写字母构成。</p>
+<p>这个题的切入点在于虽然字符串总长度可能非常长，但字符串本身只由26个小写字母构成，而长度为3的回文子序列的总量很有限，只有最多26x26=676个，那么我们可以将每种字符的下标存储下来，再穷举所有的回文序列，判断该序列是否存在于字符串中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int countPalindromicSubsequence(string s) &#123;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; idx(26);</span><br><span class="line">        for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">            // 记录下所有字符对应的坐标，这里的坐标肯定是递增的</span><br><span class="line">            idx[s[i] - &#x27;a&#x27;].push_back(i);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 0; i &lt; 26; i++) &#123;</span><br><span class="line">            for (int j = 0; j &lt; 26; j++) &#123;</span><br><span class="line">                // 判断子序列 &#123; &#x27;a&#x27; + i, &#x27;a&#x27; + j, &#x27;a&#x27; + i &#125; 是否存在</span><br><span class="line">                if (idx[i].size() &lt; 2 || idx[j].empty()) &#123;</span><br><span class="line">                    // 显然不成立</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                // 这里l是字符i首次出现的位置，r是最后出现的位置</span><br><span class="line">                // 我们需要确定字符j是否在区间(l, r)内出现过</span><br><span class="line">                int l = idx[i].front(), r = idx[i].back();</span><br><span class="line">                // [it1, it2) 是一个区间，区间内的坐标k均满足 l &lt; k &lt; r，因此如果该区间不为空，则我们可以得到一个回文子序列</span><br><span class="line">                auto it1 = upper_bound(idx[j].begin(), idx[j].end(), l);</span><br><span class="line">                auto it2 = lower_bound(idx[j].begin(), idx[j].end(), r);</span><br><span class="line">                if (it1 != it2) &#123;</span><br><span class="line">                    ans++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这个问题的另一个思路是，对于每种可能的字符，我们都获取它们的最左和最右的位置，然后将所有中间的字符都算做一种，这种方法需要用set来进行去重。也比较简单，我这里就不写了。</p>
+<hr>
+<p>总的来说，这周的双周赛做的还不错，周赛就很一般了，不过这周周赛难度确实比较大，也是没办法的事，下周加油。另外最近发现vim真的挺好用的，定义个宏啥的真的可以省非常多操作。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/511741b5/" rel="prev" title="Leetcode刷题笔记 5">
+      <i class="fa fa-chevron-left"></i> Leetcode刷题笔记 5
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#876-Middle-of-the-Linked-List"><span class="nav-number">1.</span> <span class="nav-text">876. Middle of the Linked List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1582-Special-Positions-in-a-Binary-Matrix"><span class="nav-number">2.</span> <span class="nav-text">1582. Special Positions in a Binary Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#236-Lowest-Common-Ancestor-of-a-Binary-Tree"><span class="nav-number">3.</span> <span class="nav-text">236. Lowest Common Ancestor of a Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#637-Average-of-Levels-in-Binary-Tree"><span class="nav-number">4.</span> <span class="nav-text">637. Average of Levels in Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#985-Sum-of-Even-Numbers-After-Queries"><span class="nav-number">5.</span> <span class="nav-text">985. Sum of Even Numbers After Queries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#829-Consecutive-Numbers-Sum"><span class="nav-number">6.</span> <span class="nav-text">829. Consecutive Numbers Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1925-Count-Square-Sum-Triples"><span class="nav-number">7.</span> <span class="nav-text">1925. Count Square Sum Triples</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1926-Nearest-Exit-from-Entrance-in-Maze"><span class="nav-number">8.</span> <span class="nav-text">1926. Nearest Exit from Entrance in Maze</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1927-Sum-Game"><span class="nav-number">9.</span> <span class="nav-text">1927. Sum Game</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1929-Concatenation-of-Array"><span class="nav-number">10.</span> <span class="nav-text">1929. Concatenation of Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1930-Unique-Length-3-Palindromic-Subsequences"><span class="nav-number">11.</span> <span class="nav-text">1930. Unique Length-3 Palindromic Subsequences</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dearfl"
+      src="/favicon.ico">
+  <p class="site-author-name" itemprop="name">dearfl</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dearfl</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
