@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1. Two SumQ: Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode刷题笔记 1">
+<meta property="og:url" content="http://flr.me/p/f11d10529355/">
+<meta property="og:site_name" content="dearfl">
+<meta property="og:description" content="1. Two SumQ: Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-19T00:56:00.000Z">
+<meta property="article:modified_time" content="2023-04-16T07:49:38.920Z">
+<meta property="article:author" content="dearfl">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>Leetcode刷题笔记 1</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <!--
+    <span id="nav">
+      <ul>
+        
+        <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    -->
+    <span id="actions">
+      <ul>
+        <li><a class="icon" aria-label="Home" href="/"><i class="fas fa-home" aria-hidden="true" onmouseover="$('#i-home').toggle();" onmouseout="$('#i-home').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Previous post" href="/p/cf0517520311/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/p/42c2017f4391/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!--<li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>-->
+      </ul>
+      <span id="i-home" class="info" style="display:none;">Home</span>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <!--<span id="i-share" class="info" style="display:none;">Share post</span>-->
+    </span>
+    <br/>
+    <!--
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://flr.me/p/f11d10529355/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://flr.me/p/f11d10529355/&text=Leetcode刷题笔记 1"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://flr.me/p/f11d10529355/&is_video=false&description=Leetcode刷题笔记 1"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode刷题笔记 1&body=Check out this article: http://flr.me/p/f11d10529355/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://flr.me/p/f11d10529355/&name=Leetcode刷题笔记 1&description=&lt;h2 id=&#34;1-Two-Sum&#34;&gt;&lt;a href=&#34;#1-Two-Sum&#34; class=&#34;headerlink&#34; title=&#34;1. Two Sum&#34;&gt;&lt;/a&gt;1. Two Sum&lt;/h2&gt;&lt;p&gt;Q: Given an array of integers &lt;code&gt;nums&lt;/code&gt; and an integer &lt;code&gt;target&lt;/code&gt;, return &lt;code&gt;indices&lt;/code&gt; of the two numbers such that they add up to &lt;code&gt;target&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You may assume that each input would have exactly one solution, and you may not use the same element twice.&lt;/p&gt;
+&lt;p&gt;You can return the answer in any order.&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://flr.me/p/f11d10529355/&t=Leetcode刷题笔记 1"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    -->
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Two-Sum"><span class="toc-number">1.</span> <span class="toc-text">1. Two Sum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Add-Two-Numbers"><span class="toc-number">2.</span> <span class="toc-text">2. Add Two Numbers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Longest-Substring-without-Repeating-Characters"><span class="toc-number">3.</span> <span class="toc-text">3. Longest Substring without Repeating Characters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Longest-Palindrome-Substring"><span class="toc-number">4.</span> <span class="toc-text">5. Longest Palindrome Substring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-ZigZag-Conversion"><span class="toc-number">5.</span> <span class="toc-text">6. ZigZag Conversion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Reverse-Integer"><span class="toc-number">6.</span> <span class="toc-text">7. Reverse Integer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-String-to-Integer-atoi"><span class="toc-number">7.</span> <span class="toc-text">8. String to Integer (atoi)</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Leetcode刷题笔记 1
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">dearfl</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-06-19T00:56:00.000Z" class="dt-published" itemprop="datePublished">2021-06-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="1-Two-Sum"><a href="#1-Two-Sum" class="headerlink" title="1. Two Sum"></a>1. Two Sum</h2><p>Q: Given an array of integers <code>nums</code> and an integer <code>target</code>, return <code>indices</code> of the two numbers such that they add up to <code>target</code>.</p>
+<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+<p>You can return the answer in any order.</p>
+<span id="more"></span>
+
+<p>第一反应自然是暴力</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #A6E22E">vector</span><span style="color: #F8F8F2">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2">&gt; </span><span style="color: #A6E22E">twoSum</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">vector</span><span style="color: #F8F8F2">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2">&gt;</span><span style="color: #F92672">&</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">nums</span><span style="color: #F8F8F2">, </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">target</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    vector</span><span style="color: #F92672">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> res;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> i </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">; i </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> nums.</span><span style="color: #A6E22E">size</span><span style="color: #F8F8F2">(); i</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> j </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> i </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">; j </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> nums.</span><span style="color: #A6E22E">size</span><span style="color: #F8F8F2">(); j</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (nums[i] </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> nums[j] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> target) &#123;</span></div><div class='line'><span style="color: #F8F8F2">                </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> &#123;i, j&#125;;</span></div><div class='line'><span style="color: #F8F8F2">            &#125;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> &#123;</span><span style="color: #F92672">-</span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">, </span><span style="color: #F92672">-</span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">&#125;;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><p>但这样做显然不够好，我们可以使用键值对来存储&lt;&lt;value, index&gt;&gt;对，一边遍历一边查找键值对内是否有匹配的值。具体的数据结构可以选择哈希表，因为哈希表的插入&#x2F;查找都是o(1)操作，因此我们可以将总体的复杂度降至o(n)</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #A6E22E">vector</span><span style="color: #F8F8F2">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2">&gt; </span><span style="color: #A6E22E">twoSum</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">vector</span><span style="color: #F8F8F2">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2">&gt;</span><span style="color: #F92672">&</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">nums</span><span style="color: #F8F8F2">, </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">target</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    vector</span><span style="color: #F92672">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> res;</span></div><div class='line'><span style="color: #F8F8F2">    unordered_map</span><span style="color: #F92672">&lt;</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2">, </span><span style="color: #66D9EF">int</span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> indices;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">auto</span><span style="color: #F8F8F2"> it </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> nums.</span><span style="color: #A6E22E">begin</span><span style="color: #F8F8F2">(); it </span><span style="color: #F92672">!=</span><span style="color: #F8F8F2"> nums.</span><span style="color: #A6E22E">end</span><span style="color: #F8F8F2">(); </span><span style="color: #F92672">++</span><span style="color: #F8F8F2">it) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (indices.</span><span style="color: #A6E22E">find</span><span style="color: #F8F8F2">(target </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">*</span><span style="color: #F8F8F2">it) </span><span style="color: #F92672">!=</span><span style="color: #F8F8F2"> indices.</span><span style="color: #A6E22E">end</span><span style="color: #F8F8F2">()) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            res.</span><span style="color: #A6E22E">push_back</span><span style="color: #F8F8F2">(indices[target </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">*</span><span style="color: #F8F8F2">it]);</span></div><div class='line'><span style="color: #F8F8F2">            res.</span><span style="color: #A6E22E">push_back</span><span style="color: #F8F8F2">(it </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> nums.</span><span style="color: #A6E22E">begin</span><span style="color: #F8F8F2">());</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">break</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">        indices[</span><span style="color: #F92672">*</span><span style="color: #F8F8F2">it] </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> it </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> nums.</span><span style="color: #A6E22E">begin</span><span style="color: #F8F8F2">();</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> res;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><hr>
+<h2 id="2-Add-Two-Numbers"><a href="#2-Add-Two-Numbers" class="headerlink" title="2. Add Two Numbers"></a>2. Add Two Numbers</h2><p>Q: You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p>这个题不算难，就是写起来有点别扭，我自己写的非常丑，贴一个别人写的吧。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #A6E22E">ListNode</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">*</span><span style="color: #A6E22E">addTwoNumbers</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">ListNode</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">*</span><span style="color: #FD971F">l1</span><span style="color: #F8F8F2">, </span><span style="color: #A6E22E">ListNode</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">*</span><span style="color: #FD971F">l2</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    ListNode </span><span style="color: #A6E22E">dummy</span><span style="color: #F8F8F2">(</span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">), </span><span style="color: #F92672">*</span><span style="color: #F8F8F2">p </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&</span><span style="color: #F8F8F2">dummy;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> carry </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">while</span><span style="color: #F8F8F2"> (l1 </span><span style="color: #F92672">||</span><span style="color: #F8F8F2"> l2 </span><span style="color: #F92672">||</span><span style="color: #F8F8F2"> carry) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> sum </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> (l1 </span><span style="color: #F92672">?</span><span style="color: #F8F8F2"> l1-&gt;val </span><span style="color: #F92672">:</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> (l2 </span><span style="color: #F92672">?</span><span style="color: #F8F8F2"> l2-&gt;val </span><span style="color: #F92672">:</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> carry;</span></div><div class='line'><span style="color: #F8F8F2">        carry </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> sum </span><span style="color: #F92672">/</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        p-&gt;next </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">new</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">ListNode</span><span style="color: #F8F8F2">(sum </span><span style="color: #F92672">%</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">);</span></div><div class='line'><span style="color: #F8F8F2">        p </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> p-&gt;next;</span></div><div class='line'><span style="color: #F8F8F2">        l1 </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> l1 </span><span style="color: #F92672">?</span><span style="color: #F8F8F2"> l1-&gt;next </span><span style="color: #F92672">:</span><span style="color: #F8F8F2"> l1;</span></div><div class='line'><span style="color: #F8F8F2">        l2 </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> l2 </span><span style="color: #F92672">?</span><span style="color: #F8F8F2"> l2-&gt;next </span><span style="color: #F92672">:</span><span style="color: #F8F8F2"> l2;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> dummy.next;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><hr>
+<h2 id="3-Longest-Substring-without-Repeating-Characters"><a href="#3-Longest-Substring-without-Repeating-Characters" class="headerlink" title="3. Longest Substring without Repeating Characters"></a>3. Longest Substring without Repeating Characters</h2><p>Q: Given a string <code>s</code>, find the length of the longest substring without repeating characters.</p>
+<p>简单的思路自然还是o(n^2)的，写起来也很简单</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">lengthOfLongestSubstring</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">s</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> ans </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, last </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">; last </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> s.</span><span style="color: #A6E22E">length</span><span style="color: #F8F8F2">(); last</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> i </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> last </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">; i </span><span style="color: #F92672">&gt;=</span><span style="color: #F8F8F2"> first; i</span><span style="color: #F92672">--</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (s[i] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> s[last]) &#123;</span></div><div class='line'><span style="color: #F8F8F2">                first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> i </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">                </span><span style="color: #F92672">break</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">            &#125;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">        ans </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">max</span><span style="color: #F8F8F2">(res, last </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> first </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">);</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> ans;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><p>但是效率堪忧，容易想到保存字母最后出现的位置，在遍历的同时即可判断当前范围内是否有重复字符，因而只需要遍历一次即可解决，时间复杂度为o(n)，本题只有字母，因而使用数组就可以保存下标，如果碰到数字等范围较大的数据，则可以考虑哈希表，下面的代码是别人的实现，<code>index</code>数组里实际存储的不是最后出现的位置，而是最后出现的位置+1，每次遇到重复字符时，将first设置为该重复字符最后出现的位置+1，即可使范围内不再存在重复字符。只能说这个实现实在是非常精炼。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">lengthOfLongestSubstring</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">s</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> ans </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, index[</span><span style="color: #AE81FF">256</span><span style="color: #F8F8F2">] </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> &#123;</span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">&#125;;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, last </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">; last </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> s.</span><span style="color: #A6E22E">length</span><span style="color: #F8F8F2">(); last</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">max</span><span style="color: #F8F8F2">(index[s[last]], first);</span></div><div class='line'><span style="color: #F8F8F2">        ans </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">max</span><span style="color: #F8F8F2">(ans, last </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> first </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">);</span></div><div class='line'><span style="color: #F8F8F2">        index[s[last]] </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> last </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span><span style="color: #88846F"> //index + 1, because index[] is init'd to all 0.</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> ans;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><hr>
+<h2 id="5-Longest-Palindrome-Substring"><a href="#5-Longest-Palindrome-Substring" class="headerlink" title="5. Longest Palindrome Substring"></a>5. Longest Palindrome Substring</h2><p>Q: Given a string <code>s</code>, return the longest palindromic substring in <code>s</code>.</p>
+<p>给一个字符串s，返回该字符串的最长回文子字符串。同样可以笨办法解决，思路也很简单，遍历所有可能的情况。对于每一个位置，都考虑奇数&#x2F;偶数长度回文字符串向两个方向搜索，直到碰到不匹配的字符或者到达字符串边缘。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">longestPalindrome</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">s</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> len </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> s.</span><span style="color: #A6E22E">length</span><span style="color: #F8F8F2">(), max_len </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> i </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">; i </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> len; i</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #88846F">        //odd length</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> j </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> i, k </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> i; j </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> len </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> k </span><span style="color: #F92672">&gt;=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> s[j] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> s[k]; j</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">, k</span><span style="color: #F92672">--</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (j </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> k </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> max_len) &#123;</span></div><div class='line'><span style="color: #F8F8F2">                max_len </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> j </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> k </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">                first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> k;</span></div><div class='line'><span style="color: #F8F8F2">            &#125;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #88846F">        //even length</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> j </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> i </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">, k </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> i; j </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> len </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> k </span><span style="color: #F92672">&gt;=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> s[j] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> s[k]; j</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">, k</span><span style="color: #F92672">--</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (j </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> k </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> max_len) &#123;</span></div><div class='line'><span style="color: #F8F8F2">                max_len </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> j </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> k </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">                first </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> k;</span></div><div class='line'><span style="color: #F8F8F2">            &#125;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> s.</span><span style="color: #A6E22E">substr</span><span style="color: #F8F8F2">(first, max_len);</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><p>这个问题有个o(n)的算法Manacher’s Algorithm，不过比较复杂，我就不献丑了。</p>
+<hr>
+<h2 id="6-ZigZag-Conversion"><a href="#6-ZigZag-Conversion" class="headerlink" title="6. ZigZag Conversion"></a>6. ZigZag Conversion</h2><p>Q: The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #F8F8F2">P   A   H   N</span></div><div class='line'><span style="color: #F8F8F2">A P L S I I G</span></div><div class='line'><span style="color: #F8F8F2">Y   I   R</span></div></code></div></pre><p>And then read line by line: “PAHNAPLSIIGYIR”</p>
+<p>Write the code that will take a string and make this conversion given a number of rows:</p>
+<p><code>string convert(string s, int numRows);</code></p>
+<p>这题要求实现一个字符串转换的函数，也是写起来比较烦的类型。总之我就不献丑了，抄了一个别人的代码。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">convert</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">s</span><span style="color: #F8F8F2">, </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">numRows</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (numRows </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> s;</span></div><div class='line'><span style="color: #F8F8F2">    vector</span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2">string</span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">rows</span><span style="color: #F8F8F2">(numRows);</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> curRow </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, delta </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">-</span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (</span><span style="color: #66D9EF">char</span><span style="color: #F8F8F2"> c : s) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        rows[curRow] </span><span style="color: #F92672">+=</span><span style="color: #F8F8F2"> c;</span></div><div class='line'><span style="color: #F8F8F2">        (curRow </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">||</span><span style="color: #F8F8F2"> curRow </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> numRows </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> (delta </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">-</span><span style="color: #F8F8F2">delta);</span></div><div class='line'><span style="color: #F8F8F2">        curRow </span><span style="color: #F92672">+=</span><span style="color: #F8F8F2"> delta;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    string ret;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">for</span><span style="color: #F8F8F2"> (string row : rows) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        ret </span><span style="color: #F92672">+=</span><span style="color: #F8F8F2"> row;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> ret;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><hr>
+<h2 id="7-Reverse-Integer"><a href="#7-Reverse-Integer" class="headerlink" title="7. Reverse Integer"></a>7. Reverse Integer</h2><p>Q: Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range $[-2^{31}, 2^{31} - 1]$, then return 0.</p>
+<p>Assume the environment does not allow you to store 64-bit integers (signed or unsigned).</p>
+<p>这是个有点意思也有点烦的题目，要求在不支持64位int的条件下实现翻转int的十进制位，如果可以使用64位整数，这个题目其实非常基础。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">reverse</span><span style="color: #F8F8F2">(</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">x</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">long</span><span style="color: #F8F8F2"> </span><span style="color: #66D9EF">long</span><span style="color: #F8F8F2"> res </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> x </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">?</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">-</span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">:</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">long</span><span style="color: #F8F8F2"> </span><span style="color: #66D9EF">long</span><span style="color: #F8F8F2"> sum </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, tmp </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">labs</span><span style="color: #F8F8F2">(x);</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (x </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">while</span><span style="color: #F8F8F2"> (tmp) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        sum </span><span style="color: #F92672">*=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        sum </span><span style="color: #F92672">+=</span><span style="color: #F8F8F2"> tmp </span><span style="color: #F92672">%</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        tmp </span><span style="color: #F92672">/=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (INT_MIN </span><span style="color: #F92672">&lt;=</span><span style="color: #F8F8F2"> res </span><span style="color: #F92672">*</span><span style="color: #F8F8F2"> sum </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> res </span><span style="color: #F92672">*</span><span style="color: #F8F8F2"> sum </span><span style="color: #F92672">&lt;=</span><span style="color: #F8F8F2"> INT_MAX)</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> res </span><span style="color: #F92672">*</span><span style="color: #F8F8F2"> sum;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><p>如果限制64位数据，则需要仔细考虑溢出的问题，举个例子，一个8bit整数127翻转会变为721，原本不会溢出翻转之后就溢出了。本身这个题目就比较烦，主要考察的是底层的int范围，这里贴一个当时抄的代码。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">reverse</span><span style="color: #F8F8F2">(</span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">x</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> rev </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">while</span><span style="color: #F8F8F2"> (x </span><span style="color: #F92672">!=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> pop </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> x </span><span style="color: #F92672">%</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        x </span><span style="color: #F92672">/=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (rev </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> INT_MAX</span><span style="color: #F92672">/</span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">||</span><span style="color: #F8F8F2"> (rev </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> INT_MAX </span><span style="color: #F92672">/</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> pop </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">7</span><span style="color: #F8F8F2">)) </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (rev </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> INT_MIN</span><span style="color: #F92672">/</span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">||</span><span style="color: #F8F8F2"> (rev </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> INT_MIN </span><span style="color: #F92672">/</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> pop </span><span style="color: #F92672">&lt;</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">-</span><span style="color: #AE81FF">8</span><span style="color: #F8F8F2">)) </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        rev </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> rev </span><span style="color: #F92672">*</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> pop;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> rev;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre><hr>
+<h2 id="8-String-to-Integer-atoi"><a href="#8-String-to-Integer-atoi" class="headerlink" title="8. String to Integer (atoi)"></a>8. String to Integer (atoi)</h2><p>Q: Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C&#x2F;C++’s atoi function).</p>
+<p>The algorithm for myAtoi(string s) is as follows:</p>
+<ol>
+<li>Read in and ignore any leading whitespace.</li>
+<li>Check if the next character (if not already at the end of the string) is ‘-‘ or ‘+’. Read this character in if it is either. This determines if the final result is negative or positive respectively. Assume the result is positive if neither is present.</li>
+<li>Read in next the characters until the next non-digit charcter or the end of the input is reached. The rest of the string is ignored.</li>
+<li>Convert these digits into an integer (i.e. “123” -&gt; 123, “0032” -&gt; 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).</li>
+<li>If the integer is out of the 32-bit signed integer range $[-2^{31}, 2^{31} - 1]$, then clamp the integer so that it remains in the range. Specifically, integers less than $-2^{31}$ should be clamped to $-2^{31}$, and integers greater than $2^{31} - 1$ should be clamped to $2^{31} - 1$.</li>
+<li>Return the integer as the final result.</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>Only the space character ‘ ‘ is considered a whitespace character.</li>
+<li>Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.</li>
+</ul>
+<p>这题要求实现自己的atoi函数，比较麻烦，所以也不多说了，直接贴代码吧。</p>
+<pre class="shiki monokai" style="background-color: #272822; color: #F8F8F2"><div class="language-id">cpp</div><div class='code-container'><code><div class='line'><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> </span><span style="color: #A6E22E">myAtoi</span><span style="color: #F8F8F2">(</span><span style="color: #A6E22E">string</span><span style="color: #F8F8F2"> </span><span style="color: #FD971F">str</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #66D9EF">int</span><span style="color: #F8F8F2"> idx </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, sign </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">, res </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">, tmp;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">while</span><span style="color: #F8F8F2"> (str[idx] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #E6DB74">' '</span><span style="color: #F8F8F2">) &#123; idx</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">; &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (str[idx] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #E6DB74">'-'</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">||</span><span style="color: #F8F8F2"> str[idx] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #E6DB74">'+'</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (str[idx] </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #E6DB74">'-'</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            sign </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">-</span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">        idx</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (</span><span style="color: #F92672">!</span><span style="color: #A6E22E">isdigit</span><span style="color: #F8F8F2">(str[idx])) &#123; </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">; &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">while</span><span style="color: #F8F8F2"> (</span><span style="color: #A6E22E">isdigit</span><span style="color: #F8F8F2">(str[idx])) &#123;</span></div><div class='line'><span style="color: #F8F8F2">        tmp </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> str[idx] </span><span style="color: #F92672">-</span><span style="color: #F8F8F2"> </span><span style="color: #E6DB74">'0'</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (res </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> INT_MAX </span><span style="color: #F92672">/</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> sign </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">?</span><span style="color: #F8F8F2"> INT_MAX </span><span style="color: #F92672">:</span><span style="color: #F8F8F2"> INT_MIN;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">        </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (res </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> INT_MAX </span><span style="color: #F92672">/</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2">) &#123;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (sign </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> tmp </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">6</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> INT_MAX;</span></div><div class='line'><span style="color: #F8F8F2">            </span><span style="color: #F92672">if</span><span style="color: #F8F8F2"> (sign </span><span style="color: #F92672">==</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">-</span><span style="color: #AE81FF">1</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">&&</span><span style="color: #F8F8F2"> tmp </span><span style="color: #F92672">&gt;</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">7</span><span style="color: #F8F8F2">) </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> INT_MIN;</span></div><div class='line'><span style="color: #F8F8F2">        &#125;</span></div><div class='line'><span style="color: #F8F8F2">        res </span><span style="color: #F92672">=</span><span style="color: #F8F8F2"> res </span><span style="color: #F92672">*</span><span style="color: #F8F8F2"> </span><span style="color: #AE81FF">10</span><span style="color: #F8F8F2"> </span><span style="color: #F92672">+</span><span style="color: #F8F8F2"> tmp;</span></div><div class='line'><span style="color: #F8F8F2">        idx</span><span style="color: #F92672">++</span><span style="color: #F8F8F2">;</span></div><div class='line'><span style="color: #F8F8F2">    &#125;</span></div><div class='line'><span style="color: #F8F8F2">    </span><span style="color: #F92672">return</span><span style="color: #F8F8F2"> sign </span><span style="color: #F92672">*</span><span style="color: #F8F8F2"> res;</span></div><div class='line'><span style="color: #F8F8F2">&#125;</span></div></code></div></pre>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <!--
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Two-Sum"><span class="toc-number">1.</span> <span class="toc-text">1. Two Sum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Add-Two-Numbers"><span class="toc-number">2.</span> <span class="toc-text">2. Add Two Numbers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Longest-Substring-without-Repeating-Characters"><span class="toc-number">3.</span> <span class="toc-text">3. Longest Substring without Repeating Characters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Longest-Palindrome-Substring"><span class="toc-number">4.</span> <span class="toc-text">5. Longest Palindrome Substring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-ZigZag-Conversion"><span class="toc-number">5.</span> <span class="toc-text">6. ZigZag Conversion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Reverse-Integer"><span class="toc-number">6.</span> <span class="toc-text">7. Reverse Integer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-String-to-Integer-atoi"><span class="toc-number">7.</span> <span class="toc-text">8. String to Integer (atoi)</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://flr.me/p/f11d10529355/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://flr.me/p/f11d10529355/&text=Leetcode刷题笔记 1"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://flr.me/p/f11d10529355/&is_video=false&description=Leetcode刷题笔记 1"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode刷题笔记 1&body=Check out this article: http://flr.me/p/f11d10529355/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://flr.me/p/f11d10529355/&title=Leetcode刷题笔记 1"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://flr.me/p/f11d10529355/&name=Leetcode刷题笔记 1&description=&lt;h2 id=&#34;1-Two-Sum&#34;&gt;&lt;a href=&#34;#1-Two-Sum&#34; class=&#34;headerlink&#34; title=&#34;1. Two Sum&#34;&gt;&lt;/a&gt;1. Two Sum&lt;/h2&gt;&lt;p&gt;Q: Given an array of integers &lt;code&gt;nums&lt;/code&gt; and an integer &lt;code&gt;target&lt;/code&gt;, return &lt;code&gt;indices&lt;/code&gt; of the two numbers such that they add up to &lt;code&gt;target&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You may assume that each input would have exactly one solution, and you may not use the same element twice.&lt;/p&gt;
+&lt;p&gt;You can return the answer in any order.&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://flr.me/p/f11d10529355/&t=Leetcode刷题笔记 1"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    -->
+
+    <div id="actions-footer">
+        <a id="home" class="icon" href="/"><i class="fas fa-home fa-lg" aria-hidden="true"></i> Home</a>
+        
+        <a id="prev" class="icon" href="/p/cf0517520311/"><i class="fas fa-chevron-left" aria-hidden="true"></i> Prev</a>
+        
+        
+        <a id="next" class="icon" href="/p/42c2017f4391/"><i class="fas fa-chevron-right" aria-hidden="true"></i> Next</a>
+        
+        <!--<a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>-->
+        <!--<a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>-->
+        <!--<a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>-->
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    dearfl
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
