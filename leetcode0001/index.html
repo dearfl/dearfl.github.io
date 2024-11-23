@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="
+    
+">
+      <meta name="author" content="dearfl">
+      <title>dearfl</title>
+      <link rel="stylesheet" href="https://flr.me/site.css?h=e59df8e214aa8ff30370" />
+      <link rel="shortcut icon" type="image/png" href="https://flr.me/favicon.ico"/>
+    </head>
+
+    <header id="header">
+        <h1 class="logo"><a href="/">dearfl</a></h1>
+    </header>
+
+    <div id="content">
+        
+    <div class="post">
+        <div class="post__title">
+            <h1>Leetcode刷题笔记 1</h1>
+            <div class="post__meta">
+                2021-06-19
+                
+            </div>
+            <hr />
+        </div>
+
+        <div class="post__body">
+            <h2 id="1-two-sum">1. Two Sum<a class="zola-anchor" href="#1-two-sum" aria-label="Anchor link for: 1-two-sum">🔗</a></h2>
+<p>Q: Given an array of integers <code>nums</code> and an integer <code>target</code>, return <code>indices</code> of the two numbers such that they add up to <code>target</code>.</p>
+<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+<p>You can return the answer in any order.</p>
+<p>第一反应自然是暴力</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#c23f31;">twoSum</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">target</span><span>) {
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; res;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>(); j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(nums[i] </span><span style="color:#72ab00;">+</span><span> nums[j] </span><span style="color:#72ab00;">==</span><span> target) {
+</span><span>                </span><span style="color:#72ab00;">return </span><span>{i, j};
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return </span><span>{</span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>, </span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>};
+</span><span>}
+</span></code></pre>
+<p>但这样做显然不够好，我们可以使用键值对来存储&lt;&lt;value, index&gt;&gt;对，一边遍历一边查找键值对内是否有匹配的值。具体的数据结构可以选择哈希表，因为哈希表的插入/查找都是o(1)操作，因此我们可以将总体的复杂度降至o(n)</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#c23f31;">twoSum</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">target</span><span>) {
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; res;
+</span><span>    unordered_map&lt;</span><span style="color:#668f14;">int</span><span>, </span><span style="color:#668f14;">int</span><span>&gt; indices;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> it </span><span style="color:#72ab00;">=</span><span> nums.</span><span style="color:#5597d6;">begin</span><span>(); it </span><span style="color:#72ab00;">!=</span><span> nums.</span><span style="color:#5597d6;">end</span><span>(); </span><span style="color:#72ab00;">++</span><span>it) {
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(indices.</span><span style="color:#5597d6;">find</span><span>(target </span><span style="color:#72ab00;">- *</span><span>it) </span><span style="color:#72ab00;">!=</span><span> indices.</span><span style="color:#5597d6;">end</span><span>()) {
+</span><span>            res.</span><span style="color:#5597d6;">push_back</span><span>(indices[target </span><span style="color:#72ab00;">- *</span><span>it]);
+</span><span>            res.</span><span style="color:#5597d6;">push_back</span><span>(it </span><span style="color:#72ab00;">-</span><span> nums.</span><span style="color:#5597d6;">begin</span><span>());
+</span><span>            </span><span style="color:#72ab00;">break</span><span>;
+</span><span>        }
+</span><span>        indices[</span><span style="color:#72ab00;">*</span><span>it] </span><span style="color:#72ab00;">=</span><span> it </span><span style="color:#72ab00;">-</span><span> nums.</span><span style="color:#5597d6;">begin</span><span>();
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> res;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="2-add-two-numbers">2. Add Two Numbers<a class="zola-anchor" href="#2-add-two-numbers" aria-label="Anchor link for: 2-add-two-numbers">🔗</a></h2>
+<p>Q: You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p>这个题不算难，就是写起来有点别扭，我自己写的非常丑，贴一个别人写的吧。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>ListNode </span><span style="color:#72ab00;">*</span><span style="color:#c23f31;">addTwoNumbers</span><span>(ListNode </span><span style="color:#72ab00;">*</span><span style="color:#5597d6;">l1</span><span>, ListNode </span><span style="color:#72ab00;">*</span><span style="color:#5597d6;">l2</span><span>) {
+</span><span>    ListNode </span><span style="color:#5597d6;">dummy</span><span>(</span><span style="color:#b3933a;">0</span><span>), </span><span style="color:#72ab00;">*</span><span>p </span><span style="color:#72ab00;">= &amp;</span><span>dummy;
+</span><span>    </span><span style="color:#668f14;">int</span><span> carry </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(l1 </span><span style="color:#72ab00;">||</span><span> l2 </span><span style="color:#72ab00;">||</span><span> carry) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> sum </span><span style="color:#72ab00;">= </span><span>(l1 </span><span style="color:#72ab00;">?</span><span> l1-&gt;</span><span style="color:#5597d6;">val </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">0</span><span>) </span><span style="color:#72ab00;">+ </span><span>(l2 </span><span style="color:#72ab00;">?</span><span> l2-&gt;</span><span style="color:#5597d6;">val </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">0</span><span>) </span><span style="color:#72ab00;">+</span><span> carry;
+</span><span>        carry </span><span style="color:#72ab00;">=</span><span> sum </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">10</span><span>;
+</span><span>        p-&gt;</span><span style="color:#5597d6;">next </span><span style="color:#72ab00;">= new </span><span style="color:#5597d6;">ListNode</span><span>(sum </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">10</span><span>);
+</span><span>        p </span><span style="color:#72ab00;">=</span><span> p-&gt;</span><span style="color:#5597d6;">next</span><span>;
+</span><span>        l1 </span><span style="color:#72ab00;">=</span><span> l1 </span><span style="color:#72ab00;">?</span><span> l1-&gt;</span><span style="color:#5597d6;">next </span><span style="color:#72ab00;">:</span><span> l1;
+</span><span>        l2 </span><span style="color:#72ab00;">=</span><span> l2 </span><span style="color:#72ab00;">?</span><span> l2-&gt;</span><span style="color:#5597d6;">next </span><span style="color:#72ab00;">:</span><span> l2;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> dummy.</span><span style="color:#5597d6;">next</span><span>;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="3-longest-substring-without-repeating-characters">3. Longest Substring without Repeating Characters<a class="zola-anchor" href="#3-longest-substring-without-repeating-characters" aria-label="Anchor link for: 3-longest-substring-without-repeating-characters">🔗</a></h2>
+<p>Q: Given a string <code>s</code>, find the length of the longest substring without repeating characters.</p>
+<p>简单的思路自然还是o(n^2)的，写起来也很简单</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">lengthOfLongestSubstring</span><span>(string </span><span style="color:#5597d6;">s</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> first </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, last </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; last </span><span style="color:#72ab00;">&lt;</span><span> s.</span><span style="color:#5597d6;">length</span><span>(); last</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">=</span><span> last </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&gt;=</span><span> first; i</span><span style="color:#72ab00;">--</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(s[i] </span><span style="color:#72ab00;">==</span><span> s[last]) {
+</span><span>                first </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>;
+</span><span>                </span><span style="color:#72ab00;">break</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        ans </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(res, last </span><span style="color:#72ab00;">-</span><span> first </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>);
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<p>但是效率堪忧，容易想到保存字母最后出现的位置，在遍历的同时即可判断当前范围内是否有重复字符，因而只需要遍历一次即可解决，时间复杂度为o(n)，本题只有字母，因而使用数组就可以保存下标，如果碰到数字等范围较大的数据，则可以考虑哈希表，下面的代码是别人的实现，<code>index</code>数组里实际存储的不是最后出现的位置，而是最后出现的位置+1，每次遇到重复字符时，将first设置为该重复字符最后出现的位置+1，即可使范围内不再存在重复字符。只能说这个实现实在是非常精炼。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">lengthOfLongestSubstring</span><span>(string </span><span style="color:#5597d6;">s</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, index[</span><span style="color:#b3933a;">256</span><span>] </span><span style="color:#72ab00;">= </span><span>{</span><span style="color:#b3933a;">0</span><span>};
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> first </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, last </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; last </span><span style="color:#72ab00;">&lt;</span><span> s.</span><span style="color:#5597d6;">length</span><span>(); last</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        first </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(index[s[last]], first);
+</span><span>        ans </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(ans, last </span><span style="color:#72ab00;">-</span><span> first </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>);
+</span><span>        index[s[last]] </span><span style="color:#72ab00;">=</span><span> last </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>; </span><span style="color:#7f8989;">//index + 1, because index[] is init&#39;d to all 0.
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="5-longest-palindrome-substring">5. Longest Palindrome Substring<a class="zola-anchor" href="#5-longest-palindrome-substring" aria-label="Anchor link for: 5-longest-palindrome-substring">🔗</a></h2>
+<p>Q: Given a string <code>s</code>, return the longest palindromic substring in <code>s</code>.</p>
+<p>给一个字符串s，返回该字符串的最长回文子字符串。同样可以笨办法解决，思路也很简单，遍历所有可能的情况。对于每一个位置，都考虑奇数/偶数长度回文字符串向两个方向搜索，直到碰到不匹配的字符或者到达字符串边缘。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>string </span><span style="color:#c23f31;">longestPalindrome</span><span>(string </span><span style="color:#5597d6;">s</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> len </span><span style="color:#72ab00;">=</span><span> s.</span><span style="color:#5597d6;">length</span><span>(), max_len </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, first </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> len; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#7f8989;">//odd length
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">=</span><span> i, k </span><span style="color:#72ab00;">=</span><span> i; j </span><span style="color:#72ab00;">&lt;</span><span> len </span><span style="color:#72ab00;">&amp;&amp;</span><span> k </span><span style="color:#72ab00;">&gt;= </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&amp;&amp;</span><span> s[j] </span><span style="color:#72ab00;">==</span><span> s[k]; j</span><span style="color:#72ab00;">++</span><span>, k</span><span style="color:#72ab00;">--</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(j </span><span style="color:#72ab00;">-</span><span> k </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">&gt;</span><span> max_len) {
+</span><span>                max_len </span><span style="color:#72ab00;">=</span><span> j </span><span style="color:#72ab00;">-</span><span> k </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>;
+</span><span>                first </span><span style="color:#72ab00;">=</span><span> k;
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#7f8989;">//even length
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>, k </span><span style="color:#72ab00;">=</span><span> i; j </span><span style="color:#72ab00;">&lt;</span><span> len </span><span style="color:#72ab00;">&amp;&amp;</span><span> k </span><span style="color:#72ab00;">&gt;= </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&amp;&amp;</span><span> s[j] </span><span style="color:#72ab00;">==</span><span> s[k]; j</span><span style="color:#72ab00;">++</span><span>, k</span><span style="color:#72ab00;">--</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(j </span><span style="color:#72ab00;">-</span><span> k </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">&gt;</span><span> max_len) {
+</span><span>                max_len </span><span style="color:#72ab00;">=</span><span> j </span><span style="color:#72ab00;">-</span><span> k </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>;
+</span><span>                first </span><span style="color:#72ab00;">=</span><span> k;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> s.</span><span style="color:#5597d6;">substr</span><span>(first, max_len);
+</span><span>}
+</span></code></pre>
+<p>这个问题有个o(n)的算法Manacher's Algorithm，不过比较复杂，我就不献丑了。</p>
+<hr />
+<h2 id="6-zigzag-conversion">6. ZigZag Conversion<a class="zola-anchor" href="#6-zigzag-conversion" aria-label="Anchor link for: 6-zigzag-conversion">🔗</a></h2>
+<p>Q: The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>P   A   H   N
+</span><span>A P L S I I G
+</span><span>Y   I   R
+</span></code></pre>
+<p>And then read line by line: "PAHNAPLSIIGYIR"</p>
+<p>Write the code that will take a string and make this conversion given a number of rows:</p>
+<p><code>string convert(string s, int numRows);</code></p>
+<p>这题要求实现一个字符串转换的函数，也是写起来比较烦的类型。总之我就不献丑了，抄了一个别人的代码。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>string </span><span style="color:#c23f31;">convert</span><span>(string </span><span style="color:#5597d6;">s</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">numRows</span><span>) {
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(numRows </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">return</span><span> s;
+</span><span>    vector&lt;string&gt; </span><span style="color:#5597d6;">rows</span><span>(numRows);
+</span><span>    </span><span style="color:#668f14;">int</span><span> curRow </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, delta </span><span style="color:#72ab00;">= -</span><span style="color:#b3933a;">1</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">char</span><span> c </span><span style="color:#72ab00;">:</span><span> s) {
+</span><span>        rows[curRow] </span><span style="color:#72ab00;">+=</span><span> c;
+</span><span>        (curRow </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">||</span><span> curRow </span><span style="color:#72ab00;">==</span><span> numRows </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">&amp;&amp; </span><span>(delta </span><span style="color:#72ab00;">= -</span><span>delta);
+</span><span>        curRow </span><span style="color:#72ab00;">+=</span><span> delta;
+</span><span>    }
+</span><span>    string ret;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(string row </span><span style="color:#72ab00;">:</span><span> rows) {
+</span><span>        ret </span><span style="color:#72ab00;">+=</span><span> row;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ret;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="7-reverse-integer">7. Reverse Integer<a class="zola-anchor" href="#7-reverse-integer" aria-label="Anchor link for: 7-reverse-integer">🔗</a></h2>
+<p>Q: Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range $[-2^{31}, 2^{31} - 1]$, then return 0.</p>
+<p>Assume the environment does not allow you to store 64-bit integers (signed or unsigned).</p>
+<p>这是个有点意思也有点烦的题目，要求在不支持64位int的条件下实现翻转int的十进制位，如果可以使用64位整数，这个题目其实非常基础。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">reverse</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">x</span><span>) {
+</span><span>    </span><span style="color:#668f14;">long long</span><span> res </span><span style="color:#72ab00;">=</span><span> x </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">? -</span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">1</span><span>;
+</span><span>    </span><span style="color:#668f14;">long long</span><span> sum </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, tmp </span><span style="color:#72ab00;">= </span><span style="color:#b39f04;">labs</span><span>(x);
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(x </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(tmp) {
+</span><span>        sum </span><span style="color:#72ab00;">*= </span><span style="color:#b3933a;">10</span><span>;
+</span><span>        sum </span><span style="color:#72ab00;">+=</span><span> tmp </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">10</span><span>;
+</span><span>        tmp </span><span style="color:#72ab00;">/= </span><span style="color:#b3933a;">10</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(INT_MIN </span><span style="color:#72ab00;">&lt;=</span><span> res </span><span style="color:#72ab00;">*</span><span> sum </span><span style="color:#72ab00;">&amp;&amp;</span><span> res </span><span style="color:#72ab00;">*</span><span> sum </span><span style="color:#72ab00;">&lt;=</span><span> INT_MAX)
+</span><span>        </span><span style="color:#72ab00;">return</span><span> res </span><span style="color:#72ab00;">*</span><span> sum;
+</span><span>    </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<p>如果限制64位数据，则需要仔细考虑溢出的问题，举个例子，一个8bit整数127翻转会变为721，原本不会溢出翻转之后就溢出了。本身这个题目就比较烦，主要考察的是底层的int范围，这里贴一个当时抄的代码。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">reverse</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">x</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> rev </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(x </span><span style="color:#72ab00;">!= </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> pop </span><span style="color:#72ab00;">=</span><span> x </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">10</span><span>;
+</span><span>        x </span><span style="color:#72ab00;">/= </span><span style="color:#b3933a;">10</span><span>;
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(rev </span><span style="color:#72ab00;">&gt;</span><span> INT_MAX</span><span style="color:#72ab00;">/</span><span style="color:#b3933a;">10 </span><span style="color:#72ab00;">|| </span><span>(rev </span><span style="color:#72ab00;">==</span><span> INT_MAX </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">10 </span><span style="color:#72ab00;">&amp;&amp;</span><span> pop </span><span style="color:#72ab00;">&gt; </span><span style="color:#b3933a;">7</span><span>)) </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(rev </span><span style="color:#72ab00;">&lt;</span><span> INT_MIN</span><span style="color:#72ab00;">/</span><span style="color:#b3933a;">10 </span><span style="color:#72ab00;">|| </span><span>(rev </span><span style="color:#72ab00;">==</span><span> INT_MIN </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">10 </span><span style="color:#72ab00;">&amp;&amp;</span><span> pop </span><span style="color:#72ab00;">&lt; -</span><span style="color:#b3933a;">8</span><span>)) </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        rev </span><span style="color:#72ab00;">=</span><span> rev </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">10 </span><span style="color:#72ab00;">+</span><span> pop;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> rev;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="8-string-to-integer-atoi">8. String to Integer (atoi)<a class="zola-anchor" href="#8-string-to-integer-atoi" aria-label="Anchor link for: 8-string-to-integer-atoi">🔗</a></h2>
+<p>Q: Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).</p>
+<p>The algorithm for myAtoi(string s) is as follows:</p>
+<ol>
+<li>Read in and ignore any leading whitespace.</li>
+<li>Check if the next character (if not already at the end of the string) is '-' or '+'. Read this character in if it is either. This determines if the final result is negative or positive respectively. Assume the result is positive if neither is present.</li>
+<li>Read in next the characters until the next non-digit charcter or the end of the input is reached. The rest of the string is ignored.</li>
+<li>Convert these digits into an integer (i.e. "123" -&gt; 123, "0032" -&gt; 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).</li>
+<li>If the integer is out of the 32-bit signed integer range $[-2^{31}, 2^{31} - 1]$, then clamp the integer so that it remains in the range. Specifically, integers less than $-2^{31}$ should be clamped to $-2^{31}$, and integers greater than $2^{31} - 1$ should be clamped to $2^{31} - 1$.</li>
+<li>Return the integer as the final result.</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>Only the space character ' ' is considered a whitespace character.</li>
+<li>Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.</li>
+</ul>
+<p>这题要求实现自己的atoi函数，比较麻烦，所以也不多说了，直接贴代码吧。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">myAtoi</span><span>(string </span><span style="color:#5597d6;">str</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> idx </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, sign </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>, res </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, tmp;
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(str[idx] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39; &#39;</span><span>) { idx</span><span style="color:#72ab00;">++</span><span>; }
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(str[idx] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;-&#39; </span><span style="color:#72ab00;">||</span><span> str[idx] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;+&#39;</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(str[idx] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;-&#39;</span><span>) {
+</span><span>            sign </span><span style="color:#72ab00;">= -</span><span style="color:#b3933a;">1</span><span>;
+</span><span>        }
+</span><span>        idx</span><span style="color:#72ab00;">++</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(</span><span style="color:#72ab00;">!</span><span style="color:#b39f04;">isdigit</span><span>(str[idx])) { </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">0</span><span>; }
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(</span><span style="color:#b39f04;">isdigit</span><span>(str[idx])) {
+</span><span>        tmp </span><span style="color:#72ab00;">=</span><span> str[idx] </span><span style="color:#72ab00;">- </span><span style="color:#d07711;">&#39;0&#39;</span><span>;
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(res </span><span style="color:#72ab00;">&gt;</span><span> INT_MAX </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">10</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">return</span><span> sign </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">?</span><span> INT_MAX </span><span style="color:#72ab00;">:</span><span> INT_MIN;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(res </span><span style="color:#72ab00;">==</span><span> INT_MAX </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">10</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(sign </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">&amp;&amp;</span><span> tmp </span><span style="color:#72ab00;">&gt; </span><span style="color:#b3933a;">6</span><span>) </span><span style="color:#72ab00;">return</span><span> INT_MAX;
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(sign </span><span style="color:#72ab00;">== -</span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">&amp;&amp;</span><span> tmp </span><span style="color:#72ab00;">&gt; </span><span style="color:#b3933a;">7</span><span>) </span><span style="color:#72ab00;">return</span><span> INT_MIN;
+</span><span>        }
+</span><span>        res </span><span style="color:#72ab00;">=</span><span> res </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">10 </span><span style="color:#72ab00;">+</span><span> tmp;
+</span><span>        idx</span><span style="color:#72ab00;">++</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> sign </span><span style="color:#72ab00;">*</span><span> res;
+</span><span>}
+</span></code></pre>
+
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+        <script type="text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}}); </script>
+    </div>
+
+    </div>
+
+  <body>
+  </body>
+</html>
