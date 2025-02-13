@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="
+    
+">
+      <meta name="author" content="dearfl">
+      <title>dearfl</title>
+      <link rel="stylesheet" href="https://flr.me/site.css?h=e59df8e214aa8ff30370" />
+      <link rel="shortcut icon" type="image/png" href="https://flr.me/favicon.ico"/>
+    </head>
+
+    <header id="header">
+        <h1 class="logo"><a href="/">dearfl</a></h1>
+    </header>
+
+    <div id="content">
+        
+    <div class="post">
+        <div class="post__title">
+            <h1>Leetcode刷题笔记 6</h1>
+            <div class="post__meta">
+                2021-07-11
+                
+            </div>
+            <hr />
+        </div>
+
+        <div class="post__body">
+            <p>本周Leetcode刷题笔记</p>
+<p>本周也是划水的一周，咳嗽断断续续，还忙里抽闲玩游戏，所以基本只随意做了些题目。</p>
+<h2 id="876-middle-of-the-linked-list">876. Middle of the Linked List<a class="zola-anchor" href="#876-middle-of-the-linked-list" aria-label="Anchor link for: 876-middle-of-the-linked-list">🔗</a></h2>
+<p>Given a non-empty, singly linked list with head node head, return a middle node of linked list.</p>
+<p>If there are two middle nodes, return the second middle node.</p>
+<p>获取链表的中点，经典快慢指针</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#7f8989;">/**
+</span><span style="color:#7f8989;"> * Definition for singly-linked list.
+</span><span style="color:#7f8989;"> * struct ListNode {
+</span><span style="color:#7f8989;"> *     int val;
+</span><span style="color:#7f8989;"> *     ListNode *next;
+</span><span style="color:#7f8989;"> *     ListNode() : val(0), next(nullptr) {}
+</span><span style="color:#7f8989;"> *     ListNode(int x) : val(x), next(nullptr) {}
+</span><span style="color:#7f8989;"> *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+</span><span style="color:#7f8989;"> * };
+</span><span style="color:#7f8989;"> */
+</span><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    ListNode</span><span style="color:#72ab00;">* </span><span style="color:#c23f31;">middleNode</span><span>(ListNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">head</span><span>) {
+</span><span>        ListNode </span><span style="color:#72ab00;">*</span><span>fast </span><span style="color:#72ab00;">=</span><span> head, </span><span style="color:#72ab00;">*</span><span>slow </span><span style="color:#72ab00;">=</span><span> head;
+</span><span>        </span><span style="color:#72ab00;">while </span><span>(fast </span><span style="color:#72ab00;">&amp;&amp;</span><span> fast-&gt;</span><span style="color:#5597d6;">next</span><span>) {
+</span><span>            slow </span><span style="color:#72ab00;">=</span><span> slow-&gt;</span><span style="color:#5597d6;">next</span><span>;
+</span><span>            fast </span><span style="color:#72ab00;">=</span><span> fast-&gt;</span><span style="color:#5597d6;">next</span><span>-&gt;</span><span style="color:#5597d6;">next</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> slow;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="1582-special-positions-in-a-binary-matrix">1582. Special Positions in a Binary Matrix<a class="zola-anchor" href="#1582-special-positions-in-a-binary-matrix" aria-label="Anchor link for: 1582-special-positions-in-a-binary-matrix">🔗</a></h2>
+<p>Given a rows x cols matrix mat, where mat[i][j] is either 0 or 1, return the number of special positions in mat.</p>
+<p>A position (i,j) is called special if mat[i][j] == 1 and all other elements in row i and column j are 0 (rows and columns are 0-indexed).</p>
+<p>简单题，我的做法其实比较繁琐</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">int </span><span style="color:#c23f31;">numSpecial</span><span>(vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">mat</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> m </span><span style="color:#72ab00;">=</span><span> mat.</span><span style="color:#5597d6;">size</span><span>(), n </span><span style="color:#72ab00;">=</span><span> mat.</span><span style="color:#5597d6;">back</span><span>().</span><span style="color:#5597d6;">size</span><span>(), ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> m; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#668f14;">int</span><span> idx </span><span style="color:#72ab00;">= -</span><span style="color:#b3933a;">1</span><span>, cnt </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, s </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> n; j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(mat[i][j]) {
+</span><span>                    idx </span><span style="color:#72ab00;">=</span><span> j;
+</span><span>                    cnt</span><span style="color:#72ab00;">++</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(cnt </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>                </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> k </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; k </span><span style="color:#72ab00;">&lt;</span><span> m; k</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>                    s </span><span style="color:#72ab00;">+=</span><span> mat[k][idx];
+</span><span>                }
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(s </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>                    ans</span><span style="color:#72ab00;">++</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<p>这里推荐一个简单的做法，当然是我从讨论里抄来的</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">numSpecial</span><span>(vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">mat</span><span>) {
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#5597d6;">rows</span><span>(mat.</span><span style="color:#5597d6;">size</span><span>()), </span><span style="color:#5597d6;">cols</span><span>(mat[</span><span style="color:#b3933a;">0</span><span>].</span><span style="color:#5597d6;">size</span><span>());
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> rows.</span><span style="color:#5597d6;">size</span><span>(); </span><span style="color:#72ab00;">++</span><span>i)
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> cols.</span><span style="color:#5597d6;">size</span><span>(); </span><span style="color:#72ab00;">++</span><span>j) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(mat[i][j])
+</span><span>                </span><span style="color:#72ab00;">++</span><span>rows[i], </span><span style="color:#72ab00;">++</span><span>cols[j];
+</span><span>        }
+</span><span>    </span><span style="color:#668f14;">int</span><span> res </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> rows.</span><span style="color:#5597d6;">size</span><span>(); </span><span style="color:#72ab00;">++</span><span>i)
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> cols.</span><span style="color:#5597d6;">size</span><span>(); </span><span style="color:#72ab00;">++</span><span>j)
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(mat[i][j] </span><span style="color:#72ab00;">&amp;&amp;</span><span> rows[i] </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">&amp;&amp;</span><span> cols[j] </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>)
+</span><span>                </span><span style="color:#72ab00;">++</span><span>res;
+</span><span>    </span><span style="color:#72ab00;">return</span><span> res;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="236-lowest-common-ancestor-of-a-binary-tree">236. Lowest Common Ancestor of a Binary Tree<a class="zola-anchor" href="#236-lowest-common-ancestor-of-a-binary-tree" aria-label="Anchor link for: 236-lowest-common-ancestor-of-a-binary-tree">🔗</a></h2>
+<p>Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.</p>
+<p>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”</p>
+<p>思考的时候有点问题，以为是个很简单的题目，实际上p和q的父节点是无法直接获取的，因此我们无法轻易的获取整棵树的层次结构。先看代码：</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#7f8989;">/**
+</span><span style="color:#7f8989;"> * Definition for a binary tree node.
+</span><span style="color:#7f8989;"> * struct TreeNode {
+</span><span style="color:#7f8989;"> *     int val;
+</span><span style="color:#7f8989;"> *     TreeNode *left;
+</span><span style="color:#7f8989;"> *     TreeNode *right;
+</span><span style="color:#7f8989;"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+</span><span style="color:#7f8989;"> * };
+</span><span style="color:#7f8989;"> */
+</span><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#c23f31;">helper</span><span>(TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">root</span><span>, TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">p</span><span>, TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">q</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(root </span><span style="color:#72ab00;">==</span><span> p </span><span style="color:#72ab00;">||</span><span> root </span><span style="color:#72ab00;">==</span><span> q </span><span style="color:#72ab00;">||</span><span> root </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">nullptr</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">return</span><span> root;
+</span><span>        }
+</span><span>        </span><span style="color:#668f14;">auto</span><span> l </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">helper</span><span>(root-&gt;</span><span style="color:#5597d6;">left</span><span>, p, q), r </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">helper</span><span>(root-&gt;</span><span style="color:#5597d6;">right</span><span>, p, q);
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(l </span><span style="color:#72ab00;">&amp;&amp;</span><span> r) {
+</span><span>            </span><span style="color:#72ab00;">return</span><span> root;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> l </span><span style="color:#72ab00;">?</span><span> l </span><span style="color:#72ab00;">:</span><span> r;
+</span><span>    }
+</span><span>
+</span><span>    TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#c23f31;">lowestCommonAncestor</span><span>(TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">root</span><span>, TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">p</span><span>, TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">q</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">return </span><span style="color:#5597d6;">helper</span><span>(root, p, q);
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<p>如果碰到了p或者q，就返回该节点，其他情况下，我们返回的都是空指针，这样在递归返回之后，我们就可以判断p节点或者q节点是否在该根节点下。对于根节点，我们分别遍历他的左右节点，如果返回的结果均不为空指针，则说明p和q分别在跟节点的左右节点下，因此p和q的最低公共祖先即为根节点本身。如果返回的结果只有一个有效节点，另一个是空指针，则我们只需要返回该结果即可。</p>
+<hr />
+<h2 id="637-average-of-levels-in-binary-tree">637. Average of Levels in Binary Tree<a class="zola-anchor" href="#637-average-of-levels-in-binary-tree" aria-label="Anchor link for: 637-average-of-levels-in-binary-tree">🔗</a></h2>
+<p>Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.</p>
+<p>层序遍历求每层的平均值，我个人比较喜欢双队列的做法</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#7f8989;">/**
+</span><span style="color:#7f8989;"> * Definition for a binary tree node.
+</span><span style="color:#7f8989;"> * struct TreeNode {
+</span><span style="color:#7f8989;"> *     int val;
+</span><span style="color:#7f8989;"> *     TreeNode *left;
+</span><span style="color:#7f8989;"> *     TreeNode *right;
+</span><span style="color:#7f8989;"> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+</span><span style="color:#7f8989;"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+</span><span style="color:#7f8989;"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+</span><span style="color:#7f8989;"> * };
+</span><span style="color:#7f8989;"> */
+</span><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    vector&lt;</span><span style="color:#668f14;">double</span><span>&gt; </span><span style="color:#c23f31;">averageOfLevels</span><span>(TreeNode</span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">root</span><span>) {
+</span><span>        deque</span><span style="color:#72ab00;">&lt;</span><span>TreeNode </span><span style="color:#72ab00;">*&gt;</span><span> dq, swp;
+</span><span>        vector&lt;</span><span style="color:#668f14;">double</span><span>&gt; ans;
+</span><span>        dq.</span><span style="color:#5597d6;">push_back</span><span>(root);
+</span><span>        </span><span style="color:#668f14;">long long</span><span> sum </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, cnt </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">while </span><span>(</span><span style="color:#72ab00;">!</span><span>dq.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>            sum </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, cnt </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>            </span><span style="color:#72ab00;">while </span><span>(</span><span style="color:#72ab00;">!</span><span>dq.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>                </span><span style="color:#668f14;">auto</span><span> node </span><span style="color:#72ab00;">=</span><span> dq.</span><span style="color:#5597d6;">front</span><span>();
+</span><span>                dq.</span><span style="color:#5597d6;">pop_front</span><span>();
+</span><span>                sum </span><span style="color:#72ab00;">+=</span><span> node-&gt;</span><span style="color:#5597d6;">val</span><span>;
+</span><span>                cnt</span><span style="color:#72ab00;">++</span><span>;
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(node-&gt;</span><span style="color:#5597d6;">left</span><span>) {
+</span><span>                    swp.</span><span style="color:#5597d6;">push_back</span><span>(node-&gt;</span><span style="color:#5597d6;">left</span><span>);
+</span><span>                }
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(node-&gt;</span><span style="color:#5597d6;">right</span><span>) {
+</span><span>                    swp.</span><span style="color:#5597d6;">push_back</span><span>(node-&gt;</span><span style="color:#5597d6;">right</span><span>);
+</span><span>                }
+</span><span>            }
+</span><span>            ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#b3933a;">1.0 </span><span style="color:#72ab00;">*</span><span> sum </span><span style="color:#72ab00;">/</span><span> cnt);
+</span><span>            </span><span style="color:#5597d6;">swap</span><span>(dq, swp);
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="985-sum-of-even-numbers-after-queries">985. Sum of Even Numbers After Queries<a class="zola-anchor" href="#985-sum-of-even-numbers-after-queries" aria-label="Anchor link for: 985-sum-of-even-numbers-after-queries">🔗</a></h2>
+<p>We have an array nums of integers, and an array queries of queries.</p>
+<p>For the i-th query val = queries[i][0], index = queries[i][1], we add val to nums[index].  Then, the answer to the i-th query is the sum of the even values of A.</p>
+<p>(Here, the given index = queries[i][1] is a 0-based index, and each query permanently modifies the array nums.)</p>
+<p>Return the answer to all queries.  Your answer array should have answer[i] as the answer to the i-th query.</p>
+<p>简单题，根据相应的query更新结果即可。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span>    </span><span style="color:#668f14;">public</span><span>:
+</span><span>        vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#c23f31;">sumEvenAfterQueries</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>, vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">queries</span><span>) {
+</span><span>            vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; ans;
+</span><span>            </span><span style="color:#668f14;">int</span><span> s </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">const auto</span><span> n </span><span style="color:#72ab00;">:</span><span> nums) {
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(n </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>                    s </span><span style="color:#72ab00;">+=</span><span> n;
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">const auto</span><span> query </span><span style="color:#72ab00;">:</span><span> queries) {
+</span><span>                </span><span style="color:#668f14;">int</span><span> val </span><span style="color:#72ab00;">=</span><span> query[</span><span style="color:#b3933a;">0</span><span>], idx </span><span style="color:#72ab00;">=</span><span> query[</span><span style="color:#b3933a;">1</span><span>];
+</span><span>                </span><span style="color:#668f14;">int</span><span> v1 </span><span style="color:#72ab00;">=</span><span> nums[idx], v2 </span><span style="color:#72ab00;">=</span><span> v1 </span><span style="color:#72ab00;">+</span><span> val;
+</span><span>                s </span><span style="color:#72ab00;">-=</span><span> v1 </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">?</span><span> v1 </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">0</span><span>;
+</span><span>                s </span><span style="color:#72ab00;">+=</span><span> v2 </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">?</span><span> v2 </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">0</span><span>;
+</span><span>                nums[idx] </span><span style="color:#72ab00;">+=</span><span> val;
+</span><span>                ans.</span><span style="color:#5597d6;">push_back</span><span>(s);
+</span><span>            }
+</span><span>            </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>        }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="829-consecutive-numbers-sum">829. Consecutive Numbers Sum<a class="zola-anchor" href="#829-consecutive-numbers-sum" aria-label="Anchor link for: 829-consecutive-numbers-sum">🔗</a></h2>
+<p>Given a positive integer n, how many ways can we write it as a sum of consecutive positive integers?</p>
+<p>某次面试的时候做过这个题，不过当时没有细想，写的非常丑，这次仔细思考了一下，发现其实比较简单。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">int </span><span style="color:#c23f31;">consecutiveNumbersSum</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">n</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; (i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">*</span><span> i </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">*</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>((n </span><span style="color:#72ab00;">- </span><span>(i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">*</span><span> i </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>) </span><span style="color:#72ab00;">%</span><span> i </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>                ans</span><span style="color:#72ab00;">++</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<p>假设一共有k个数，第一个数为a，则这些数的总和为$s = \frac{(a + a + k - 1) \times k}{2}$，那么我们可以得到$a = \frac{s - \frac{1}{2}(k-1)k}{k}$，能表示为连续整数之和等价于a为整数，而a为整数等价于<code>(s - k * (k - 1) / 2) % k == 0</code>。我们从k=1开始遍历，直到<code>s - k * (k - 1) / 2</code>小于0为止。</p>
+<hr />
+<p>接下来是本周的双周赛和周赛，本周双周赛我做的还行，虽然最后一题还是不会。周赛因为最后两题都难度很大，所以做的比较差，总之这周还行吧，继续加油。</p>
+<h2 id="1925-count-square-sum-triples">1925. Count Square Sum Triples<a class="zola-anchor" href="#1925-count-square-sum-triples" aria-label="Anchor link for: 1925-count-square-sum-triples">🔗</a></h2>
+<p>A square triple (a,b,c) is a triple where a, b, and c are integers and a2 + b2 = c2.</p>
+<p>Given an integer n, return the number of square triples such that 1 &lt;= a, b, c &lt;= n.</p>
+<p>签到题，o(N^3)算法走起</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">int </span><span style="color:#c23f31;">countTriples</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">n</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&lt;=</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">=</span><span> i; j </span><span style="color:#72ab00;">&lt;=</span><span> n; j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>                </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> k </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>; k </span><span style="color:#72ab00;">&lt;=</span><span> n; k</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>                    </span><span style="color:#72ab00;">if </span><span>(i </span><span style="color:#72ab00;">*</span><span> i </span><span style="color:#72ab00;">+</span><span> j </span><span style="color:#72ab00;">*</span><span> j </span><span style="color:#72ab00;">==</span><span> k </span><span style="color:#72ab00;">*</span><span> k) {
+</span><span>                        ans </span><span style="color:#72ab00;">+= </span><span style="color:#b3933a;">2</span><span>;
+</span><span>                    }
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="1926-nearest-exit-from-entrance-in-maze">1926. Nearest Exit from Entrance in Maze<a class="zola-anchor" href="#1926-nearest-exit-from-entrance-in-maze" aria-label="Anchor link for: 1926-nearest-exit-from-entrance-in-maze">🔗</a></h2>
+<p>You are given an m x n matrix maze (0-indexed) with empty cells (represented as '.') and walls (represented as '+'). You are also given the entrance of the maze, where entrance = [entrancerow, entrancecol] denotes the row and column of the cell you are initially standing at.</p>
+<p>In one step, you can move one cell up, down, left, or right. You cannot step into a cell with a wall, and you cannot step outside the maze. Your goal is to find the nearest exit from the entrance. An exit is defined as an empty cell that is at the border of the maze. The entrance does not count as an exit.</p>
+<p>Return the number of steps in the shortest path from the entrance to the nearest exit, or -1 if no such path exists.</p>
+<p>寻路问题，返回最短路径的长度，简单的BFS即可。这里因为我个人比较喜欢双队列的trick，又有点嫌麻烦没用<code>deque&lt;pair&lt;int,int&gt;&gt;</code>而是直接用了<code>deque&lt;int&gt;</code>，所以写的不是很明白。不过大体思路基本都没什么问题，就懒得改了。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">int </span><span style="color:#c23f31;">nearestExit</span><span>(vector&lt;vector&lt;</span><span style="color:#668f14;">char</span><span>&gt;&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">maze</span><span>, vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">entrance</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> h </span><span style="color:#72ab00;">=</span><span> maze.</span><span style="color:#5597d6;">size</span><span>(), w </span><span style="color:#72ab00;">=</span><span> maze.</span><span style="color:#5597d6;">back</span><span>().</span><span style="color:#5597d6;">size</span><span>(), x </span><span style="color:#72ab00;">=</span><span> entrance[</span><span style="color:#b3933a;">1</span><span>], y </span><span style="color:#72ab00;">=</span><span> entrance[</span><span style="color:#b3933a;">0</span><span>];
+</span><span>        maze[y][x] </span><span style="color:#72ab00;">= </span><span style="color:#d07711;">&#39;*&#39;</span><span>;
+</span><span>        deque&lt;</span><span style="color:#668f14;">int</span><span>&gt; dq, swp;
+</span><span>        </span><span style="color:#668f14;">int</span><span> di[][</span><span style="color:#b3933a;">2</span><span>] </span><span style="color:#72ab00;">= </span><span>{ {</span><span style="color:#b3933a;">0</span><span>, </span><span style="color:#b3933a;">1</span><span>}, {</span><span style="color:#b3933a;">1</span><span>, </span><span style="color:#b3933a;">0</span><span>}, {</span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>, </span><span style="color:#b3933a;">0</span><span>}, {</span><span style="color:#b3933a;">0</span><span>, </span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>} };
+</span><span>        </span><span style="color:#668f14;">int</span><span> ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        dq.</span><span style="color:#5597d6;">push_back</span><span>(y </span><span style="color:#72ab00;">*</span><span> w </span><span style="color:#72ab00;">+</span><span> x);
+</span><span>        </span><span style="color:#72ab00;">while </span><span>(</span><span style="color:#72ab00;">!</span><span>dq.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>            ans</span><span style="color:#72ab00;">++</span><span>;
+</span><span>            </span><span style="color:#72ab00;">while </span><span>(</span><span style="color:#72ab00;">!</span><span>dq.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>                </span><span style="color:#668f14;">int</span><span> k </span><span style="color:#72ab00;">=</span><span> dq.</span><span style="color:#5597d6;">front</span><span>();
+</span><span>                dq.</span><span style="color:#5597d6;">pop_front</span><span>();
+</span><span>                </span><span style="color:#668f14;">int</span><span> m </span><span style="color:#72ab00;">=</span><span> k </span><span style="color:#72ab00;">/</span><span> w, n </span><span style="color:#72ab00;">=</span><span> k </span><span style="color:#72ab00;">%</span><span> w;
+</span><span>                </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto </span><span>[a, b] </span><span style="color:#72ab00;">:</span><span> di) {
+</span><span>                    </span><span style="color:#668f14;">int</span><span> s </span><span style="color:#72ab00;">=</span><span> m </span><span style="color:#72ab00;">+</span><span> a, d </span><span style="color:#72ab00;">=</span><span> n </span><span style="color:#72ab00;">+</span><span> b;
+</span><span>                    </span><span style="color:#72ab00;">if </span><span>(</span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&lt;=</span><span> s </span><span style="color:#72ab00;">&amp;&amp;</span><span> s </span><span style="color:#72ab00;">&lt;</span><span> h </span><span style="color:#72ab00;">&amp;&amp; </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&lt;=</span><span> d </span><span style="color:#72ab00;">&amp;&amp;</span><span> d </span><span style="color:#72ab00;">&lt;</span><span> w) {
+</span><span>                        </span><span style="color:#72ab00;">if </span><span>(maze[s][d] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;.&#39;</span><span>) {
+</span><span>                            maze[s][d] </span><span style="color:#72ab00;">= </span><span style="color:#d07711;">&#39;*&#39;</span><span>;
+</span><span>                            </span><span style="color:#72ab00;">if </span><span>(s </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">||</span><span> s </span><span style="color:#72ab00;">==</span><span> h </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">||</span><span> d </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">||</span><span> d </span><span style="color:#72ab00;">==</span><span> w </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>                                </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>                            }
+</span><span>                            swp.</span><span style="color:#5597d6;">push_back</span><span>(s </span><span style="color:#72ab00;">*</span><span> w </span><span style="color:#72ab00;">+</span><span> d);
+</span><span>                        }
+</span><span>                    }
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style="color:#5597d6;">swap</span><span>(dq, swp);
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return -</span><span style="color:#b3933a;">1</span><span>;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="1927-sum-game">1927. Sum Game<a class="zola-anchor" href="#1927-sum-game" aria-label="Anchor link for: 1927-sum-game">🔗</a></h2>
+<p>Alice and Bob take turns playing a game, with Alice starting first.</p>
+<p>You are given a string num of even length consisting of digits and '?' characters. On each turn, a player will do the following if there is still at least one '?' in num:</p>
+<p>Choose an index i where num[i] == '?'.
+Replace num[i] with any digit between '0' and '9'.
+The game ends when there are no more '?' characters in num.</p>
+<p>For Bob to win, the sum of the digits in the first half of num must be equal to the sum of the digits in the second half. For Alice to win, the sums must not be equal.</p>
+<p>For example, if the game ended with num = "243801", then Bob wins because 2+4+3 = 8+0+1. If the game ended with num = "243803", then Alice wins because 2+4+3 != 8+0+3.
+Assuming Alice and Bob play optimally, return true if Alice will win and false if Bob will win.</p>
+<p>本周做出的最难题目，大意是两人玩游戏，有一个长度为偶数只包含数字或问号的字符串，由AB两人分别将问号替换为具体的数字，A的目的是使字符串前后两半的和不相等，而B的目的则相反。假设A和B都使用最佳策略，问A是否必胜。</p>
+<p>首先很容易想到的一点是，假如问号个数为奇数个，则A必胜。因为此时由A最后操作，而A只需要两边不相等即可，因此A必胜。</p>
+<p>另外一个点则是，如果两边都有问号，则这些问号可以被抵消。这一点没有严格的证明，但是我们可以这样稍微思考一下，作为A来说，他是希望两边的差尽可能大的，因此他可以在和比较大的那边放9，而作为回应，B只能在另外一边同样放9来抵消这个差距。因此这些问号就这样被抵消了。</p>
+<p>当我们抵消完某一边的问号之后，真正的问题就浮出水面了。我们先考虑一个简单例子：<code>52??</code>，这个例子A是必胜的，只要A将某一个问号替换为9，那么无论如何B都失败了。为什么会这样，因为左边的和为7小于9，那么大于9如何呢？<code>99??</code>，A也是必胜的，A只需要将其中某个问号替换为0，则B无论如何也会失败。那么等于9呢，<code>54??</code>，这样的情况则B是必胜的，为什么，因为无论A将某一个问号替换成多少，都存在另一个对应的数，可以让两边相等。到这里我们大致有了一些思路，也就是如果一对问号如果换成两个和为9的数，能让两边的和相等，则B必胜，否则A必胜。如果有多对问号，则每对问号都需要满足这个条件。</p>
+<p>分析到这里，题目就做出来了，当然我的代码写的很差，这里我放上我写的代码和某大佬的代码做对比。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">bool </span><span style="color:#c23f31;">sumGame</span><span>(string </span><span style="color:#5597d6;">num</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> n </span><span style="color:#72ab00;">=</span><span> num.</span><span style="color:#5597d6;">length</span><span>(), half </span><span style="color:#72ab00;">=</span><span> n </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>;
+</span><span>        </span><span style="color:#668f14;">int</span><span> s1 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, s2 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, cnt1 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, cnt2 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> half; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(num[i] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;?&#39;</span><span>) {
+</span><span>                cnt1</span><span style="color:#72ab00;">++</span><span>;
+</span><span>            } </span><span style="color:#72ab00;">else </span><span>{
+</span><span>                s1 </span><span style="color:#72ab00;">+=</span><span> num[i] </span><span style="color:#72ab00;">- </span><span style="color:#d07711;">&#39;0&#39;</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">=</span><span> half; i </span><span style="color:#72ab00;">&lt;</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(num[i] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;?&#39;</span><span>) {
+</span><span>                cnt2</span><span style="color:#72ab00;">++</span><span>;
+</span><span>            } </span><span style="color:#72ab00;">else </span><span>{
+</span><span>                s2 </span><span style="color:#72ab00;">+=</span><span> num[i] </span><span style="color:#72ab00;">- </span><span style="color:#d07711;">&#39;0&#39;</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(cnt1 </span><span style="color:#72ab00;">+</span><span> cnt2 </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">return</span><span> s1 </span><span style="color:#72ab00;">!=</span><span> s2;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>((cnt1 </span><span style="color:#72ab00;">+</span><span> cnt2) </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">true</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(cnt1 </span><span style="color:#72ab00;">==</span><span> cnt2 </span><span style="color:#72ab00;">&amp;&amp;</span><span> s1 </span><span style="color:#72ab00;">==</span><span> s2) {
+</span><span>            </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">false</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>((cnt1 </span><span style="color:#72ab00;">&gt;</span><span> cnt2 </span><span style="color:#72ab00;">&amp;&amp;</span><span> s1 </span><span style="color:#72ab00;">&gt;</span><span> s2) </span><span style="color:#72ab00;">|| </span><span>(cnt1 </span><span style="color:#72ab00;">&lt;</span><span> cnt2 </span><span style="color:#72ab00;">&amp;&amp;</span><span> s1 </span><span style="color:#72ab00;">&lt;</span><span> s2)) {
+</span><span>            </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">true</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> cnt1 </span><span style="color:#72ab00;">&gt;</span><span> cnt2 </span><span style="color:#72ab00;">?</span><span> s2 </span><span style="color:#72ab00;">-</span><span> s1 </span><span style="color:#72ab00;">!= </span><span>(cnt1 </span><span style="color:#72ab00;">-</span><span> cnt2) </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">9 </span><span style="color:#72ab00;">:</span><span> s1 </span><span style="color:#72ab00;">-</span><span> s2 </span><span style="color:#72ab00;">!= </span><span>(cnt2 </span><span style="color:#72ab00;">-</span><span> cnt1) </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">9</span><span>;
+</span><span>    }
+</span><span>};
+</span><span>
+</span><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">bool </span><span style="color:#c23f31;">sumGame</span><span>(string </span><span style="color:#5597d6;">num</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> n </span><span style="color:#72ab00;">=</span><span> num.</span><span style="color:#5597d6;">length</span><span>(), x </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, a </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, b </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> n </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            num[i] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;?&#39; </span><span style="color:#72ab00;">?</span><span> a</span><span style="color:#72ab00;">++ :</span><span> x </span><span style="color:#72ab00;">+=</span><span> num[i] </span><span style="color:#72ab00;">- </span><span style="color:#d07711;">&#39;0&#39;</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">=</span><span> n </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            num[i] </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;?&#39; </span><span style="color:#72ab00;">?</span><span> b</span><span style="color:#72ab00;">++ :</span><span> x </span><span style="color:#72ab00;">-=</span><span> num[i] </span><span style="color:#72ab00;">- </span><span style="color:#d07711;">&#39;0&#39;</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">&amp; </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">true</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> x </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">9 </span><span style="color:#72ab00;">*</span><span> b </span><span style="color:#72ab00;">+ </span><span>(a </span><span style="color:#72ab00;">+</span><span> b) </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">9</span><span>;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="1929-concatenation-of-array">1929. Concatenation of Array<a class="zola-anchor" href="#1929-concatenation-of-array" aria-label="Anchor link for: 1929-concatenation-of-array">🔗</a></h2>
+<p>Given an integer array nums of length n, you want to create an array ans of length 2n where ans[i] == nums[i] and ans[i + n] == nums[i] for 0 &lt;= i &lt; n (0-indexed).</p>
+<p>Specifically, ans is the concatenation of two nums arrays.</p>
+<p>Return the array ans.</p>
+<p>周赛签到题，不提。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#c23f31;">getConcatenation</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> n </span><span style="color:#72ab00;">=</span><span> nums.</span><span style="color:#5597d6;">size</span><span>();
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            nums.</span><span style="color:#5597d6;">push_back</span><span>(nums[i]);
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> nums;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<hr />
+<h2 id="1930-unique-length-3-palindromic-subsequences">1930. Unique Length-3 Palindromic Subsequences<a class="zola-anchor" href="#1930-unique-length-3-palindromic-subsequences" aria-label="Anchor link for: 1930-unique-length-3-palindromic-subsequences">🔗</a></h2>
+<p>Given a string s, return the number of unique palindromes of length three that are a subsequence of s.</p>
+<p>Note that even if there are multiple ways to obtain the same subsequence, it is still only counted once.</p>
+<p>A palindrome is a string that reads the same forwards and backwards.</p>
+<p>A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.</p>
+<p>For example, "ace" is a subsequence of "abcde".</p>
+<p>周赛第二题，求字符串的子序列里长度为3的回文子序列有多少。字符串本身只由26个小写字母构成。</p>
+<p>这个题的切入点在于虽然字符串总长度可能非常长，但字符串本身只由26个小写字母构成，而长度为3的回文子序列的总量很有限，只有最多26x26=676个，那么我们可以将每种字符的下标存储下来，再穷举所有的回文序列，判断该序列是否存在于字符串中。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">class </span><span style="color:#c23f31;">Solution </span><span>{
+</span><span style="color:#668f14;">public</span><span>:
+</span><span>    </span><span style="color:#668f14;">int </span><span style="color:#c23f31;">countPalindromicSubsequence</span><span>(string </span><span style="color:#5597d6;">s</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> ans </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>        vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt; </span><span style="color:#5597d6;">idx</span><span>(</span><span style="color:#b3933a;">26</span><span>);
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> s.</span><span style="color:#5597d6;">length</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#7f8989;">// 记录下所有字符对应的坐标，这里的坐标肯定是递增的
+</span><span>            idx[s[i] </span><span style="color:#72ab00;">- </span><span style="color:#d07711;">&#39;a&#39;</span><span>].</span><span style="color:#5597d6;">push_back</span><span>(i);
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">26</span><span>; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">26</span><span>; j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>                </span><span style="color:#7f8989;">// 判断子序列 { &#39;a&#39; + i, &#39;a&#39; + j, &#39;a&#39; + i } 是否存在
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(idx[i].</span><span style="color:#5597d6;">size</span><span>() </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">||</span><span> idx[j].</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>                    </span><span style="color:#7f8989;">// 显然不成立
+</span><span>                    </span><span style="color:#72ab00;">continue</span><span>;
+</span><span>                }
+</span><span>                </span><span style="color:#7f8989;">// 这里l是字符i首次出现的位置，r是最后出现的位置
+</span><span>                </span><span style="color:#7f8989;">// 我们需要确定字符j是否在区间(l, r)内出现过
+</span><span>                </span><span style="color:#668f14;">int</span><span> l </span><span style="color:#72ab00;">=</span><span> idx[i].</span><span style="color:#5597d6;">front</span><span>(), r </span><span style="color:#72ab00;">=</span><span> idx[i].</span><span style="color:#5597d6;">back</span><span>();
+</span><span>                </span><span style="color:#7f8989;">// [it1, it2) 是一个区间，区间内的坐标k均满足 l &lt; k &lt; r，因此如果该区间不为空，则我们可以得到一个回文子序列
+</span><span>                </span><span style="color:#668f14;">auto</span><span> it1 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">upper_bound</span><span>(idx[j].</span><span style="color:#5597d6;">begin</span><span>(), idx[j].</span><span style="color:#5597d6;">end</span><span>(), l);
+</span><span>                </span><span style="color:#668f14;">auto</span><span> it2 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">lower_bound</span><span>(idx[j].</span><span style="color:#5597d6;">begin</span><span>(), idx[j].</span><span style="color:#5597d6;">end</span><span>(), r);
+</span><span>                </span><span style="color:#72ab00;">if </span><span>(it1 </span><span style="color:#72ab00;">!=</span><span> it2) {
+</span><span>                    ans</span><span style="color:#72ab00;">++</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<p>这个问题的另一个思路是，对于每种可能的字符，我们都获取它们的最左和最右的位置，然后将所有中间的字符都算做一种，这种方法需要用set来进行去重。也比较简单，我这里就不写了。</p>
+<hr />
+<p>总的来说，这周的双周赛做的还不错，周赛就很一般了，不过这周周赛难度确实比较大，也是没办法的事，下周加油。另外最近发现vim真的挺好用的，定义个宏啥的真的可以省非常多操作。</p>
+
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+        <script type="text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}}); </script>
+    </div>
+
+    </div>
+
+  <body>
+  </body>
+</html>

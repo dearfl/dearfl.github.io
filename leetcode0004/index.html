@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="
+    
+">
+      <meta name="author" content="dearfl">
+      <title>dearfl</title>
+      <link rel="stylesheet" href="https://flr.me/site.css?h=e59df8e214aa8ff30370" />
+      <link rel="shortcut icon" type="image/png" href="https://flr.me/favicon.ico"/>
+    </head>
+
+    <header id="header">
+        <h1 class="logo"><a href="/">dearfl</a></h1>
+    </header>
+
+    <div id="content">
+        
+    <div class="post">
+        <div class="post__title">
+            <h1>Leetcode刷题笔记 4</h1>
+            <div class="post__meta">
+                2021-06-27
+                
+            </div>
+            <hr />
+        </div>
+
+        <div class="post__body">
+            <p>本周Leetcode刷题笔记</p>
+<h2 id="309-best-time-to-buy-and-sell-stock-with-cooldown">309. Best Time to Buy and Sell Stock with Cooldown<a class="zola-anchor" href="#309-best-time-to-buy-and-sell-stock-with-cooldown" aria-label="Anchor link for: 309-best-time-to-buy-and-sell-stock-with-cooldown">🔗</a></h2>
+<p>You are given an array prices where prices[i] is the price of a given stock on the ith day.</p>
+<p>Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times) with the following restrictions:</p>
+<ul>
+<li>After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).</li>
+</ul>
+<p>Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).</p>
+<p>因为这个问题规模不大，因此可以通过比较naive的DP来做，假设dp[i]是到第i步时在我们卖出股票的前提下，赚到的最多的钱。那么我们可以遍历前面的[0, i-1]区间内的步骤，来更新最大值。代码如下</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">maxProfit</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">prices</span><span>) {
+</span><span>    unordered_map&lt;</span><span style="color:#668f14;">int</span><span>, </span><span style="color:#668f14;">int</span><span>&gt; dp;
+</span><span>    </span><span style="color:#668f14;">int</span><span> res </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> prices.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> i; j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            dp[i] </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(dp[i], dp[j </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">2</span><span>] </span><span style="color:#72ab00;">+ </span><span style="color:#5597d6;">max</span><span>(prices[i] </span><span style="color:#72ab00;">-</span><span> prices[j], </span><span style="color:#b3933a;">0</span><span>));
+</span><span>        }
+</span><span>        dp[i] </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(dp[i], dp[i</span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>]);
+</span><span>        res </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(res, dp[i]);
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> res;
+</span><span>}
+</span></code></pre>
+<p>这个代码挺难理解的，写的比较差，复杂度也是o(n^2)的，实际上这个题目有更好的o(n)解法。以状态机的方式来思考，我们一共可能有三种状态:</p>
+<ul>
+<li>s0 空闲状态，此时我们可以买入，也可以跳过下一次交易时间。买入则进入s1，跳过则保持在s0</li>
+<li>s1 刚刚买入，此时可以跳过下一次交易时间也可以卖出。跳过下一次交易则我们保持在s1，卖出则进入s2</li>
+<li>s2 刚刚卖出，此时只能跳过下一次交易时间。跳过后我们进入s0</li>
+</ul>
+<p>我们可以看到，不同的状态有不同的进入方式，假如我们每一步都维持每个状态的最大值，那么最终我们需要的最大值就在s0和s2之间，因为s1刚刚买入显然不会是最大值。初始状态则如下：s0是空闲状态，因此是0，s1刚刚买入，所以初始值是<code>-prices[0]</code>，s2刚刚卖出其实是不可能出现的，我们将其初始化为最小值，防止影响我们的结果。同时这里其实也不需要使用vector存储状态，不过我这里就不改了。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">maxProfit</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">prices</span><span>) {
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(prices.</span><span style="color:#5597d6;">size</span><span>() </span><span style="color:#72ab00;">&lt;= </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#5597d6;">s0</span><span>(prices.</span><span style="color:#5597d6;">size</span><span>(), </span><span style="color:#b3933a;">0</span><span>);
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#5597d6;">s1</span><span>(prices.</span><span style="color:#5597d6;">size</span><span>(), </span><span style="color:#b3933a;">0</span><span>);
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#5597d6;">s2</span><span>(prices.</span><span style="color:#5597d6;">size</span><span>(), </span><span style="color:#b3933a;">0</span><span>);
+</span><span>    s1[</span><span style="color:#b3933a;">0</span><span>] </span><span style="color:#72ab00;">= -</span><span>prices[</span><span style="color:#b3933a;">0</span><span>];
+</span><span>    s0[</span><span style="color:#b3933a;">0</span><span>] </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    s2[</span><span style="color:#b3933a;">0</span><span>] </span><span style="color:#72ab00;">=</span><span> INT_MIN;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> prices.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        s0[i] </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(s0[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>], s2[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>]);
+</span><span>        s1[i] </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(s1[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>], s0[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>] </span><span style="color:#72ab00;">-</span><span> prices[i]);
+</span><span>        s2[i] </span><span style="color:#72ab00;">=</span><span> s1[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>] </span><span style="color:#72ab00;">+</span><span> prices[i];
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return </span><span style="color:#5597d6;">max</span><span>(s0[prices.</span><span style="color:#5597d6;">size</span><span>() </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>], s2[prices.</span><span style="color:#5597d6;">size</span><span>() </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>]);
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="95-unique-binary-search-tree-ii">95. Unique Binary Search Tree II<a class="zola-anchor" href="#95-unique-binary-search-tree-ii" aria-label="Anchor link for: 95-unique-binary-search-tree-ii">🔗</a></h2>
+<p>Given an integer n, return all the structurally unique BST's (binary search trees), which has exactly n nodes of unique values from 1 to n. Return the answer in any order.</p>
+<p>这个题要求返回由[1, n]区间内所有的数字构成的全部平衡二叉树。一般这种题我的第一反应只会是递归，思路也比较清晰，从[1,n]区间选一个数i作为根节点的值，再构造由[1, i-1]和[i+1, n]构成的平衡二叉树，作为根节点的左右节点。相比于使用[l, r]作为区间范围，我更偏向于使用由n和base表示的[1+base, n+base]区间范围，因为这样我可以在函数原型内加入一个默认形参，从而免去了另写一个helper函数的麻烦。代码如下：</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#7f8989;">/**
+</span><span style="color:#7f8989;"> * Definition for a binary tree node.
+</span><span style="color:#7f8989;"> * struct TreeNode {
+</span><span style="color:#7f8989;"> *     int val;
+</span><span style="color:#7f8989;"> *     TreeNode *left;
+</span><span style="color:#7f8989;"> *     TreeNode *right;
+</span><span style="color:#7f8989;"> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+</span><span style="color:#7f8989;"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+</span><span style="color:#7f8989;"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+</span><span style="color:#7f8989;"> * };
+</span><span style="color:#7f8989;"> */
+</span><span>
+</span><span>vector&lt;TreeNode</span><span style="color:#72ab00;">*</span><span>&gt; </span><span style="color:#c23f31;">generateTrees</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">n</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">base </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>    vector</span><span style="color:#72ab00;">&lt;</span><span>TreeNode</span><span style="color:#72ab00;">*&gt;</span><span> ans;
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(n </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(n </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>        ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#72ab00;">new </span><span style="color:#5597d6;">TreeNode</span><span>(n </span><span style="color:#72ab00;">+</span><span> base));
+</span><span>        </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&lt;=</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#668f14;">auto</span><span> vec1 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">generateTrees</span><span>(i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>, base);
+</span><span>        </span><span style="color:#668f14;">auto</span><span> vec2 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">generateTrees</span><span>(n </span><span style="color:#72ab00;">-</span><span> i, i </span><span style="color:#72ab00;">+</span><span> base);
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(vec1.</span><span style="color:#5597d6;">empty</span><span>() </span><span style="color:#72ab00;">&amp;&amp;</span><span> vec2.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>            ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#72ab00;">new </span><span style="color:#5597d6;">TreeNode</span><span>(i </span><span style="color:#72ab00;">+</span><span> base));
+</span><span>        } </span><span style="color:#72ab00;">else if </span><span>(vec1.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> right </span><span style="color:#72ab00;">:</span><span> vec2) {
+</span><span>                ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#72ab00;">new </span><span style="color:#5597d6;">TreeNode</span><span>(i </span><span style="color:#72ab00;">+</span><span> base, </span><span style="color:#b3933a;">nullptr</span><span>, right));
+</span><span>            }
+</span><span>        } </span><span style="color:#72ab00;">else if </span><span>(vec2.</span><span style="color:#5597d6;">empty</span><span>()) {
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> left </span><span style="color:#72ab00;">:</span><span> vec1) {
+</span><span>                ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#72ab00;">new </span><span style="color:#5597d6;">TreeNode</span><span>(i </span><span style="color:#72ab00;">+</span><span> base, left, </span><span style="color:#b3933a;">nullptr</span><span>));
+</span><span>            }
+</span><span>        } </span><span style="color:#72ab00;">else </span><span>{
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> left </span><span style="color:#72ab00;">:</span><span> vec1) {
+</span><span>                </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> right </span><span style="color:#72ab00;">:</span><span> vec2) {
+</span><span>                    ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#72ab00;">new </span><span style="color:#5597d6;">TreeNode</span><span>(i </span><span style="color:#72ab00;">+</span><span> base, left, right));
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<p>但是这边写的还是比较麻烦，其实主要原因出在当n=0时的返回值上，我返回了空集，因此需要做一些复杂的检查和处理。但是如果返回的是一个包含nullptr的集合，则根本不需要写这么复杂。另外这边需要注意的是，我们直接把返回的节点接入根节点上，在实际中会有严重的内存问题，但如果仅仅考虑通过这个问题，则无所谓。如下所示：</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>vector&lt;TreeNode</span><span style="color:#72ab00;">*</span><span>&gt; </span><span style="color:#c23f31;">generateTrees</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">n</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">base </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>    vector</span><span style="color:#72ab00;">&lt;</span><span>TreeNode</span><span style="color:#72ab00;">*&gt;</span><span> ans;
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(n </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">return </span><span>{ </span><span style="color:#b3933a;">nullptr </span><span>};
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&lt;=</span><span> n; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> left </span><span style="color:#72ab00;">: </span><span style="color:#5597d6;">generateTrees</span><span>(i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>, base)) {
+</span><span>            </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> right </span><span style="color:#72ab00;">: </span><span style="color:#5597d6;">generateTrees</span><span>(n </span><span style="color:#72ab00;">-</span><span> i, i </span><span style="color:#72ab00;">+</span><span> base)) {
+</span><span>                ans.</span><span style="color:#5597d6;">push_back</span><span>(</span><span style="color:#72ab00;">new </span><span style="color:#5597d6;">TreeNode</span><span>(i </span><span style="color:#72ab00;">+</span><span> base, left, right));
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1314-matrix-block-sum">1314. Matrix Block Sum<a class="zola-anchor" href="#1314-matrix-block-sum" aria-label="Anchor link for: 1314-matrix-block-sum">🔗</a></h2>
+<p>Given a m x n matrix mat and an integer k, return a matrix answer where each answer[i][j] is the sum of all elements mat[r][c] for:</p>
+<ul>
+<li><code>i - k &lt;= r &lt;= i + k</code>,</li>
+<li><code>j - k &lt;= c &lt;= j + k</code>, and</li>
+<li><code>(r, c)</code> is a valid position in the matrix.</li>
+</ul>
+<p>这个问题相对来说比较简单，用前缀和的思路即可，不多说。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt; </span><span style="color:#c23f31;">matrixBlockSum</span><span>(vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">mat</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">k</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> m </span><span style="color:#72ab00;">=</span><span> mat.</span><span style="color:#5597d6;">size</span><span>(), n </span><span style="color:#72ab00;">=</span><span> mat[</span><span style="color:#b3933a;">0</span><span>].</span><span style="color:#5597d6;">size</span><span>();
+</span><span>    vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt; </span><span style="color:#5597d6;">preSum</span><span>(m </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>, </span><span style="color:#5597d6;">vector</span><span>&lt;</span><span style="color:#668f14;">int</span><span>&gt;(n </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>, </span><span style="color:#b3933a;">0</span><span>));
+</span><span>    vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt; </span><span style="color:#5597d6;">ans</span><span>(m, </span><span style="color:#5597d6;">vector</span><span>&lt;</span><span style="color:#668f14;">int</span><span>&gt;(n, </span><span style="color:#b3933a;">0</span><span>));
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> preSum.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> preSum[i].</span><span style="color:#5597d6;">size</span><span>(); j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            preSum[i][j] </span><span style="color:#72ab00;">=</span><span> preSum[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>][j] </span><span style="color:#72ab00;">+</span><span> preSum[i][j </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>] </span><span style="color:#72ab00;">-</span><span> preSum[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>][j </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>] </span><span style="color:#72ab00;">+</span><span> mat[i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>][j </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>];
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> ans.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> ans[i].</span><span style="color:#5597d6;">size</span><span>(); j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#668f14;">int</span><span> x1 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(</span><span style="color:#b3933a;">0</span><span>, i </span><span style="color:#72ab00;">-</span><span> k), y1 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(</span><span style="color:#b3933a;">0</span><span>, j </span><span style="color:#72ab00;">-</span><span> k);
+</span><span>            </span><span style="color:#668f14;">int</span><span> x2 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">min</span><span>(m, i </span><span style="color:#72ab00;">+</span><span> k </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>), y2 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">min</span><span>(n, j </span><span style="color:#72ab00;">+</span><span> k </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1</span><span>);
+</span><span>            ans[i][j] </span><span style="color:#72ab00;">=</span><span> preSum[x2][y2] </span><span style="color:#72ab00;">-</span><span> preSum[x1][y2] </span><span style="color:#72ab00;">-</span><span> preSum[x2][y1] </span><span style="color:#72ab00;">+</span><span> preSum[x1][y1];
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="50-power-x-n">50. Power(x, n)<a class="zola-anchor" href="#50-power-x-n" aria-label="Anchor link for: 50-power-x-n">🔗</a></h2>
+<p>Implement pow(x, n), which calculates x raised to the power n (i.e., $x^n$).</p>
+<p>实现Power(x, n)，这个问题n范围比较大，需要使用快速幂算法，同时需要考虑n为0或者为负的情况。注意好这些细节就不算难写。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">double </span><span style="color:#c23f31;">myPow</span><span>(</span><span style="color:#668f14;">double </span><span style="color:#5597d6;">x</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">n</span><span>) {
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(n </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">1.0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(n </span><span style="color:#72ab00;">== </span><span style="color:#b3933a;">1</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">return</span><span> x;
+</span><span>    }
+</span><span>    </span><span style="color:#668f14;">bool</span><span> neg </span><span style="color:#72ab00;">=</span><span> n </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    n </span><span style="color:#72ab00;">= </span><span style="color:#b39f04;">abs</span><span>(n);
+</span><span>    </span><span style="color:#668f14;">double</span><span> tmp </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">myPow</span><span>(x, n </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>);
+</span><span>    tmp </span><span style="color:#72ab00;">=</span><span> tmp </span><span style="color:#72ab00;">*</span><span> tmp </span><span style="color:#72ab00;">* </span><span style="color:#5597d6;">myPow</span><span>(x, n </span><span style="color:#72ab00;">% </span><span style="color:#b3933a;">2</span><span>);
+</span><span>    </span><span style="color:#72ab00;">return</span><span> neg </span><span style="color:#72ab00;">? </span><span style="color:#b3933a;">1.0 </span><span style="color:#72ab00;">/</span><span> tmp </span><span style="color:#72ab00;">:</span><span> tmp;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1848-minimum-distance-to-the-target-element">1848. Minimum Distance to the Target Element<a class="zola-anchor" href="#1848-minimum-distance-to-the-target-element" aria-label="Anchor link for: 1848-minimum-distance-to-the-target-element">🔗</a></h2>
+<p>Given an integer array nums (0-indexed) and two integers target and start, find an index i such that <code>nums[i] == target</code> and <code>abs(i - start)</code> is minimized. Note that abs(x) is the absolute value of x.</p>
+<p>Return <code>abs(i - start)</code>.</p>
+<p>It is guaranteed that target exists in nums.</p>
+<p>简单题，朝两个方向遍历即可。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">getMinDistance</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">target</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">start</span><span>) {
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; start </span><span style="color:#72ab00;">+</span><span> i </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>() </span><span style="color:#72ab00;">||</span><span> start </span><span style="color:#72ab00;">-</span><span> i </span><span style="color:#72ab00;">&gt;= </span><span style="color:#b3933a;">0</span><span>; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(start </span><span style="color:#72ab00;">+</span><span> i </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>() </span><span style="color:#72ab00;">&amp;&amp;</span><span> nums[start </span><span style="color:#72ab00;">+</span><span> i] </span><span style="color:#72ab00;">==</span><span> target </span><span style="color:#72ab00;">||</span><span> start </span><span style="color:#72ab00;">-</span><span> i </span><span style="color:#72ab00;">&gt;= </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&amp;&amp;</span><span> nums[start </span><span style="color:#72ab00;">-</span><span> i] </span><span style="color:#72ab00;">==</span><span> target) {
+</span><span>            </span><span style="color:#72ab00;">return</span><span> i;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return -</span><span style="color:#b3933a;">1</span><span>;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1704-determine-if-string-halves-are-alike">1704. Determine if String Halves are Alike<a class="zola-anchor" href="#1704-determine-if-string-halves-are-alike" aria-label="Anchor link for: 1704-determine-if-string-halves-are-alike">🔗</a></h2>
+<p>You are given a string s of even length. Split this string into two halves of equal lengths, and let a be the first half and b be the second half.</p>
+<p>Two strings are alike if they have the same number of vowels ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'). Notice that s contains uppercase and lowercase letters.</p>
+<p>Return true if a and b are alike. Otherwise, return false.</p>
+<p>当天的又一个简单题，数前后两半的元音数。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">bool </span><span style="color:#c23f31;">isVowel</span><span>(</span><span style="color:#668f14;">char </span><span style="color:#5597d6;">c</span><span>) {
+</span><span>    c </span><span style="color:#72ab00;">= </span><span style="color:#b39f04;">tolower</span><span>(c);
+</span><span>    </span><span style="color:#72ab00;">return</span><span> c </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;a&#39; </span><span style="color:#72ab00;">||</span><span> c </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;e&#39; </span><span style="color:#72ab00;">||</span><span> c </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;i&#39; </span><span style="color:#72ab00;">||</span><span> c </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;o&#39; </span><span style="color:#72ab00;">||</span><span> c </span><span style="color:#72ab00;">== </span><span style="color:#d07711;">&#39;u&#39;</span><span>;
+</span><span>}
+</span><span>
+</span><span style="color:#668f14;">bool </span><span style="color:#c23f31;">halvesAreAlike</span><span>(string </span><span style="color:#5597d6;">s</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> cnt1 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>, cnt2 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> s.</span><span style="color:#5597d6;">length</span><span>() </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(</span><span style="color:#5597d6;">isVowel</span><span>(s[i])) {
+</span><span>            cnt1</span><span style="color:#72ab00;">++</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(</span><span style="color:#5597d6;">isVowel</span><span>(s[s.</span><span style="color:#5597d6;">length</span><span>() </span><span style="color:#72ab00;">-</span><span> i </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>])) {
+</span><span>            cnt2</span><span style="color:#72ab00;">++</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> cnt1 </span><span style="color:#72ab00;">==</span><span> cnt2;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="735-asteroid-collision">735. Asteroid Collision<a class="zola-anchor" href="#735-asteroid-collision" aria-label="Anchor link for: 735-asteroid-collision">🔗</a></h2>
+<p>We are given an array asteroids of integers representing asteroids in a row.</p>
+<p>For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.</p>
+<p>Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.</p>
+<p>这个题还挺难的，首先我一直没有很好的思路，其次看了别人的思路也没写出自己的代码。这道题其实类似括号匹配，只不过这里匹配之后，需要摧毁其中一个或者全部，剩下的继续参与匹配，因此可以用栈实现。这个题的细节也很重要，什么时候入栈什么时候出栈，绝对值相等时怎么处理，etc，这里贴一段别人的代码。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#c23f31;">asteroidCollision</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">asteroids</span><span>) {
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; ans;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> asteroids.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(asteroids[i] </span><span style="color:#72ab00;">&gt; </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">||</span><span> ans.</span><span style="color:#5597d6;">empty</span><span>() </span><span style="color:#72ab00;">||</span><span> ans.</span><span style="color:#5597d6;">back</span><span>() </span><span style="color:#72ab00;">&lt; </span><span style="color:#b3933a;">0</span><span>) {
+</span><span>            ans.</span><span style="color:#5597d6;">push_back</span><span>(asteroids[i]);
+</span><span>        } </span><span style="color:#72ab00;">else if </span><span>(ans.</span><span style="color:#5597d6;">back</span><span>() </span><span style="color:#72ab00;">&lt;= -</span><span>asteroids[i]) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(ans.</span><span style="color:#5597d6;">back</span><span>() </span><span style="color:#72ab00;">&lt; -</span><span>asteroids[i]) {
+</span><span>                i</span><span style="color:#72ab00;">--</span><span>;
+</span><span>            }
+</span><span>            ans.</span><span style="color:#5597d6;">pop_back</span><span>();
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1720-decode-xored-array">1720. Decode XORed Array<a class="zola-anchor" href="#1720-decode-xored-array" aria-label="Anchor link for: 1720-decode-xored-array">🔗</a></h2>
+<p>There is a hidden integer array arr that consists of n non-negative integers.</p>
+<p>It was encoded into another integer array encoded of length n - 1, such that encoded[i] = arr[i] XOR arr[i + 1]. For example, if arr = [1,0,2,1], then encoded = [1,2,3].</p>
+<p>You are given the encoded array. You are also given an integer first, that is the first element of arr, i.e. arr[0].</p>
+<p>Return the original array arr. It can be proved that the answer exists and is unique.</p>
+<p>简单题，利用异或的性质(A = B ^ C =&gt; B = A ^ C)即可，即使不知道性质，也可以在纸上推一推，总之比较简单。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#c23f31;">decode</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">encoded</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">first</span><span>) {
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; </span><span style="color:#5597d6;">ans</span><span>(</span><span style="color:#b3933a;">1</span><span>, first);
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">auto</span><span> n </span><span style="color:#72ab00;">:</span><span> encoded) {
+</span><span>        ans.</span><span style="color:#5597d6;">push_back</span><span>(ans.</span><span style="color:#5597d6;">back</span><span>() </span><span style="color:#72ab00;">^</span><span> n);
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<h2 id="31-next-permutation">31. Next Permutation<a class="zola-anchor" href="#31-next-permutation" aria-label="Anchor link for: 31-next-permutation">🔗</a></h2>
+<p>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.</p>
+<p>If such an arrangement is not possible, it must rearrange it as the lowest possible order (i.e., sorted in ascending order).</p>
+<p>The replacement must be in place and use only constant extra memory.</p>
+<p>日常题的最后一道，实现next permutation，将一个序列变为它的下一个字典序排列。这个题的算法其实比较简单，即使没有接触过，也可以自己推导出来，有点像手动实现+1，假设区间[1,n]，算法步骤如下：</p>
+<ol>
+<li>找到使得[i, n]非严格单调递减的最大下标i</li>
+<li>反转[i, n]区间，这里反转指逆序</li>
+<li>如果i等于1，说明整个序列从最大字典序转换到了最小字典序，因此算法结束</li>
+<li>找到[i, n]区间内第一个大于$A_{i-1}$的数$A_ k$，即upper bound</li>
+<li>交换$A_ k$和$A_ {i-1}$</li>
+</ol>
+<p>整个算法就这5步，写起来也比较简单，我这里是当时实现的两个版本，第一个比较粗糙，第二个经过了一定的优化。这个题主要的作用还是帮我加深了对next permutation的理解，如果要使用这个函数遍历一个序列的全排列，那么必须先对这个序列进行排序。之前有一次机试我实际上就犯错了，不过当时运气好，测试样例很简单因此侥幸通过了。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">void </span><span style="color:#c23f31;">helper</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;::iterator </span><span style="color:#5597d6;">first</span><span>, vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;::iterator </span><span style="color:#5597d6;">last</span><span>) {
+</span><span>    </span><span style="color:#668f14;">auto</span><span> it </span><span style="color:#72ab00;">=</span><span> last </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>;
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(it </span><span style="color:#72ab00;">!=</span><span> first </span><span style="color:#72ab00;">&amp;&amp; *</span><span>(it </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">&gt;= *</span><span>it) {
+</span><span>        it</span><span style="color:#72ab00;">--</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#5597d6;">sort</span><span>(it, last);
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(it </span><span style="color:#72ab00;">!=</span><span> first) {
+</span><span>        </span><span style="color:#668f14;">auto</span><span> k </span><span style="color:#72ab00;">=</span><span> it </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>;
+</span><span>        </span><span style="color:#72ab00;">while </span><span>(it </span><span style="color:#72ab00;">!=</span><span> last </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">&amp;&amp; *</span><span>k </span><span style="color:#72ab00;">&gt;= *</span><span>it) {
+</span><span>            it</span><span style="color:#72ab00;">++</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#5597d6;">swap</span><span>(</span><span style="color:#72ab00;">*</span><span>k, </span><span style="color:#72ab00;">*</span><span>it);
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#668f14;">void </span><span style="color:#c23f31;">helper</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;::iterator </span><span style="color:#5597d6;">first</span><span>, vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;::iterator </span><span style="color:#5597d6;">last</span><span>) {
+</span><span>    </span><span style="color:#668f14;">auto</span><span> it </span><span style="color:#72ab00;">=</span><span> last </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>;
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(it </span><span style="color:#72ab00;">!=</span><span> first </span><span style="color:#72ab00;">&amp;&amp; *</span><span>(it </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>) </span><span style="color:#72ab00;">&gt;= *</span><span>it) {
+</span><span>        it</span><span style="color:#72ab00;">--</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#5597d6;">reverse</span><span>(it, last);
+</span><span>    </span><span style="color:#72ab00;">if </span><span>(it </span><span style="color:#72ab00;">!=</span><span> first) {
+</span><span>        </span><span style="color:#668f14;">auto</span><span> iter </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">upper_bound</span><span>(it, last, </span><span style="color:#72ab00;">*</span><span>(it </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>));
+</span><span>        </span><span style="color:#5597d6;">swap</span><span>(</span><span style="color:#72ab00;">*</span><span>(it </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1</span><span>), </span><span style="color:#72ab00;">*</span><span>iter);
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#668f14;">void </span><span style="color:#c23f31;">nextPermutation</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>) {
+</span><span>    </span><span style="color:#5597d6;">helper</span><span>(nums.</span><span style="color:#5597d6;">begin</span><span>(), nums.</span><span style="color:#5597d6;">end</span><span>());
+</span><span>}
+</span></code></pre>
+<hr />
+<p>然后是本周的双周赛，这次是我第一次参加双周赛，题目也不算很难，做出来三个，如果时间多点其实也可能能做出来第四个，不过无所谓了。</p>
+<h2 id="1909-remove-one-element-to-make-the-array-strictly-increasing">1909. Remove One Element to Make the Array Strictly Increasing<a class="zola-anchor" href="#1909-remove-one-element-to-make-the-array-strictly-increasing" aria-label="Anchor link for: 1909-remove-one-element-to-make-the-array-strictly-increasing">🔗</a></h2>
+<p>Given a 0-indexed integer array nums, return true if it can be made strictly increasing after removing exactly one element, or false otherwise. If the array is already strictly increasing, return true.</p>
+<p>The array nums is strictly increasing if nums[i - 1] &lt; nums[i] for each index (1 &lt;= i &lt; nums.length).</p>
+<p>给一个数组，判定该数组是否可以通过仅仅删除一个元素就成为严格单调递增的数组。当时差点怀疑人生，因为这个题看起来好像简单，实则做起来却完全不是这样。但是这个题简单可能简单在数据不大，数组长度10000级别，也就是说o(n^2)的时间复杂度是可以通过的。因此暴力基本是最好的选择了。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">bool </span><span style="color:#c23f31;">canBeIncreasing</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>) {
+</span><span>    vector&lt;</span><span style="color:#668f14;">int</span><span>&gt; vec;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        vec.</span><span style="color:#5597d6;">clear</span><span>();
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>(); j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(i </span><span style="color:#72ab00;">!=</span><span> j) {
+</span><span>                vec.</span><span style="color:#5597d6;">push_back</span><span>(nums[j]);
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#668f14;">bool</span><span> flag </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">true</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">1</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> vec.</span><span style="color:#5597d6;">size</span><span>(); j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#72ab00;">if </span><span>(vec[j</span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>] </span><span style="color:#72ab00;">&gt;=</span><span> vec[j]) {
+</span><span>                flag </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">false</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#72ab00;">if </span><span>(flag) {
+</span><span>            </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">true</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return </span><span style="color:#b3933a;">false</span><span>;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1910-remove-all-occurrences-of-a-substring">1910. Remove All Occurrences of a Substring<a class="zola-anchor" href="#1910-remove-all-occurrences-of-a-substring" aria-label="Anchor link for: 1910-remove-all-occurrences-of-a-substring">🔗</a></h2>
+<p>Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:</p>
+<ul>
+<li>Find the leftmost occurrence of the substring part and remove it from s.</li>
+</ul>
+<p>Return s after removing all occurrences of part.</p>
+<p>A substring is a contiguous sequence of characters in a string.</p>
+<p>这道题倒是没有什么好说的，比第一题简单多了，而且数据级别也很小，直接模拟即可。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>string </span><span style="color:#c23f31;">removeOccurrences</span><span>(string </span><span style="color:#5597d6;">s</span><span>, string </span><span style="color:#5597d6;">part</span><span>) {
+</span><span>    </span><span style="color:#668f14;">auto</span><span> it </span><span style="color:#72ab00;">=</span><span> s.</span><span style="color:#5597d6;">find</span><span>(part);
+</span><span>    </span><span style="color:#72ab00;">while </span><span>(it </span><span style="color:#72ab00;">!= -</span><span style="color:#b3933a;">1</span><span>) {
+</span><span>        s </span><span style="color:#72ab00;">=</span><span> s.</span><span style="color:#5597d6;">substr</span><span>(</span><span style="color:#b3933a;">0</span><span>, it) </span><span style="color:#72ab00;">+</span><span> s.</span><span style="color:#5597d6;">substr</span><span>(it </span><span style="color:#72ab00;">+</span><span> part.</span><span style="color:#5597d6;">length</span><span>());
+</span><span>        it </span><span style="color:#72ab00;">=</span><span> s.</span><span style="color:#5597d6;">find</span><span>(part);
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> s;
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1911-maximum-alternating-subsequence-sum">1911. Maximum Alternating Subsequence Sum<a class="zola-anchor" href="#1911-maximum-alternating-subsequence-sum" aria-label="Anchor link for: 1911-maximum-alternating-subsequence-sum">🔗</a></h2>
+<p>The alternating sum of a 0-indexed array is defined as the sum of the elements at even indices minus the sum of the elements at odd indices.</p>
+<p>For example, the alternating sum of [4,2,5,3] is (4 + 5) - (2 + 3) = 4.
+Given an array nums, return the maximum alternating sum of any subsequence of nums (after reindexing the elements of the subsequence).</p>
+<p>A subsequence of an array is a new array generated from the original array by deleting some elements (possibly none) without changing the remaining elements' relative order. For example, [2,7,4] is a subsequence of [4,2,3,7,2,1,4] (the underlined elements), while [2,4,2] is not.</p>
+<p>这个题求序列的子序列最大Alternating Sum，Alternating Sum是序列的偶数下标的数总和减去奇数下标的数总和。这个题其实和之前做过的买股票的题类似，而且比那个更简单，只有两种状态：我们还是用买卖股票的例子来说明，买入和卖出都相当于我们选择了一个数加入子序列，但是他们的下标分别为奇数和偶数，我们也可以跳过，此时不选择该数进入子序列。假如和股票的题类比，这里我们的目标是其实是要亏损最大。</p>
+<ol>
+<li>s0，刚买入股票，此时可以跳过或者卖出，跳过保持s0，卖出进入s1</li>
+<li>s1，刚卖出股票，此时可以跳过或者买入，跳过保持s1，卖出进入s0</li>
+</ol>
+<p>代码如下:</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">long long </span><span style="color:#c23f31;">maxAlternatingSum</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>) {
+</span><span>    </span><span style="color:#668f14;">long long</span><span> s1 </span><span style="color:#72ab00;">=</span><span> INT_MIN, s2 </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> nums.</span><span style="color:#5597d6;">size</span><span>(); i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        s1 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(s1, s2 </span><span style="color:#72ab00;">+</span><span> nums[i]);
+</span><span>        s2 </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">max</span><span>(s2, s1 </span><span style="color:#72ab00;">-</span><span> nums[i]);
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return </span><span style="color:#5597d6;">max</span><span>(s1, s2);
+</span><span>}
+</span></code></pre>
+<p>这里其实我不太确定代码的正确性，理论上来说好像有点问题，当时提交的比较急，没有仔细检查，理论上应该先备份s1的值，在更新s2时使用备份的值而不是更新后的s1。但是总之通过了所有的测试样例。</p>
+<p>双周赛的最后一题算是考察数据结构的设计，比较复杂，我就不写了。</p>
+<hr />
+<p>然后是本周的周赛，本周周赛对我来说还是比较难的，只做出来两道题。</p>
+<h2 id="1913-maximum-product-difference-between-two-pairs">1913. Maximum Product Difference Between Two Pairs<a class="zola-anchor" href="#1913-maximum-product-difference-between-two-pairs" aria-label="Anchor link for: 1913-maximum-product-difference-between-two-pairs">🔗</a></h2>
+<p>The product difference between two pairs (a, b) and (c, d) is defined as (a * b) - (c * d).</p>
+<p>For example, the product difference between (5, 6) and (2, 7) is (5 * 6) - (2 * 7) = 16.
+Given an integer array nums, choose four distinct indices w, x, y, and z such that the product difference between pairs (nums[w], nums[x]) and (nums[y], nums[z]) is maximized.</p>
+<p>Return the maximum such product difference.</p>
+<p>老老实实做可能还比较费劲，但是本题不需要考虑负数，因此直接排序选择前两位和后两位比较简单。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">maxProductDifference</span><span>(vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">nums</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> n </span><span style="color:#72ab00;">=</span><span> nums.</span><span style="color:#5597d6;">size</span><span>();
+</span><span>    </span><span style="color:#5597d6;">sort</span><span>(nums.</span><span style="color:#5597d6;">begin</span><span>(), nums.</span><span style="color:#5597d6;">end</span><span>());
+</span><span>    </span><span style="color:#72ab00;">return</span><span> nums[n</span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">1</span><span>] </span><span style="color:#72ab00;">*</span><span> nums[n</span><span style="color:#72ab00;">-</span><span style="color:#b3933a;">2</span><span>] </span><span style="color:#72ab00;">-</span><span> nums[</span><span style="color:#b3933a;">0</span><span>] </span><span style="color:#72ab00;">*</span><span> nums[</span><span style="color:#b3933a;">1</span><span>];
+</span><span>}
+</span></code></pre>
+<hr />
+<h2 id="1914-cyclically-rotating-a-grid">1914. Cyclically Rotating a Grid<a class="zola-anchor" href="#1914-cyclically-rotating-a-grid" aria-label="Anchor link for: 1914-cyclically-rotating-a-grid">🔗</a></h2>
+<p>You are given an m x n integer matrix grid, where m and n are both even integers, and an integer k.</p>
+<p>The matrix is composed of several layers, which is shown in the below image, where each color is its own layer:</p>
+<p><img src="https://assets.leetcode.com/uploads/2021/06/10/ringofgrid.png" alt="image" /></p>
+<p>A cyclic rotation of the matrix is done by cyclically rotating each layer in the matrix. To cyclically rotate a layer once, each element in the layer will take the place of the adjacent element in the counter-clockwise direction. An example rotation is shown below:</p>
+<p><img src="https://assets.leetcode.com/uploads/2021/06/22/explanation_grid.jpg" alt="rotate" /></p>
+<p>Return the matrix after applying k cyclic rotations to it.</p>
+<p>这个题是究级烦，按照规则旋转矩阵的layer，我最后选择的做法是对每一层的坐标都做变换，得到转换前的坐标和转换后的坐标的关系。有多恶心就不提了。</p>
+<pre data-lang="cpp" style="background-color:#f5f5f5;color:#1f1f1f;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#668f14;">int </span><span style="color:#c23f31;">x1</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">j</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">a</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">b</span><span>) {
+</span><span>    </span><span style="color:#72ab00;">return </span><span>(</span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&lt;=</span><span> j </span><span style="color:#72ab00;">&amp;&amp;</span><span> j </span><span style="color:#72ab00;">&lt;</span><span> b) </span><span style="color:#72ab00;">? </span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">:</span><span> b </span><span style="color:#72ab00;">&lt;=</span><span> j </span><span style="color:#72ab00;">&amp;&amp;</span><span> j </span><span style="color:#72ab00;">&lt;=</span><span> a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">?</span><span> j </span><span style="color:#72ab00;">-</span><span> b </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">: </span><span>(a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">&lt;</span><span> j </span><span style="color:#72ab00;">&amp;&amp;</span><span> j </span><span style="color:#72ab00;">&lt;=</span><span> a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">3 </span><span style="color:#72ab00;">?</span><span> a </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">*</span><span> a </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">*</span><span> b </span><span style="color:#72ab00;">-</span><span> j </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">4</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#668f14;">int </span><span style="color:#c23f31;">y1</span><span>(</span><span style="color:#668f14;">int </span><span style="color:#5597d6;">j</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">a</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">b</span><span>) {
+</span><span>    </span><span style="color:#72ab00;">return </span><span>(</span><span style="color:#b3933a;">0 </span><span style="color:#72ab00;">&lt;=</span><span> j </span><span style="color:#72ab00;">&amp;&amp;</span><span> j </span><span style="color:#72ab00;">&lt;</span><span> b) </span><span style="color:#72ab00;">?</span><span> j </span><span style="color:#72ab00;">:</span><span> b </span><span style="color:#72ab00;">&lt;=</span><span> j </span><span style="color:#72ab00;">&amp;&amp;</span><span> j </span><span style="color:#72ab00;">&lt;=</span><span> a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">?</span><span> b </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">1 </span><span style="color:#72ab00;">: </span><span>(a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">&lt;</span><span> j </span><span style="color:#72ab00;">&amp;&amp;</span><span> j </span><span style="color:#72ab00;">&lt;=</span><span> a </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">3 </span><span style="color:#72ab00;">?</span><span> a </span><span style="color:#72ab00;">+ </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">*</span><span> b </span><span style="color:#72ab00;">-</span><span> j </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">3 </span><span style="color:#72ab00;">: </span><span style="color:#b3933a;">0</span><span>);
+</span><span>}
+</span><span>
+</span><span>vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt; </span><span style="color:#c23f31;">rotateGrid</span><span>(vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt;</span><span style="color:#72ab00;">&amp; </span><span style="color:#5597d6;">grid</span><span>, </span><span style="color:#668f14;">int </span><span style="color:#5597d6;">k</span><span>) {
+</span><span>    </span><span style="color:#668f14;">int</span><span> m </span><span style="color:#72ab00;">=</span><span> grid.</span><span style="color:#5597d6;">size</span><span>(), n </span><span style="color:#72ab00;">=</span><span> grid.</span><span style="color:#5597d6;">front</span><span>().</span><span style="color:#5597d6;">size</span><span>(), l </span><span style="color:#72ab00;">= </span><span style="color:#5597d6;">min</span><span>(m, n);
+</span><span>    vector&lt;vector&lt;</span><span style="color:#668f14;">int</span><span>&gt;&gt; ans </span><span style="color:#72ab00;">=</span><span> grid;
+</span><span>    </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> i </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; i </span><span style="color:#72ab00;">&lt;</span><span> l </span><span style="color:#72ab00;">/ </span><span style="color:#b3933a;">2</span><span>; i</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>        </span><span style="color:#668f14;">int</span><span> a </span><span style="color:#72ab00;">=</span><span> m </span><span style="color:#72ab00;">-</span><span> i </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">2</span><span>, b </span><span style="color:#72ab00;">=</span><span> n </span><span style="color:#72ab00;">-</span><span> i </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">2</span><span>, c </span><span style="color:#72ab00;">=</span><span> a </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">+</span><span> b </span><span style="color:#72ab00;">* </span><span style="color:#b3933a;">2 </span><span style="color:#72ab00;">- </span><span style="color:#b3933a;">4</span><span>;
+</span><span>        </span><span style="color:#72ab00;">for </span><span>(</span><span style="color:#668f14;">int</span><span> j </span><span style="color:#72ab00;">= </span><span style="color:#b3933a;">0</span><span>; j </span><span style="color:#72ab00;">&lt;</span><span> c; j</span><span style="color:#72ab00;">++</span><span>) {
+</span><span>            </span><span style="color:#668f14;">int</span><span> x </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#5597d6;">x1</span><span>(j, a, b);
+</span><span>            </span><span style="color:#668f14;">int</span><span> y </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#5597d6;">y1</span><span>(j, a, b);
+</span><span>            </span><span style="color:#668f14;">int</span><span> s </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#5597d6;">x1</span><span>((j </span><span style="color:#72ab00;">+</span><span> k) </span><span style="color:#72ab00;">%</span><span> c, a, b), f </span><span style="color:#72ab00;">=</span><span> i </span><span style="color:#72ab00;">+ </span><span style="color:#5597d6;">y1</span><span>((j </span><span style="color:#72ab00;">+</span><span> k) </span><span style="color:#72ab00;">%</span><span> c, a, b);
+</span><span>            ans[x][y] </span><span style="color:#72ab00;">=</span><span> grid[s][f];
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#72ab00;">return</span><span> ans;
+</span><span>}
+</span></code></pre>
+<p>接下来的两道题我都基本没有思路，可以说是完全不会，连别人的题解都还没理解，就先不写了。这周周赛还是挺惨的，感觉还是基础不行啊，继续加油吧。</p>
+
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+        <script type="text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}}); </script>
+    </div>
+
+    </div>
+
+  <body>
+  </body>
+</html>
