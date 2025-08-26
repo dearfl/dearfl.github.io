@@ -1,0 +1,316 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | Leetcode刷题笔记 5</title><link as=style href=https://flr.me/css/style.css rel=preload><link crossorigin href=https://raw.githack.com/Speyll/suCSS/main/reset-min.css rel=stylesheet><link crossorigin href=https://raw.githack.com/Speyll/suCSS/main/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/blog> /blog/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><time datetime=2021-07-04>Published on: <span class=accent-data>2021-07-04</span> </time><h1>Leetcode刷题笔记 5</h1></header><div class=post-content><p>本周Leetcode刷题笔记<p>本周嗓子一直在咳嗽，去医院检查结果是急性呼吸道感染，吃了点药，也只能说好了点，但是没完全好。anyway，总之我就趁机偷懒了一点，基本上多找了点简单题做做，然后这周也没有双周赛，所以总的来说这周做题量比以往小。然后这周也懒得写之前做的题的笔记了。<h2 id=867-transpose-matrix>867. Transpose Matrix</h2><p>Given a 2D integer array matrix, return the transpose of matrix.<p>The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix’s row and column indices.<p>矩阵转置，很简单不说了<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>> </span><span style=color:#8ec07c>transpose</span><span>(vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>matrix</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> m </span><span style=color:#fe8019>=</span><span> matrix.</span><span style=color:#fdf4c1>size</span><span>(), n </span><span style=color:#fe8019>=</span><span> matrix.</span><span style=color:#fdf4c1>back</span><span>().</span><span style=color:#fdf4c1>size</span><span>();
+</span><span>    vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>> </span><span style=color:#fdf4c1>ans(n, vector&lt;</span><span style=color:#fa5c4b>int</span><span style=color:#fdf4c1>>(m))</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> m; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> j </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; j </span><span style=color:#fe8019>&lt;</span><span> n; j</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            ans[j][i] </span><span style=color:#fe8019>=</span><span> matrix[i][j];
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><hr><h2 id=678-valid-parenthesis-string>678. Valid Parenthesis String</h2><p>Given a string s containing only three types of characters: ‘(’, ‘)’ and ‘*’, return true if s is valid.<p>The following rules define a valid string:<ul><li>Any left parenthesis ‘(’ must have a corresponding right parenthesis ‘)’.<li>Any right parenthesis ‘)’ must have a corresponding left parenthesis ‘(’.<li>Left parenthesis ‘(’ must go before the corresponding right parenthesis ‘)’.<li>‘*’ could be treated as a single right parenthesis ‘)’ or a single left parenthesis ‘(’ or an empty string “”.</ul><p>这个题挺有意思的，是之前合法括号字符串的进阶版，引入*作为通配符。星号可以作为左括号，右括号或者空。这个题我没有想出特别好的做法，我主要的想法还是暴力，但是这样对于一些星号很多的特殊样例，绝对会超时。因为这个题的括号只有一种，用贪心的想法是比较好解决的，而关键是如何思考到正确的贪心解法。下面介绍两种别人的贪心解法。<ol><li><p>数左括号个数。这个做法的思路在于我们数左括号的个数，根据这个数决定我们后续需要多少个右括号配对。问题在于星号的不确定性，因此我们维护一个范围[cmin, cmax]，cmin表示我们最少需要这么多个右括号来匹配，cmax表示我们最多可以匹配这么多个右括号。那么怎么样才是不合法的呢？如果在任意时刻，cmax小于0，则说明我们没有足够的左括号来匹配右括号，因此是不合法的。当我们到达字符串的结尾，此时我们已经没有更多的括号可以匹配了，如果此时cmin不等于0，则说明我们存在没有进行匹配的括号，那么也是不合法的。</p><li><p>双栈模拟。双栈模拟的想法是当我们遇到右括号时，我们应当优先使用左括号进行配对，因为星号是通配符，它可以适用于更多情景。双栈模拟的步骤稍微复杂一些，但我个人觉得更加容易理解一点。双栈模拟的思路是用两个栈保存左括号和星号的位置，当我们遇到右括号时，我们优先使用左括号进行配对。如果没有可以配对的左括号，那么再使用星号进行配对。双栈模拟分为2步，第1步是模拟配对过程，第2步是为剩余没有被配对的左括号寻找匹配的星号。</p> <ol><li><p>第1步，如果碰到一个右括号时，左括号和星号的栈都为空，则说明这个右括号没有能与之配对的符号，字符串非法。否则优先使用左括号配对，一直到字符串结束。</p><li><p>第2步我们进一步检查两个栈里剩余的字符。我们的目的是为每一个左括号都匹配上相应的右括号(使用剩余的星号)。因此这里存在一个要求，每一个左括号必须在对应的星号前面，否则它们是无法进行配对的。这也是为什么我们要使用栈来存储位置的原因。最后如果每一个剩余的左括号都能配对成功，那么整个字符串都是合法的，至于剩余的星号，我们无需关心。</p></ol></ol><pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#928374;font-style:italic>// 第1种做法
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>checkValidString</span><span>(string </span><span style=color:#fdf4c1>s</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> minl </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>, maxl </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto</span><span> c </span><span style=color:#fe8019>:</span><span> s) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(c </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'('</span><span>) {
+</span><span>            minl</span><span style=color:#fe8019>++</span><span>, maxl</span><span style=color:#fe8019>++</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else if </span><span>(c </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>')'</span><span>) {
+</span><span>            </span><span style=color:#928374;font-style:italic>// minl是我们必须匹配的左括号数量，自然大于小于0
+</span><span>            minl </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>max(minl </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>, </span><span style=color:#d3869b>0</span><span style=color:#fdf4c1>)</span><span>;
+</span><span>            maxl</span><span style=color:#fe8019>--</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            </span><span style=color:#928374;font-style:italic>// 碰到星号时，minl当成右括号，maxl当成左括号
+</span><span>            minl </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>max(minl </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>, </span><span style=color:#d3869b>0</span><span style=color:#fdf4c1>)</span><span>;
+</span><span>            maxl</span><span style=color:#fe8019>++</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(maxl </span><span style=color:#fe8019>&lt; </span><span style=color:#d3869b>0</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> minl </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#928374;font-style:italic>// 双栈模拟
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>checkValidString</span><span>(string </span><span style=color:#fdf4c1>s</span><span>) {
+</span><span>    vector&lt;</span><span style=color:#fa5c4b>int</span><span>> open, star;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> s.</span><span style=color:#fdf4c1>length</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(s[i] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'('</span><span>) {
+</span><span>            open.</span><span style=color:#fdf4c1>push_back</span><span>(i);
+</span><span>        } </span><span style=color:#fa5c4b>else if </span><span>(s[i] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>')'</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(open.</span><span style=color:#fdf4c1>empty</span><span>() </span><span style=color:#fe8019>&&</span><span> star.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>                </span><span style=color:#928374;font-style:italic>// 两个栈都为空，false
+</span><span>                </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// 优先匹配左括号
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fe8019>!</span><span>open.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>                open.</span><span style=color:#fdf4c1>pop_back</span><span>();
+</span><span>            } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                star.</span><span style=color:#fdf4c1>pop_back</span><span>();
+</span><span>            }
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            star.</span><span style=color:#fdf4c1>push_back</span><span>(i);
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fe8019>!</span><span>open.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        </span><span style=color:#fa5c4b>int</span><span> idx </span><span style=color:#fe8019>=</span><span> open.</span><span style=color:#fdf4c1>back</span><span>();
+</span><span>        open.</span><span style=color:#fdf4c1>pop_back</span><span>();
+</span><span>        </span><span style=color:#928374;font-style:italic>// 如果星号栈为空或者栈顶坐标小于左括号坐标，false
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(star.</span><span style=color:#fdf4c1>empty</span><span>() </span><span style=color:#fe8019>||</span><span> star.</span><span style=color:#fdf4c1>back</span><span>() </span><span style=color:#fe8019>&lt;</span><span> idx) {
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>        }
+</span><span>        star.</span><span style=color:#fdf4c1>pop_back</span><span>();
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>true</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><p>总的来说其实两种方法都是贪心的思路，这里我也没有严格证明这两种方法都是对的，没办法我实在是太菜了。<hr><h2 id=1636-sort-array-by-increasing-frequency>1636. Sort Array By Increasing Frequency</h2><p>Given an array of integers nums, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.<p>Return the sorted array.<p>按照数组内元素的出现次数排序，没啥好说的，哈希表统计一下出现次数，再按照哈希表数据排序即可。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;</span><span style=color:#fa5c4b>int</span><span>> </span><span style=color:#8ec07c>frequencySort</span><span>(vector&lt;</span><span style=color:#fa5c4b>int</span><span>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>nums</span><span>) {
+</span><span>    unordered_map&lt;</span><span style=color:#fa5c4b>int</span><span>, </span><span style=color:#fa5c4b>int</span><span>> cnt;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto</span><span> n </span><span style=color:#fe8019>:</span><span> nums) {
+</span><span>        cnt[n]</span><span style=color:#fe8019>++</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fdf4c1>sort(nums.begin(), nums.end(), [</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>cnt](</span><span style=color:#fa5c4b>int</span><span style=color:#fdf4c1> a, </span><span style=color:#fa5c4b>int</span><span style=color:#fdf4c1> b) {
+</span><span style=color:#fdf4c1>        </span><span style=color:#fa5c4b>return</span><span style=color:#fdf4c1> cnt[a] </span><span style=color:#fe8019>==</span><span style=color:#fdf4c1> cnt[b] </span><span style=color:#fe8019>?</span><span style=color:#fdf4c1> a </span><span style=color:#fe8019>></span><span style=color:#fdf4c1> b </span><span style=color:#fe8019>:</span><span style=color:#fdf4c1> cnt[a] </span><span style=color:#fe8019>&lt;</span><span style=color:#fdf4c1> cnt[b];
+</span><span style=color:#fdf4c1>    })</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> nums;
+</span><span>}
+</span></code></pre><hr><h2 id=48-rotate-image>48. Rotate Image</h2><p>You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).<p>You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.<p>旋转nxn的图像/Matrix，要求原地旋转不申请另外一块图像/Matrix内存。<p>我的想法其实比较笨，类似于每次都旋转四个对应的位置，比如四个角，又或者<code>(1,0),(n-1,1),(n-2,n-1),(0,n-2)</code>，然后循环的选取应该旋转的位置。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>void </span><span style=color:#8ec07c>rotate</span><span>(vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>matrix</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> n </span><span style=color:#fe8019>=</span><span> matrix.</span><span style=color:#fdf4c1>size</span><span>();
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> n </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span>; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>int</span><span> k </span><span style=color:#fe8019>=</span><span> n </span><span style=color:#fe8019>- </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>*</span><span> i;
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> j </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; j </span><span style=color:#fe8019>&lt;</span><span> k </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>; j</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            </span><span style=color:#fdf4c1>swap(matrix[i][i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> j], matrix[i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> j][i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> k </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>])</span><span>;
+</span><span>            </span><span style=color:#fdf4c1>swap(matrix[i][i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> j], matrix[i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> k </span><span style=color:#fe8019>-</span><span style=color:#fdf4c1> j </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>][i])</span><span>;
+</span><span>            </span><span style=color:#fdf4c1>swap(matrix[i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> k </span><span style=color:#fe8019>-</span><span style=color:#fdf4c1> j </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>][i], matrix[i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> k </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>][i </span><span style=color:#fe8019>+</span><span style=color:#fdf4c1> k </span><span style=color:#fe8019>-</span><span style=color:#fdf4c1> j </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>])</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre><p>实际上存在更加通用的做法，即先做行反转，再做转置。包括逆时针旋转也有先做列反转，再做转置的做法。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>void </span><span style=color:#8ec07c>rotate</span><span>(vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>> > </span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>matrix</span><span>) {
+</span><span>    </span><span style=color:#fdf4c1>reverse(matrix.begin(), matrix.end())</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> matrix.</span><span style=color:#fdf4c1>size</span><span>(); </span><span style=color:#fe8019>++</span><span>i) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> j </span><span style=color:#fe8019>=</span><span> i </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>; j </span><span style=color:#fe8019>&lt;</span><span> matrix[i].</span><span style=color:#fdf4c1>size</span><span>(); </span><span style=color:#fe8019>++</span><span>j)
+</span><span>            </span><span style=color:#fdf4c1>swap(matrix[i][j], matrix[j][i])</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre><hr><h2 id=690-employee-importance>690. Employee Importance</h2><p>You have a data structure of employee information, which includes the employee’s unique id, their importance value, and their direct subordinates’ id.<p>You are given an array of employees employees where:<ul><li>employees[i].id is the ID of the ith employee.<li>employees[i].importance is the importance value of the ith employee.<li>employees[i].subordinates is a list of the IDs of the subordinates of the ith employee.</ul><p>Given an integer id that represents the ID of an employee, return the total importance value of this employee and all their subordinates.<p>员工重要度，这个题目没啥好说的，本质上就是构造一个树求子树的和，当然并不需要真的构造一个树的数据结构，只要能表达这个关系即可。分为递归和队列的写法，也都差不多，递归写法这边就懒得写了。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>int </span><span style=color:#8ec07c>getImportance</span><span>(vector&lt;Employee</span><span style=color:#fe8019>*</span><span>> </span><span style=color:#fdf4c1>employees</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>id</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    unordered_map</span><span style=color:#fe8019>&lt;</span><span style=color:#fa5c4b>int</span><span>, Employee</span><span style=color:#fe8019>*></span><span> m;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto</span><span> em </span><span style=color:#fe8019>:</span><span> employees) {
+</span><span>        m[em-></span><span style=color:#fdf4c1>id</span><span>] </span><span style=color:#fe8019>=</span><span> em;
+</span><span>    }
+</span><span>    deque&lt;</span><span style=color:#fa5c4b>int</span><span>> q;
+</span><span>    q.</span><span style=color:#fdf4c1>push_back</span><span>(id);
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fe8019>!</span><span>q.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        id </span><span style=color:#fe8019>=</span><span> q.</span><span style=color:#fdf4c1>front</span><span>();
+</span><span>        q.</span><span style=color:#fdf4c1>pop_front</span><span>();
+</span><span>        ans </span><span style=color:#fe8019>+=</span><span> m[id]-></span><span style=color:#fdf4c1>importance</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto</span><span> k </span><span style=color:#fe8019>:</span><span> m[id]-></span><span style=color:#fdf4c1>subordinates</span><span>) {
+</span><span>            q.</span><span style=color:#fdf4c1>push_back</span><span>(k);
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><hr><h2 id=1162-as-far-from-land-as-possible>1162. As Far from Land as Possible</h2><p>Given an n x n grid containing only values 0 and 1, where 0 represents water and 1 represents land, find a water cell such that its distance to the nearest land cell is maximized, and return the distance. If no land or water exists in the grid, return -1.<p>The distance used in this problem is the Manhattan distance: the distance between two cells (x0, y0) and (x1, y1) is |x0 - x1| + |y0 - y1|.<p>求海面离岛屿的最大曼哈顿距离。正常来说这个题的思考是从海面出发，比如做DP啥的，但我也没想出特别好的做法。实际上从岛屿出发还比较容易写，时间复杂度也比较低，为o(n^2)。不过需要使用两个队列的trick。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>int </span><span style=color:#8ec07c>maxDistance</span><span>(vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>grid</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> ans </span><span style=color:#fe8019>= -</span><span style=color:#d3869b>1</span><span>, n </span><span style=color:#fe8019>=</span><span> grid.</span><span style=color:#fdf4c1>size</span><span>();
+</span><span>    vector&lt;pair&lt;</span><span style=color:#fa5c4b>int</span><span>, </span><span style=color:#fa5c4b>int</span><span>>> di </span><span style=color:#fe8019>= </span><span>{ {</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>0</span><span>}, {</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#d3869b>1</span><span>}, {</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>0</span><span>}, {</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>} };
+</span><span>    deque&lt;pair&lt;</span><span style=color:#fa5c4b>int</span><span>, </span><span style=color:#fa5c4b>int</span><span>>> dq, tmp;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> grid.</span><span style=color:#fdf4c1>size</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> j </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; j </span><span style=color:#fe8019>&lt;</span><span> grid[i].</span><span style=color:#fdf4c1>size</span><span>(); j</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(grid[i][j]) {
+</span><span>                dq.</span><span style=color:#fdf4c1>emplace_back</span><span>(i, j);
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fe8019>!</span><span>dq.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        ans</span><span style=color:#fe8019>++</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fe8019>!</span><span>dq.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>            </span><span style=color:#fa5c4b>auto </span><span>[y, x] </span><span style=color:#fe8019>=</span><span> dq.</span><span style=color:#fdf4c1>front</span><span>();
+</span><span>            dq.</span><span style=color:#fdf4c1>pop_front</span><span>();
+</span><span>            </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto </span><span style=color:#fe8019>&</span><span>[dy, dx] </span><span style=color:#fe8019>:</span><span> di) {
+</span><span>                </span><span style=color:#fa5c4b>int</span><span> nx </span><span style=color:#fe8019>=</span><span> x </span><span style=color:#fe8019>+</span><span> dx, ny </span><span style=color:#fe8019>=</span><span> y </span><span style=color:#fe8019>+</span><span> dy;
+</span><span>                </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&lt;=</span><span> nx </span><span style=color:#fe8019>&&</span><span> nx </span><span style=color:#fe8019>&lt;</span><span> n </span><span style=color:#fe8019>&& </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&lt;=</span><span> ny </span><span style=color:#fe8019>&&</span><span> ny </span><span style=color:#fe8019>&lt;</span><span> n </span><span style=color:#fe8019>&&</span><span> grid[ny][nx] </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>) {
+</span><span>                    grid[ny][nx] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>;
+</span><span>                    tmp.</span><span style=color:#fdf4c1>emplace_back</span><span>(ny, nx);
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style=color:#fdf4c1>swap(dq, tmp)</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans </span><span style=color:#fe8019>?</span><span> ans </span><span style=color:#fe8019>: -</span><span style=color:#d3869b>1</span><span>;
+</span><span>}
+</span></code></pre><hr><h2 id=1041-robot-bounded-in-circle>1041. Robot Bounded In Circle</h2><p>On an infinite plane, a robot initially stands at (0, 0) and faces north. The robot can receive one of three instructions:<ul><li>“G”: go straight 1 unit;<li>“L”: turn 90 degrees to the left;<li>“R”: turn 90 degrees to the right.</ul><p>The robot performs the instructions given in order, and repeats them forever.<p>Return true if and only if there exists a circle in the plane such that the robot never leaves the circle.<p>这个题看着好像不是很容易，实际上只需要稍微分析就会发现，机器人行进距离发散的条件有且仅有一种，那就是当机器人走完一遍指令集后，运动方向不变且运动距离不为0。当且仅当这两者同时成立时，机器人的运动距离才不会被限制在一个圈内，或者说发散。于是剩下的就只有一些编程技巧了。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isRobotBounded</span><span>(string </span><span style=color:#fdf4c1>instructions</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> dire[][</span><span style=color:#d3869b>2</span><span>] </span><span style=color:#fe8019>= </span><span>{ {</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#d3869b>1</span><span>}, {</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>0</span><span>}, {</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>}, {</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>0</span><span>} };
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> idx </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> x </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>, y </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto</span><span> c </span><span style=color:#fe8019>:</span><span> instructions) {
+</span><span>        </span><span style=color:#fa5c4b>switch </span><span>(c) {
+</span><span>            </span><span style=color:#fa5c4b>case </span><span style=color:#b8bb26>'G'</span><span>:
+</span><span>                x </span><span style=color:#fe8019>+=</span><span> dire[idx][</span><span style=color:#d3869b>0</span><span>];
+</span><span>                y </span><span style=color:#fe8019>+=</span><span> dire[idx][</span><span style=color:#d3869b>1</span><span>];
+</span><span>                </span><span style=color:#fa5c4b>break</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>case </span><span style=color:#b8bb26>'L'</span><span>:
+</span><span>                idx </span><span style=color:#fe8019>= </span><span>(idx </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>3</span><span>) </span><span style=color:#fe8019>% </span><span style=color:#d3869b>4</span><span>;
+</span><span>                </span><span style=color:#fa5c4b>break</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>case </span><span style=color:#b8bb26>'R'</span><span>:
+</span><span>                idx </span><span style=color:#fe8019>= </span><span>(idx </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>% </span><span style=color:#d3869b>4</span><span>;
+</span><span>                </span><span style=color:#fa5c4b>break</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#fe8019>!</span><span>(idx </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&& </span><span>(x </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>||</span><span> y </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0</span><span>));
+</span><span>}
+</span></code></pre><hr><h2 id=566-reshape-the-matrix>566. Reshape the Matrix</h2><p>In MATLAB, there is a handy function called reshape which can reshape an m x n matrix into a new one with a different size r x c keeping its original data.<p>You are given an m x n matrix mat and two integers r and c representing the row number and column number of the wanted reshaped matrix.<p>The reshaped matrix should be filled with all the elements of the original matrix in the same row-traversing order as they were.<p>If the reshape operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output the original matrix.<p>实现Reshape函数，没啥好说的<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>> </span><span style=color:#8ec07c>matrixReshape</span><span>(vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>mat</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>r</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>c</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> m </span><span style=color:#fe8019>=</span><span> mat.</span><span style=color:#fdf4c1>size</span><span>(), n </span><span style=color:#fe8019>=</span><span> mat.</span><span style=color:#fdf4c1>back</span><span>().</span><span style=color:#fdf4c1>size</span><span>();
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(m </span><span style=color:#fe8019>*</span><span> n </span><span style=color:#fe8019>!=</span><span> r </span><span style=color:#fe8019>*</span><span> c) {
+</span><span>        </span><span style=color:#fa5c4b>return</span><span> mat;
+</span><span>    }
+</span><span>    vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>> </span><span style=color:#fdf4c1>ans(r, vector&lt;</span><span style=color:#fa5c4b>int</span><span style=color:#fdf4c1>>(c))</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> r </span><span style=color:#fe8019>*</span><span> c; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        ans[i </span><span style=color:#fe8019>/</span><span> c][i </span><span style=color:#fe8019>%</span><span> c] </span><span style=color:#fe8019>=</span><span> mat[i </span><span style=color:#fe8019>/</span><span> n][i </span><span style=color:#fe8019>%</span><span> n];
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><hr><h2 id=100-same-tree>100. Same Tree</h2><p>Given the roots of two binary trees p and q, write a function to check if they are the same or not.<p>Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.<p>判断两颗二叉树是否是相同，也没啥好说的。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#928374;font-style:italic>/*
+</span><span style=color:#928374;font-style:italic> * Definition for a binary tree node.
+</span><span style=color:#928374;font-style:italic> * struct TreeNode {
+</span><span style=color:#928374;font-style:italic> *     int val;
+</span><span style=color:#928374;font-style:italic> *     TreeNode *left;
+</span><span style=color:#928374;font-style:italic> *     TreeNode *right;
+</span><span style=color:#928374;font-style:italic> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+</span><span style=color:#928374;font-style:italic> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+</span><span style=color:#928374;font-style:italic> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+</span><span style=color:#928374;font-style:italic> * };
+</span><span style=color:#928374;font-style:italic> */
+</span><span style=color:#928374;font-style:italic>// 递归写法
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isSameTree</span><span>(TreeNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>p</span><span>, TreeNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>q</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fe8019>!</span><span>p </span><span style=color:#fe8019>&& !</span><span>q) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>true</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fe8019>!</span><span>p </span><span style=color:#fe8019>|| !</span><span>q) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(p-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>!=</span><span> q-></span><span style=color:#fdf4c1>val</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#fdf4c1>isSameTree(p->left, q->left) </span><span style=color:#fe8019>&& </span><span style=color:#fdf4c1>isSameTree(p->right, q->right)</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#928374;font-style:italic>// 队列写法
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isSameTree</span><span>(TreeNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>p</span><span>, TreeNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>q</span><span>) {
+</span><span>    deque</span><span style=color:#fe8019>&lt;</span><span>pair</span><span style=color:#fe8019>&lt;</span><span>TreeNode</span><span style=color:#fe8019>*</span><span>, TreeNode</span><span style=color:#fe8019>*>></span><span> dq;
+</span><span>    dq.</span><span style=color:#fdf4c1>emplace_back</span><span>(p, q);
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fe8019>!</span><span>dq.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        </span><span style=color:#fa5c4b>auto </span><span>[a, b] </span><span style=color:#fe8019>=</span><span> dq.</span><span style=color:#fdf4c1>front</span><span>();
+</span><span>        dq.</span><span style=color:#fdf4c1>pop_front</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(a </span><span style=color:#fe8019>&&</span><span> b) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(a-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>!=</span><span> b-></span><span style=color:#fdf4c1>val</span><span>) {
+</span><span>                </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>            }
+</span><span>            dq.</span><span style=color:#fdf4c1>emplace_back</span><span>(a-></span><span style=color:#fdf4c1>left</span><span>, b-></span><span style=color:#fdf4c1>left</span><span>);
+</span><span>            dq.</span><span style=color:#fdf4c1>emplace_back</span><span>(a-></span><span style=color:#fdf4c1>right</span><span>, b-></span><span style=color:#fdf4c1>right</span><span>);
+</span><span>        } </span><span style=color:#fa5c4b>else if </span><span>(a </span><span style=color:#fe8019>||</span><span> b) {
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>true</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><hr><h2 id=700-search-in-a-binary-search-tree>700. Search in a Binary Search Tree</h2><p>You are given the root of a binary search tree (BST) and an integer val.<p>Find the node in the BST that the node’s value equals val and return the subtree rooted with that node. If such a node does not exist, return null.<p>在BST上搜索，也很简单<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#928374;font-style:italic>/*
+</span><span style=color:#928374;font-style:italic> * Definition for a binary tree node.
+</span><span style=color:#928374;font-style:italic> * struct TreeNode {
+</span><span style=color:#928374;font-style:italic> *     int val;
+</span><span style=color:#928374;font-style:italic> *     TreeNode *left;
+</span><span style=color:#928374;font-style:italic> *     TreeNode *right;
+</span><span style=color:#928374;font-style:italic> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+</span><span style=color:#928374;font-style:italic> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+</span><span style=color:#928374;font-style:italic> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+</span><span style=color:#928374;font-style:italic> * };
+</span><span style=color:#928374;font-style:italic> */
+</span><span>
+</span><span style=color:#928374;font-style:italic>// 递归写法
+</span><span>TreeNode</span><span style=color:#fe8019>* </span><span style=color:#8ec07c>searchBST</span><span>(TreeNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>root</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>val</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fe8019>!</span><span>root </span><span style=color:#fe8019>||</span><span> root-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>==</span><span> val) {
+</span><span>        </span><span style=color:#fa5c4b>return</span><span> root;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#fdf4c1>searchBST(root->val </span><span style=color:#fe8019>></span><span style=color:#fdf4c1> val </span><span style=color:#fe8019>?</span><span style=color:#fdf4c1> root->left </span><span style=color:#fe8019>:</span><span style=color:#fdf4c1> root->right, val)</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#928374;font-style:italic>// 循环写法
+</span><span>TreeNode</span><span style=color:#fe8019>* </span><span style=color:#8ec07c>searchBST</span><span>(TreeNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>root</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>val</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>auto</span><span> p </span><span style=color:#fe8019>=</span><span> root;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(p) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(p-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>==</span><span> val) {
+</span><span>            </span><span style=color:#fa5c4b>break</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else if </span><span>(p-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>></span><span> val) {
+</span><span>            p </span><span style=color:#fe8019>=</span><span> p-></span><span style=color:#fdf4c1>left</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            p </span><span style=color:#fe8019>=</span><span> p-></span><span style=color:#fdf4c1>right</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> p;
+</span><span>}
+</span></code></pre><hr><h2 id=1816-truncate-sentence>1816. Truncate Sentence</h2><p>A sentence is a list of words that are separated by a single space with no leading or trailing spaces. Each of the words consists of only uppercase and lowercase English letters (no punctuation).<p>For example, “Hello World”, “HELLO”, and “hello world hello world” are all sentences. You are given a sentence s and an integer k. You want to truncate s such that it contains only the first k words. Return s after truncating it.<p>简单不提<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>string </span><span style=color:#8ec07c>truncateSentence</span><span>(string </span><span style=color:#fdf4c1>s</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>k</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(k </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&&</span><span> i </span><span style=color:#fe8019>&lt;</span><span> s.</span><span style=color:#fdf4c1>length</span><span>()) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(s[i] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>' '</span><span>) {
+</span><span>            k</span><span style=color:#fe8019>--</span><span>;
+</span><span>        }
+</span><span>        i</span><span style=color:#fe8019>++</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> i </span><span style=color:#fe8019>==</span><span> s.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>?</span><span> s.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>0</span><span>, i) </span><span style=color:#fe8019>:</span><span> s.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>0</span><span>, i </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>);
+</span><span>}
+</span></code></pre><hr><h2 id=46-permutations>46. Permutations</h2><p>Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.<p>这个题本身其实还是可以的，不过还是建议使用next_permutation，而且作为写完了Next_Permutation那题的人，我个人觉得这并不算作弊。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>> </span><span style=color:#8ec07c>permute</span><span>(vector&lt;</span><span style=color:#fa5c4b>int</span><span>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>nums</span><span>) {
+</span><span>    </span><span style=color:#fdf4c1>sort(nums.begin(), nums.end())</span><span>;
+</span><span>    vector&lt;vector&lt;</span><span style=color:#fa5c4b>int</span><span>>> ans;
+</span><span>    </span><span style=color:#fa5c4b>do </span><span>{
+</span><span>        ans.</span><span style=color:#fdf4c1>push_back</span><span>(nums);
+</span><span>    } </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fdf4c1>next_permutation(nums.begin(), nums.end())</span><span>);
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><hr><p>接下来是本周的周赛，本周周赛也是喜忧参半，喜的是本周周赛应该是我参加以来名次最好的一次了，忧的是这次的第四题也太难了，实在打击自信心。不过这次周赛的难度可以说是两个极端，前三题基本非常简单，最后一题也真的是难得发指。只能说下次加油。<h2 id=1920-build-array-from-permutation>1920. Build Array from Permutation</h2><p>Given a zero-based permutation nums (0-indexed), build an array ans of the same length where ans[i] = nums[nums[i]] for each 0 &lt;= i &lt; nums.length and return it.<p>A zero-based permutation nums is an array of distinct integers from 0 to nums.length - 1 (inclusive).<p>连题目都没怎么看懂，但是基本上已经把做法写在了题目里，只能说签到题一般不会出现上周双周赛那样的。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;</span><span style=color:#fa5c4b>int</span><span>> </span><span style=color:#8ec07c>buildArray</span><span>(vector&lt;</span><span style=color:#fa5c4b>int</span><span>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>nums</span><span>) {
+</span><span>    vector&lt;</span><span style=color:#fa5c4b>int</span><span>> ans;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>const auto</span><span> i </span><span style=color:#fe8019>:</span><span> nums) {
+</span><span>        ans.</span><span style=color:#fdf4c1>push_back</span><span>(nums[i]);
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><hr><h2 id=1921-eliminate-maximum-number-of-monsters>1921. Eliminate Maximum Number of Monsters</h2><p>You are playing a video game where you are defending your city from a group of n monsters. You are given a 0-indexed integer array dist of size n, where dist[i] is the initial distance in meters of the ith monster from the city.<p>The monsters walk toward the city at a constant speed. The speed of each monster is given to you in an integer array speed of size n, where speed[i] is the speed of the ith monster in meters per minute.<p>The monsters start moving at minute 0. You have a weapon that you can choose to use at the start of every minute, including minute 0. You cannot use the weapon in the middle of a minute. The weapon can eliminate any monster that is still alive. You lose when any monster reaches your city. If a monster reaches the city exactly at the start of a minute, it counts as a loss, and the game ends before you can use your weapon in that minute.<p>Return the maximum number of monsters that you can eliminate before you lose, or n if you can eliminate all the monsters before they reach the city.<p>模拟题，大意是类似植物大战僵尸，每个僵尸有一个距离和速度，它们不停的朝你走来，你有一个远程武器，可以在每分钟开始的时候消灭任意一个僵尸。但是如果任意僵尸靠近到了你身边，则游戏失败。如果一个僵尸在某一分钟开始的时候到达，则你来不及开枪，也算是失败。问你最多可以消灭多少僵尸。<p>这个问题其实很简单，我们关注的其实不是僵尸的距离或者速度，我们关注的是僵尸到达我们身边的时间，只不过这个时间不一定是整数的，因此我们可以新建一个double数组表示每个僵尸到达的时间，再对它们排序，最后我们按照顺序击杀僵尸即可。如果第i个僵尸在第i分钟之前到达了，那说明我们无法及时消灭它，即失败了。然后这边注意一下0-index还是1-index之类的细节即可。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>int </span><span style=color:#8ec07c>eliminateMaximum</span><span>(vector&lt;</span><span style=color:#fa5c4b>int</span><span>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>dist</span><span>, vector&lt;</span><span style=color:#fa5c4b>int</span><span>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>speed</span><span>) {
+</span><span>    vector&lt;</span><span style=color:#fa5c4b>double</span><span>> reach;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> dist.</span><span style=color:#fdf4c1>size</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        reach.</span><span style=color:#fdf4c1>push_back</span><span>(</span><span style=color:#d3869b>1.0 </span><span style=color:#fe8019>*</span><span> dist[i] </span><span style=color:#fe8019>/</span><span> speed[i]);
+</span><span>    }
+</span><span>    </span><span style=color:#fdf4c1>sort(reach.begin(), reach.end())</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> reach.</span><span style=color:#fdf4c1>size</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(i </span><span style=color:#fe8019>>=</span><span> reach[i]) {
+</span><span>            </span><span style=color:#fa5c4b>return</span><span> i;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> reach.</span><span style=color:#fdf4c1>size</span><span>();
+</span><span>}
+</span></code></pre><hr><h2 id=1922-count-good-numbers>1922. Count Good Numbers</h2><p>A digit string is good if the digits (0-indexed) at even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).<ul><li>For example, “2582” is good because the digits (2 and 8) at even positions are even and the digits (5 and 2) at odd positions are prime. However, “3245” is not good because 3 is at an even index but is not even.</ul><p>Given an integer n, return the total number of good digit strings of length n. Since the answer may be large, return it modulo 109 + 7.<p>A digit string is a string consisting of digits 0 through 9 that may contain leading zeros.<p>计数题，也很简单，本质上因为0-9范围内，偶数有5个，质数有4个，因此本质上这个题就是求<code>power(5, n / 2) * power(4, n / 2) * power(5, n % 2)</code>，由于n非常大，所以需要实现快速幂，且需要对结果取模，但是这个也没有什么难度。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>const int</span><span> mod </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1000000007</span><span>;
+</span><span>
+</span><span style=color:#fa5c4b>long long </span><span style=color:#8ec07c>helper</span><span>(</span><span style=color:#fa5c4b>long long </span><span style=color:#fdf4c1>n</span><span>, </span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>k</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(n </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(n </span><span style=color:#fe8019>== </span><span style=color:#d3869b>1</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>return</span><span> k;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>long long</span><span> tmp </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>helper(n </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span style=color:#fdf4c1>, k) </span><span style=color:#fe8019>%</span><span> mod;
+</span><span>    </span><span style=color:#fa5c4b>long long</span><span> s </span><span style=color:#fe8019>=</span><span> n </span><span style=color:#fe8019>% </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>?</span><span> k </span><span style=color:#fe8019>: </span><span style=color:#d3869b>1</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> tmp </span><span style=color:#fe8019>*</span><span> tmp </span><span style=color:#fe8019>%</span><span> mod </span><span style=color:#fe8019>*</span><span> s </span><span style=color:#fe8019>%</span><span> mod;
+</span><span>}
+</span><span>
+</span><span style=color:#fa5c4b>int </span><span style=color:#8ec07c>countGoodNumbers</span><span>(</span><span style=color:#fa5c4b>long long </span><span style=color:#fdf4c1>n</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(n </span><span style=color:#fe8019>== </span><span style=color:#d3869b>1</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>5</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>long long</span><span> tmp1 </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>helper(n </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span style=color:#fdf4c1>, </span><span style=color:#d3869b>5</span><span style=color:#fdf4c1>) </span><span style=color:#fe8019>%</span><span> mod;
+</span><span>    </span><span style=color:#fa5c4b>long long</span><span> tmp2 </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>helper(n </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span style=color:#fdf4c1>, </span><span style=color:#d3869b>4</span><span style=color:#fdf4c1>) </span><span style=color:#fe8019>%</span><span> mod;
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> tmp3 </span><span style=color:#fe8019>=</span><span> n </span><span style=color:#fe8019>% </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>? </span><span style=color:#d3869b>5 </span><span style=color:#fe8019>: </span><span style=color:#d3869b>1</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> tmp1 </span><span style=color:#fe8019>*</span><span> tmp2 </span><span style=color:#fe8019>%</span><span> mod </span><span style=color:#fe8019>*</span><span> tmp3 </span><span style=color:#fe8019>%</span><span> mod;
+</span><span>}
+</span></code></pre><p>最后一题实在有点超出我的能力范围，所以这里就不写了。总的来说这周虽然名次还ok，但是因为题目本身也比较简单，所以这个名次也没啥含金量，以后加油吧。</div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div><script>MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js></script></footer><script defer src=https://flr.me/js/script.js></script>

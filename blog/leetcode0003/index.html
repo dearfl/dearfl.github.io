@@ -1,0 +1,283 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | Leetcode刷题笔记 3</title><link as=style href=https://flr.me/css/style.css rel=preload><link crossorigin href=https://raw.githack.com/Speyll/suCSS/main/reset-min.css rel=stylesheet><link crossorigin href=https://raw.githack.com/Speyll/suCSS/main/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/blog> /blog/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><time datetime=2021-06-25>Published on: <span class=accent-data>2021-06-25</span> </time><h1>Leetcode刷题笔记 3</h1></header><div class=post-content><h2 id=9-palindrome-number>9. Palindrome Number</h2><p>Q: Given an integer x, return true if x is palindrome integer.<p>An integer is a palindrome when it reads the same backward as forward. For example, 121 is palindrome while 123 is not.<p>判断一个数是否为回文数，本题判定负数均不属于回文数。最简单的思路当然是把数字转成字符串或者字符数组，然后判定是否是回文。但是题目进阶的要求是不做这个转化，这样这个题目就有难度了。这里会用到一个比较巧妙的技巧，我们通过这个技巧得到这个数的前半部分和后半部分的反转，从而判定整个数是否是回文数。具体来说，我们一边将这个数除10，一边将除10的余数构造成另一个数，然后这个过程中，我们可以根据这两个数而判定原数是否是回文数。举个例子，如1234321，每次循环我们可以得到如下数字&lt;123432, 1>,&lt;12345, 12>,&lt;1234,123>，进行到这里就足够了，因为这里1234/10==123，因此我们就可以判定1234321是回文数，如果原数是偶数位的，那我们判定两数是否相等。但是这种做法对于一些特例是不成立的，当x有后置0且x本身不为0时，我们相当于在判定x/10是否为回文数，而结论不成立。因此我们只需要判断是否是特例，再根据这种做法判定即可。以下分别是我自己的代码和别人相同思路的代码。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#928374;font-style:italic>// mine
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isPalindrome</span><span>(</span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>x</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(x </span><span style=color:#fe8019>&lt; </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>||</span><span> x </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&&</span><span> x </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0</span><span>) { </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>; }
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> k </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(x </span><span style=color:#fe8019>>=</span><span> k) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(x </span><span style=color:#fe8019>==</span><span> k </span><span style=color:#fe8019>||</span><span> x </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>==</span><span> k) {
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>true</span><span>;
+</span><span>        }
+</span><span>        k </span><span style=color:#fe8019>=</span><span> k </span><span style=color:#fe8019>* </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>+</span><span> x </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10</span><span>;
+</span><span>        x </span><span style=color:#fe8019>=</span><span> x </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>10</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isPalindrome</span><span>(</span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>x</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(x </span><span style=color:#fe8019>&lt; </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>||</span><span> x </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&&</span><span> x </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0</span><span>) { </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>; }
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> reverse </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(reverse </span><span style=color:#fe8019>&lt;</span><span> x) {
+</span><span>        reverse </span><span style=color:#fe8019>=</span><span> reverse </span><span style=color:#fe8019>* </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>+</span><span> x </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10</span><span>;
+</span><span>        x </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> x </span><span style=color:#fe8019>==</span><span> reverse </span><span style=color:#fe8019>||</span><span> reverse </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>==</span><span> x;
+</span><span>}
+</span></code></pre><hr><h2 id=10-regular-expression-matching>10. Regular Expression Matching</h2><p>Q: Given an input string (s) and a pattern (p), implement regular expression matching with support for ‘.’ and ‘*’ where:<ul><li><p>‘.’ Matches any single character.</p><li><p>‘*’ Matches zero or more of the preceding element.</p></ul><p>The matching should cover the entire input string (not partial).<p>这个题要求实现简单的正则匹配功能，我的第一反应是递归，思路相对比较简单，只是写起来比较繁琐。这里不再赘述思路，况且过了比较长时间了，这种题的思路也比较复杂，也不是想说就能说明白的。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isMatch</span><span>(string </span><span style=color:#fdf4c1>s</span><span>, string </span><span style=color:#fdf4c1>p</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>char</span><span> c;
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(p.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        </span><span style=color:#fa5c4b>return</span><span> s.</span><span style=color:#fdf4c1>empty</span><span>();
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(p.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>> </span><span style=color:#d3869b>1 </span><span style=color:#fe8019>&&</span><span> p[</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'*'</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fdf4c1>isMatch(s, p.substr(</span><span style=color:#d3869b>2</span><span style=color:#fdf4c1>))</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>true</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else if </span><span>(s.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&& </span><span>(p[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'.' </span><span style=color:#fe8019>||</span><span> p[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>==</span><span> s[</span><span style=color:#d3869b>0</span><span>])) {
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#fdf4c1>isMatch(s.substr(</span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>), p)</span><span>;
+</span><span>        }
+</span><span>    } </span><span style=color:#fa5c4b>else if </span><span>(s.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&& </span><span>(p[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'.' </span><span style=color:#fe8019>||</span><span> p[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>==</span><span> s[</span><span style=color:#d3869b>0</span><span>])) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span style=color:#fdf4c1>isMatch(s.substr(</span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>), p.substr(</span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>))</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>}
+</span></code></pre><p>除了递归做法外，这道题还有DP的做法，设dp[i][j]是字符串s,p的子串s[0,i]和p[0,j]是否匹配，可以得到相应的状态转换方程。不过DP方法比较难懂，状态转换方程较为复杂，这里我就不说啥了，毕竟虽然能看懂，但自己想出来是不可能的。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isMatch</span><span>(string </span><span style=color:#fdf4c1>s</span><span>, string </span><span style=color:#fdf4c1>p</span><span>) {
+</span><span>    vector&lt;vector&lt;</span><span style=color:#fa5c4b>bool</span><span>> > </span><span style=color:#fdf4c1>dp(s.size() </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>, vector&lt;</span><span style=color:#fa5c4b>bool</span><span style=color:#fdf4c1>>(p.size() </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>, </span><span style=color:#d3869b>false</span><span style=color:#fdf4c1>))</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> m </span><span style=color:#fe8019>=</span><span> s.</span><span style=color:#fdf4c1>length</span><span>(), n </span><span style=color:#fe8019>=</span><span> p.</span><span style=color:#fdf4c1>length</span><span>();
+</span><span>    dp[</span><span style=color:#d3869b>0</span><span>][</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>true</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>; i </span><span style=color:#fe8019>&lt;=</span><span> n; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        dp[</span><span style=color:#d3869b>0</span><span>][i] </span><span style=color:#fe8019>=</span><span> i </span><span style=color:#fe8019>> </span><span style=color:#d3869b>1 </span><span style=color:#fe8019>&&</span><span> p[i</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'*' </span><span style=color:#fe8019>&&</span><span> dp[</span><span style=color:#d3869b>0</span><span>][i</span><span style=color:#fe8019>-</span><span style=color:#d3869b>2</span><span>];
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>; i </span><span style=color:#fe8019>&lt;=</span><span> m; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> j </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>; j </span><span style=color:#fe8019>&lt;=</span><span> n; j</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(p[j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'*'</span><span>) {
+</span><span>                dp[i][j] </span><span style=color:#fe8019>=</span><span> dp[i][j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>2</span><span>] </span><span style=color:#fe8019>|| </span><span>((p[j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>2</span><span>] </span><span style=color:#fe8019>==</span><span> s[i</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>||</span><span> p[j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>2</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'.'</span><span>) </span><span style=color:#fe8019>&&</span><span> dp[i</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>][j]);
+</span><span>            } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                dp[i][j] </span><span style=color:#fe8019>=</span><span> dp[i</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>][j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>&& </span><span>(p[j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'.' </span><span style=color:#fe8019>||</span><span> p[j</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>==</span><span> s[i</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>]);
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> dp[m][n];
+</span><span>}
+</span></code></pre><hr><h2 id=11-container-with-most-water>11. Container with Most Water</h2><p>Q: Given n non-negative integers a1, a2, …, an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of the line i is at (i, ai) and (i, 0). Find two lines, which, together with the x-axis forms a container, such that the container contains the most water.<p>Notice that you may not slant the container.<p>这个题可以用o(n^2)的笨办法做出来，勉强不会超时，但同时这个题也有o(n)的方法，其思路是：一个容器的容量为$min(a_ {i}, a_ {j}) \times ABS(i - j)$，那么我们可以先从ABS(i - j)最大，即i=1,j=n时开始，逐步向中心遍历，因为乘法的一个乘数只会逐渐变小，那么另一个乘数必须变大，才能让我们的结果尽可能大。同时由于木桶的短板原理，即使我们将更高的一块木板变得更高，容量也不会变得更大。因此我们必须从更短的那一侧逐渐向内搜索，才有可能得到更大的容量。也就是说，通过这些前提条件，我们可以这样对搜索范围进行剪枝，完全略过那些不存在答案的搜索空间。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>int </span><span style=color:#8ec07c>maxArea</span><span>(vector&lt;</span><span style=color:#fa5c4b>int</span><span>></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>height</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> n </span><span style=color:#fe8019>=</span><span> height.</span><span style=color:#fdf4c1>size</span><span>(), l </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>, r </span><span style=color:#fe8019>=</span><span> n </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>, res </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(l </span><span style=color:#fe8019>&lt;</span><span> r) {
+</span><span>        res </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>max(res, min(height[l], height[r]) </span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>(r </span><span style=color:#fe8019>-</span><span style=color:#fdf4c1> l))</span><span>;
+</span><span>        </span><span style=color:#928374;font-style:italic>// 必须从较短的木板朝中心靠拢，才有可能得到更大的res
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(height[l] </span><span style=color:#fe8019>&lt;</span><span> height[r]) {
+</span><span>            l</span><span style=color:#fe8019>++</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            r</span><span style=color:#fe8019>--</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> res;
+</span><span>}
+</span></code></pre><hr><h2 id=12-integer-to-roman>12. Integer to Roman</h2><p>Q: Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.<pre style=color:#fdf4c1aa;background-color:#282828><code><span>Symbol       Value
+</span><span>I             1
+</span><span>V             5
+</span><span>X             10
+</span><span>L             50
+</span><span>C             100
+</span><span>D             500
+</span><span>M             1000
+</span></code></pre><p>For example, 2 is written as II in Roman numeral, just two one’s added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.<p>Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:<p>I can be placed before V (5) and X (10) to make 4 and 9. X can be placed before L (50) and C (100) to make 40 and 90. C can be placed before D (500) and M (1000) to make 400 and 900. Given an integer, convert it to a roman numeral.<p>将一个整数转换为罗马数字的形式，爷吐了。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>string </span><span style=color:#8ec07c>intToRoman</span><span>(</span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>num</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>int</span><span> digit;
+</span><span>    string res, tmp;
+</span><span>    string digits </span><span style=color:#fe8019>= </span><span style=color:#b8bb26>"IVXLCDM "</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; num; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        digit </span><span style=color:#fe8019>=</span><span> num </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10</span><span>;
+</span><span>        tmp </span><span style=color:#fe8019>= </span><span style=color:#b8bb26>""</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(digit </span><span style=color:#fe8019>== </span><span style=color:#d3869b>9</span><span>) {
+</span><span>            tmp </span><span style=color:#fe8019>=</span><span> digits.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>2 </span><span style=color:#fe8019>*</span><span> i, </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>+</span><span> digits.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>2 </span><span style=color:#fe8019>*</span><span> i </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>2</span><span>, </span><span style=color:#d3869b>1</span><span>);
+</span><span>        } </span><span style=color:#fa5c4b>else if </span><span>(digit </span><span style=color:#fe8019>== </span><span style=color:#d3869b>4</span><span>) {
+</span><span>            tmp </span><span style=color:#fe8019>=</span><span> digits.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>2 </span><span style=color:#fe8019>*</span><span> i, </span><span style=color:#d3869b>2</span><span>);
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(digit </span><span style=color:#fe8019>> </span><span style=color:#d3869b>4</span><span>) {
+</span><span>                digit </span><span style=color:#fe8019>-= </span><span style=color:#d3869b>5</span><span>;
+</span><span>                tmp </span><span style=color:#fe8019>+=</span><span> digits.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>2 </span><span style=color:#fe8019>*</span><span> i </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>1</span><span>);
+</span><span>            }
+</span><span>            </span><span style=color:#fa5c4b>while </span><span>(digit</span><span style=color:#fe8019>--</span><span>) {
+</span><span>                tmp </span><span style=color:#fe8019>+=</span><span> digits.</span><span style=color:#fdf4c1>substr</span><span>(</span><span style=color:#d3869b>2 </span><span style=color:#fe8019>*</span><span> i, </span><span style=color:#d3869b>1</span><span>);
+</span><span>            }
+</span><span>        }
+</span><span>        res </span><span style=color:#fe8019>=</span><span> tmp </span><span style=color:#fe8019>+</span><span> res;
+</span><span>        num </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> res;
+</span><span>}
+</span></code></pre><hr><h2 id=13-roman-to-integer>13. Roman to Integer</h2><p>Q: Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.<pre style=color:#fdf4c1aa;background-color:#282828><code><span>Symbol       Value
+</span><span>I             1
+</span><span>V             5
+</span><span>X             10
+</span><span>L             50
+</span><span>C             100
+</span><span>D             500
+</span><span>M             1000
+</span></code></pre><p>For example, 2 is written as II in Roman numeral, just two one’s added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.<p>Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:<p>I can be placed before V (5) and X (10) to make 4 and 9. X can be placed before L (50) and C (100) to make 40 and 90. C can be placed before D (500) and M (1000) to make 400 and 900. Given a roman numeral, convert it to an integer.<p>将一个罗马数字转换为普通的整数，相比上一题，这一题还是简单不少。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span> </span><span style=color:#fa5c4b>int </span><span style=color:#8ec07c>romanToInt</span><span>(string </span><span style=color:#fdf4c1>s</span><span>) {
+</span><span>     </span><span style=color:#fa5c4b>int</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>     </span><span style=color:#fa5c4b>char</span><span> pc </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>     </span><span style=color:#fa5c4b>int</span><span> val[</span><span style=color:#d3869b>256</span><span>] </span><span style=color:#fe8019>= </span><span>{</span><span style=color:#d3869b>0</span><span>};
+</span><span>     val[</span><span style=color:#b8bb26>'M'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1000</span><span>;
+</span><span>     val[</span><span style=color:#b8bb26>'D'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>500</span><span>;
+</span><span>     val[</span><span style=color:#b8bb26>'C'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>100</span><span>;
+</span><span>     val[</span><span style=color:#b8bb26>'L'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>50</span><span>;
+</span><span>     val[</span><span style=color:#b8bb26>'X'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>10</span><span>;
+</span><span>     val[</span><span style=color:#b8bb26>'V'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>5</span><span>;
+</span><span>     val[</span><span style=color:#b8bb26>'I'</span><span>] </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>;
+</span><span>     </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> c </span><span style=color:#fe8019>:</span><span> s) {
+</span><span>         </span><span style=color:#fa5c4b>if </span><span>(val[pc] </span><span style=color:#fe8019>&lt;</span><span> val[c]) {
+</span><span>             ans </span><span style=color:#fe8019>+=</span><span> val[c] </span><span style=color:#fe8019>- </span><span>(val[pc] </span><span style=color:#fe8019>&lt;&lt; </span><span style=color:#d3869b>1</span><span>);
+</span><span>         } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>             ans </span><span style=color:#fe8019>+=</span><span> val[c];
+</span><span>         }
+</span><span>         pc </span><span style=color:#fe8019>=</span><span> c;
+</span><span>     }
+</span><span>     </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span> }
+</span></code></pre><hr><h2 id=14-longest-common-prefix>14. Longest Common Prefix</h2><p>Q: Write a function to find the longest common prefix string amongst an array of strings.<p>If there is no common prefix, return an empty string “”.<p>这题其实比较简单，关键在于需要考虑很多细节。我个人写的不太简洁，这里贴一段别人写的比较简洁的代码。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>string </span><span style=color:#8ec07c>longestCommonPrefix</span><span>(vector&lt;string></span><span style=color:#fe8019>& </span><span style=color:#fdf4c1>strs</span><span>) {
+</span><span>    string prefix </span><span style=color:#fe8019>= </span><span style=color:#b8bb26>""</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> idx </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; strs.</span><span style=color:#fdf4c1>size</span><span>() </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0</span><span>; prefix </span><span style=color:#fe8019>+=</span><span> strs[</span><span style=color:#d3869b>0</span><span>][idx], idx</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> strs.</span><span style=color:#fdf4c1>size</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(idx </span><span style=color:#fe8019>>=</span><span> strs[i].</span><span style=color:#fdf4c1>size</span><span>() </span><span style=color:#fe8019>|| </span><span>(i </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&&</span><span> strs[i][idx] </span><span style=color:#fe8019>!=</span><span> strs[i </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>][idx])) {
+</span><span>                </span><span style=color:#fa5c4b>return</span><span> prefix;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> prefix;
+</span><span>}
+</span></code></pre><hr><h2 id=17-letter-combinations-of-a-phone-number>17. Letter Combinations of a Phone Number</h2><p>Q: Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.<p>这个题也没啥好说的，我也是第一思路递归，把当前数字键上的字母和余下数字序列的所有答案组合起来。队列做法相对巧妙一些，也稍微难写一些，但也没有太大难度。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#928374;font-style:italic>// 递归写法
+</span><span>vector&lt;string> </span><span style=color:#8ec07c>letterCombinations</span><span>(string </span><span style=color:#fdf4c1>digits</span><span>) {
+</span><span>    vector&lt;string> ans;
+</span><span>    vector&lt;string> </span><span style=color:#fdf4c1>map{</span><span style=color:#b8bb26>"abc"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"def"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"ghi"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"jkl"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"mno"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"pqrs"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"tuv"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"wxyz"</span><span style=color:#fdf4c1>}</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(digits.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span>{};
+</span><span>    } </span><span style=color:#fa5c4b>else if </span><span>(digits.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>== </span><span style=color:#d3869b>1</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> map[digits[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>- </span><span style=color:#b8bb26>'2'</span><span>].</span><span style=color:#fdf4c1>length</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            ans.</span><span style=color:#fdf4c1>push_back</span><span>(map[digits[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>- </span><span style=color:#b8bb26>'2'</span><span>].</span><span style=color:#fdf4c1>substr</span><span>(i, </span><span style=color:#d3869b>1</span><span>));
+</span><span>        }
+</span><span>        </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>    } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> map[digits[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>- </span><span style=color:#b8bb26>'2'</span><span>].</span><span style=color:#fdf4c1>length</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s </span><span style=color:#fe8019>: </span><span style=color:#fdf4c1>letterCombinations(digits.substr(</span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>))</span><span>) {
+</span><span>                ans.</span><span style=color:#fdf4c1>push_back</span><span>(map[digits[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>- </span><span style=color:#b8bb26>'2'</span><span>][i] </span><span style=color:#fe8019>+</span><span> s);
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style=color:#928374;font-style:italic>// 队列写法
+</span><span>vector&lt;string> </span><span style=color:#8ec07c>letterCombinations</span><span>(string </span><span style=color:#fdf4c1>digits</span><span>) {
+</span><span>    vector&lt;string> ans;
+</span><span>    vector&lt;string> </span><span style=color:#fdf4c1>map{</span><span style=color:#b8bb26>"abc"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"def"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"ghi"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"jkl"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"mno"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"pqrs"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"tuv"</span><span style=color:#fdf4c1>, </span><span style=color:#b8bb26>"wxyz"</span><span style=color:#fdf4c1>}</span><span>;
+</span><span>    queue&lt;string> q;
+</span><span>    q.</span><span style=color:#fdf4c1>push</span><span>(</span><span style=color:#b8bb26>""</span><span>);
+</span><span>    string tmp;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(</span><span style=color:#fe8019>!</span><span>q.</span><span style=color:#fdf4c1>empty</span><span>()) {
+</span><span>        tmp </span><span style=color:#fe8019>=</span><span> q.</span><span style=color:#fdf4c1>front</span><span>();
+</span><span>        q.</span><span style=color:#fdf4c1>pop</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(tmp.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>==</span><span> digits.</span><span style=color:#fdf4c1>length</span><span>()) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(tmp.</span><span style=color:#fdf4c1>length</span><span>() </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0</span><span>) {
+</span><span>                ans.</span><span style=color:#fdf4c1>push_back</span><span>(tmp);
+</span><span>            }
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> map[digits[tmp.</span><span style=color:#fdf4c1>length</span><span>()] </span><span style=color:#fe8019>- </span><span style=color:#b8bb26>'2'</span><span>].</span><span style=color:#fdf4c1>length</span><span>(); i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>                q.</span><span style=color:#fdf4c1>push</span><span>(tmp </span><span style=color:#fe8019>+</span><span> map[digits[tmp.</span><span style=color:#fdf4c1>length</span><span>()] </span><span style=color:#fe8019>- </span><span style=color:#b8bb26>'2'</span><span>].</span><span style=color:#fdf4c1>substr</span><span>(i, </span><span style=color:#d3869b>1</span><span>));
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><hr><h2 id=20-valid-parentheses>20. Valid Parentheses</h2><p>Q: Given a string s containing just the characters ‘(’, ‘)’, ‘{’, ‘}’, ‘[’ and ‘]’, determine if the input string is valid.<p>An input string is valid if:<ul><li>Open brackets must be closed by the same type of brackets.<li>Open brackets must be closed in the correct order.</ul><p>使用栈来处理即可，左括号推入栈。右括号则检查栈顶是否有匹配的左括号。没有即不匹配，有则将其推出栈即可。所有字符遍历过后，如果栈内不为空，则说明，有部分左括号没有匹配的右括号。如果为空，则说明所有的括号都是匹配的。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isMatchChar</span><span>(</span><span style=color:#fa5c4b>char </span><span style=color:#fdf4c1>c1</span><span>, </span><span style=color:#fa5c4b>char </span><span style=color:#fdf4c1>c2</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> c1 </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'[' </span><span style=color:#fe8019>&&</span><span> c2 </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>']' </span><span style=color:#fe8019>||</span><span> c1 </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'(' </span><span style=color:#fe8019>&&</span><span> c2 </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>')' </span><span style=color:#fe8019>||</span><span> c1 </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'{' </span><span style=color:#fe8019>&&</span><span> c2 </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'}'</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#fa5c4b>bool </span><span style=color:#8ec07c>isValid</span><span>(string </span><span style=color:#fdf4c1>s</span><span>) {
+</span><span>    stack&lt;</span><span style=color:#fa5c4b>char</span><span>> stk;
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> c </span><span style=color:#fe8019>:</span><span> s) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(c </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>']' </span><span style=color:#fe8019>||</span><span> c </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>'}' </span><span style=color:#fe8019>||</span><span> c </span><span style=color:#fe8019>== </span><span style=color:#b8bb26>')'</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>if </span><span>(stk.</span><span style=color:#fdf4c1>empty</span><span>() </span><span style=color:#fe8019>|| !</span><span style=color:#fdf4c1>isMatchChar(stk.top(), c)</span><span>) {
+</span><span>                </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>            }
+</span><span>            stk.</span><span style=color:#fdf4c1>pop</span><span>();
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            stk.</span><span style=color:#fdf4c1>push</span><span>(c);
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> stk.</span><span style=color:#fdf4c1>empty</span><span>();
+</span><span>}
+</span></code></pre><hr><h2 id=21-merge-two-sorted-lists>21. Merge Two Sorted Lists</h2><p>Q: Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.<p>将两个有序的链表合并，这个题我是选择递归做法的，相对来说比较简单，我们只需要选出两个头节点里最小的那个，然后将剩下的两个链表递归的合并，再将合并好的链表接到最小的头节点后面即可。相对来说，非递归的写法还是比较难写的。<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span style=color:#928374;font-style:italic>/*
+</span><span style=color:#928374;font-style:italic> * Definition for singly-linked list.
+</span><span style=color:#928374;font-style:italic> * struct ListNode {
+</span><span style=color:#928374;font-style:italic> *     int val;
+</span><span style=color:#928374;font-style:italic> *     ListNode *next;
+</span><span style=color:#928374;font-style:italic> *     ListNode(int x) : val(x), next(NULL) {}
+</span><span style=color:#928374;font-style:italic> * };
+</span><span style=color:#928374;font-style:italic> */
+</span><span>
+</span><span>ListNode</span><span style=color:#fe8019>* </span><span style=color:#8ec07c>mergeTwoLists</span><span>(ListNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>l1</span><span>, ListNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>l2</span><span>) {
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fe8019>!</span><span>l1) { </span><span style=color:#fa5c4b>return</span><span> l2; }
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(</span><span style=color:#fe8019>!</span><span>l2) { </span><span style=color:#fa5c4b>return</span><span> l1; }
+</span><span>    ListNode</span><span style=color:#fe8019>*</span><span> minNode </span><span style=color:#fe8019>=</span><span> l1-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>&lt;</span><span> l2-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>?</span><span> l1 </span><span style=color:#fe8019>:</span><span> l2;
+</span><span>    ListNode</span><span style=color:#fe8019>*</span><span> maxNode </span><span style=color:#fe8019>=</span><span> l1-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>&lt;</span><span> l2-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>?</span><span> l2 </span><span style=color:#fe8019>:</span><span> l1;
+</span><span>    minNode-></span><span style=color:#fdf4c1>next </span><span style=color:#fe8019>= </span><span style=color:#fdf4c1>mergeTwoLists(minNode->next, maxNode)</span><span>;
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> minNode;
+</span><span>}
+</span><span>
+</span><span>ListNode</span><span style=color:#fe8019>* </span><span style=color:#8ec07c>mergeTwoLists</span><span>(ListNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>l1</span><span>, ListNode</span><span style=color:#fe8019>* </span><span style=color:#fdf4c1>l2</span><span>) {
+</span><span>    ListNode </span><span style=color:#fdf4c1>dummy(</span><span style=color:#d3869b>0</span><span style=color:#fdf4c1>)</span><span>, </span><span style=color:#fe8019>*</span><span>tail </span><span style=color:#fe8019>= &</span><span>dummy;
+</span><span>    </span><span style=color:#fa5c4b>while </span><span>(l1 </span><span style=color:#fe8019>&&</span><span> l2) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span>(l1-></span><span style=color:#fdf4c1>val </span><span style=color:#fe8019>&lt;</span><span> l2-></span><span style=color:#fdf4c1>val</span><span>) {
+</span><span>            tail-></span><span style=color:#fdf4c1>next </span><span style=color:#fe8019>=</span><span> l1;
+</span><span>            l1 </span><span style=color:#fe8019>=</span><span> l1-></span><span style=color:#fdf4c1>next</span><span>;
+</span><span>        } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>            tail-></span><span style=color:#fdf4c1>next </span><span style=color:#fe8019>=</span><span> l2;
+</span><span>            l2 </span><span style=color:#fe8019>=</span><span> l2-></span><span style=color:#fdf4c1>next</span><span>;
+</span><span>        }
+</span><span>        tail </span><span style=color:#fe8019>=</span><span> tail-></span><span style=color:#fdf4c1>next</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#928374;font-style:italic>// we have to connect the rest part to the returned linked list
+</span><span>    tail-></span><span style=color:#fdf4c1>next </span><span style=color:#fe8019>=</span><span> l1 </span><span style=color:#fe8019>?</span><span> l1 </span><span style=color:#fe8019>:</span><span> l2;
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> dummy.</span><span style=color:#fdf4c1>next</span><span>;
+</span><span>}
+</span></code></pre><hr><h2 id=22-generate-parentheses>22. Generate Parentheses</h2><p>Q: Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<p>给出括号的对数，生成所有合法的包含指定对数括号的字符串，第一反应是递归，对于n的case，我们生成i和n-i的所有case，然后将他们两两组合起来，同时再生成n-1的case，再将他们包在一对括号里。但是这样做需要去除相同的项。即如下<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;string> </span><span style=color:#8ec07c>generateParenthesis</span><span>(</span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>n</span><span>) {
+</span><span>    vector&lt;string> ans;
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(n </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>) {
+</span><span>        ans </span><span style=color:#fe8019>= </span><span>{};
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>else if </span><span>(n </span><span style=color:#fe8019>== </span><span style=color:#d3869b>1</span><span>) {
+</span><span>        ans </span><span style=color:#fe8019>= </span><span>{</span><span style=color:#b8bb26>"()"</span><span>};
+</span><span>    } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> n; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s1 </span><span style=color:#fe8019>: </span><span style=color:#fdf4c1>generateParenthesis(i)</span><span>) {
+</span><span>                </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s2 </span><span style=color:#fe8019>: </span><span style=color:#fdf4c1>generateParenthesis(n </span><span style=color:#fe8019>-</span><span style=color:#fdf4c1> i)</span><span>) {
+</span><span>                    ans.</span><span style=color:#fdf4c1>push_back</span><span>(s1 </span><span style=color:#fe8019>+</span><span> s2);
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s </span><span style=color:#fe8019>: </span><span style=color:#fdf4c1>generateParenthesis(n </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>)</span><span>) {
+</span><span>            ans.</span><span style=color:#fdf4c1>push_back</span><span>(</span><span style=color:#b8bb26>"(" </span><span style=color:#fe8019>+</span><span> s </span><span style=color:#fe8019>+ </span><span style=color:#b8bb26>")"</span><span>);
+</span><span>        }
+</span><span>        set&lt;string> </span><span style=color:#fdf4c1>ss(ans.begin(), ans.end())</span><span>;
+</span><span>        ans.</span><span style=color:#fdf4c1>clear</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s </span><span style=color:#fe8019>:</span><span> ss) {
+</span><span>            ans.</span><span style=color:#fdf4c1>push_back</span><span>(s);
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><p>当然这个题有另外一种更加巧妙的递归方式，我们把问题分为3部分，case(1)/case(i)/case(n-i-1)，然后我们进行这样的组合，<code>"(" + case(i) + ")" + case(n-i-1)</code>，基础的case当然是case(0)返回包含一个空字符串的集合。这种递归方式得到的解是没有重复和遗漏的。我们先看代码：<pre class=language-cpp data-lang=cpp style=color:#fdf4c1aa;background-color:#282828><code class=language-cpp data-lang=cpp><span>vector&lt;string> </span><span style=color:#8ec07c>generateParenthesis</span><span>(</span><span style=color:#fa5c4b>int </span><span style=color:#fdf4c1>n</span><span>) {
+</span><span>    vector&lt;string> ans;
+</span><span>    </span><span style=color:#fa5c4b>if </span><span>(n </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>return </span><span>{ </span><span style=color:#b8bb26>"" </span><span>};
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>int</span><span> i </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>; i </span><span style=color:#fe8019>&lt;</span><span> n; i</span><span style=color:#fe8019>++</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s1 </span><span style=color:#fe8019>: </span><span style=color:#fdf4c1>generateParenthesis(i)</span><span>) {
+</span><span>            </span><span style=color:#fa5c4b>for </span><span>(</span><span style=color:#fa5c4b>auto</span><span style=color:#fe8019>&</span><span> s2 </span><span style=color:#fe8019>: </span><span style=color:#fdf4c1>generateParenthesis(n </span><span style=color:#fe8019>-</span><span style=color:#fdf4c1> i </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span style=color:#fdf4c1>)</span><span>) {
+</span><span>                ans.</span><span style=color:#fdf4c1>push_back</span><span>(</span><span style=color:#b8bb26>"(" </span><span style=color:#fe8019>+</span><span> s1 </span><span style=color:#fe8019>+ </span><span style=color:#b8bb26>")" </span><span style=color:#fe8019>+</span><span> s2);
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#fa5c4b>return</span><span> ans;
+</span><span>}
+</span></code></pre><p>为什么这样可以做到不重不漏呢，我们先来看相对比较明显的不重复性。假设ANS(n)是n对应的所有字符串的集合，以下均假设n>0。对于两个不同的答案来说，要相等即意味着字符串所有位置均相等，对于以上代码来说，就是要每次push_back答案字符串进入ans时，都要保证s1和s2至少有一个和其他的答案不同，也就是说ANS(i)和ANS(n-i-1)内没有重复元素。即只要保证对于[0, n-1]区间内的所有k来说来说，ANS(k)都不包含重复元素，则ANS(n)也不包含重复元素。这个我们可以通过数学归纳法比较简单的得到保证，不再赘述。<p>再看没有遗漏，没有遗漏意味着所有答案都是符合<code>"(" + case(i) + ")" + case(n-i-1)</code>这样的形式的，同时所有这样形式的字符串都是答案。后者是显然的，因为这样的字符串显然是合法的。我们知道合法的字符串第一个字符肯定是左括号，而且在字符串中有唯一一个与之匹配的右括号，且我们可以肯定，被这两个括号括起来的字符串肯定也是合法的，否则的话整个字符串也是不合法的。同样，右侧不包含在括号之内的字符串也是合法的。因此整个字符串肯定可以写成<code>"(" + case(i) + ")" + case(n-i-1)</code>的形式，其中，case(n-i-1)和case(i)均有可能为空。<p>最后通过双重循环，我们的答案包含了所有形如<code>"(" + case(i) + ")" + case(n-i-1)</code>的字符串，即保证了返回值里所有的字符串均是合法的答案，且没有重复的答案。</div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div><script>MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js></script></footer><script defer src=https://flr.me/js/script.js></script>
