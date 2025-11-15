@@ -1,0 +1,69 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0637 - Average of Levels in Binary Tree</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0637 - Average of Levels in Binary Tree</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/average-of-levels-in-binary-tree/ rel=noopener target=_blank>problem</a></h3><p>Given the <code>root</code> of a binary tree, return <em>the average value of the nodes on each level in the form of an array</em>. Answers within <code>10<sup>-5</sup></code> of the actual answer will be accepted.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/03/09/avg1-tree.jpg style=width:277px;height:302px><pre>
+<strong>Input:</strong> root = [3,9,20,null,null,15,7]
+<strong>Output:</strong> [3.00000,14.50000,11.00000]
+Explanation: The average value of nodes on level 0 is 3, on level 1 is 14.5, and on level 2 is 11.
+Hence return [3, 14.5, 11].
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/03/09/avg2-tree.jpg style=width:292px;height:302px><pre>
+<strong>Input:</strong> root = [3,9,20,15,7]
+<strong>Output:</strong> [3.00000,14.50000,11.00000]
+</pre><p> <p><strong>Constraints:</strong><ul><li>The number of nodes in the tree is in the range <code>[1, 10<sup>4</sup>]</code>.<li><code>-2<sup>31</sup> &lt;= Node.val &lt;= 2<sup>31</sup> - 1</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// Definition for a binary tree node.
+</span><span style=color:#928374;font-style:italic>// #[derive(Debug, PartialEq, Eq)]
+</span><span style=color:#928374;font-style:italic>// pub struct TreeNode {
+</span><span style=color:#928374;font-style:italic>//   pub val: i32,
+</span><span style=color:#928374;font-style:italic>//   pub left: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>//   pub right: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#928374;font-style:italic>// 
+</span><span style=color:#928374;font-style:italic>// impl TreeNode {
+</span><span style=color:#928374;font-style:italic>//   #[inline]
+</span><span style=color:#928374;font-style:italic>//   pub fn new(val: i32) -> Self {
+</span><span style=color:#928374;font-style:italic>//     TreeNode {
+</span><span style=color:#928374;font-style:italic>//       val,
+</span><span style=color:#928374;font-style:italic>//       left: None,
+</span><span style=color:#928374;font-style:italic>//       right: None
+</span><span style=color:#928374;font-style:italic>//     }
+</span><span style=color:#928374;font-style:italic>//   }
+</span><span style=color:#928374;font-style:italic>// }
+</span><span>
+</span><span style=color:#fa5c4b>use </span><span>std::cell::RefCell;
+</span><span style=color:#fa5c4b>use </span><span>std::rc::Rc;
+</span><span>
+</span><span style=color:#928374;font-style:italic>// Many BFS problem can be solved with double queue, we alternate between
+</span><span style=color:#928374;font-style:italic>// the two queues, iterate through one while adding new nodes to another
+</span><span style=color:#928374;font-style:italic>// this is very elegant IMO
+</span><span style=color:#928374;font-style:italic>// another advantage of this approach is we could use any container we like
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>average_of_levels</span><span>(
+</span><span>        </span><span style=color:#fdf4c1>root</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span>    ) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>f64</span><span>> {
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> dq, </span><span style=color:#fa5c4b>mut</span><span> swp) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#fabd2f>Vec</span><span>::new(), </span><span style=color:#fabd2f>Vec</span><span>::new());
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>Vec</span><span>::new();
+</span><span>        </span><span style=color:#928374;font-style:italic>// setup, add the first node to queue
+</span><span>        </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(root) </span><span style=color:#fe8019>=</span><span> root {
+</span><span>            dq.</span><span style=color:#fabd2f>push</span><span>(root);
+</span><span>        };
+</span><span>        </span><span style=color:#928374;font-style:italic>// outer loop
+</span><span>        </span><span style=color:#fa5c4b>while </span><span style=color:#fe8019>!</span><span>dq.</span><span style=color:#fabd2f>is_empty</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// we setup the inner loop here, like sum
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> sum </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0.0</span><span style=color:#fa5c4b>f64</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> cnt </span><span style=color:#fe8019>=</span><span> dq.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>f64</span><span>;
+</span><span>
+</span><span>            </span><span style=color:#fa5c4b>while let </span><span style=color:#fabd2f>Some</span><span>(node) </span><span style=color:#fe8019>=</span><span> dq.</span><span style=color:#fabd2f>pop</span><span>() {
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> node </span><span style=color:#fe8019>=</span><span> node.</span><span style=color:#fabd2f>borrow</span><span>();
+</span><span>                sum </span><span style=color:#fe8019>+=</span><span> node.val </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>f64</span><span>;
+</span><span>                </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fa5c4b>ref</span><span> n) </span><span style=color:#fe8019>=</span><span> node.left {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>(n.</span><span style=color:#fabd2f>clone</span><span>());
+</span><span>                }
+</span><span>                </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fa5c4b>ref</span><span> n) </span><span style=color:#fe8019>=</span><span> node.right {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>(n.</span><span style=color:#fabd2f>clone</span><span>());
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// finish inner loop here, like calculate average
+</span><span>            ans.</span><span style=color:#fabd2f>push</span><span>(sum </span><span style=color:#fe8019>/</span><span> cnt);
+</span><span>            </span><span style=color:#928374;font-style:italic>// alternate between two queues
+</span><span>            std::mem::swap(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> dq, </span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> swp);
+</span><span>        }
+</span><span>        ans
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

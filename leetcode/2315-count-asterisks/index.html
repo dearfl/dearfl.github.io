@@ -1,0 +1,29 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2315 - Count Asterisks</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2315 - Count Asterisks</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/count-asterisks/ rel=noopener target=_blank>problem</a></h3><p>You are given a string <code>s</code>, where every <strong>two</strong> consecutive vertical bars <code>'|'</code> are grouped into a <strong>pair</strong>. In other words, the 1<sup>st</sup> and 2<sup>nd</sup> <code>'|'</code> make a pair, the 3<sup>rd</sup> and 4<sup>th</sup> <code>'|'</code> make a pair, and so forth.<p>Return <em>the number of </em><code>'*'</code><em> in </em><code>s</code><em>, <strong>excluding</strong> the </em><code>'*'</code><em> between each pair of </em><code>'|'</code>.<p><strong>Note</strong> that each <code>'|'</code> will belong to <strong>exactly</strong> one pair.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "l|*e*et|c**o|*de|"
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The considered characters are underlined: "<u>l</u>|*e*et|<u>c**o</u>|*de|".
+The characters between the first and second '|' are excluded from the answer.
+Also, the characters between the third and fourth '|' are excluded from the answer.
+There are 2 asterisks considered. Therefore, we return 2.</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "iamprogrammer"
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> In this example, there are no asterisks in s. Therefore, we return 0.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "yo|uar|e**|b|e***au|tifu|l"
+<strong>Output:</strong> 5
+<strong>Explanation:</strong> The considered characters are underlined: "<u>yo</u>|uar|<u>e**</u>|b|<u>e***au</u>|tifu|<u>l</u>". There are 5 asterisks considered. Therefore, we return 5.</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= s.length &lt;= 1000</code><li><code>s</code> consists of lowercase English letters, vertical bars <code>'|'</code>, and asterisks <code>'*'</code>.<li><code>s</code> contains an <strong>even</strong> number of vertical bars <code>'|'</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// we could solve this with a simple loop
+</span><span style=color:#928374;font-style:italic>// however fold is more fun
+</span><span style=color:#928374;font-style:italic>// another fun intuition is to split by '|',
+</span><span style=color:#928374;font-style:italic>// filter by index, flat_map and count '*'
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>count_asterisks</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        s.</span><span style=color:#fabd2f>chars</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>((</span><span style=color:#d3869b>false</span><span>, </span><span style=color:#d3869b>0</span><span>), |(</span><span style=color:#fdf4c1>ignore</span><span>, </span><span style=color:#fdf4c1>sum</span><span>), </span><span style=color:#fdf4c1>ch</span><span>| </span><span style=color:#fa5c4b>match</span><span> ch {
+</span><span>                </span><span style=color:#b8bb26>'*' </span><span style=color:#fa5c4b>if </span><span style=color:#fe8019>!</span><span>ignore </span><span style=color:#fe8019>=> </span><span>(ignore, sum </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>),
+</span><span>                </span><span style=color:#b8bb26>'|' </span><span style=color:#fe8019>=> </span><span>(</span><span style=color:#fe8019>!</span><span>ignore, sum),
+</span><span>                </span><span style=color:#fe8019>_ => </span><span>(ignore, sum),
+</span><span>            })
+</span><span>            .</span><span style=color:#d3869b>1
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

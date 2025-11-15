@@ -1,0 +1,47 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0022 - Generate Parentheses</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0022 - Generate Parentheses</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/generate-parentheses/ rel=noopener target=_blank>problem</a></h3><p>Given <code>n</code> pairs of parentheses, write a function to <em>generate all combinations of well-formed parentheses</em>.<p> <p><strong class=example>Example 1:</strong><pre><strong>Input:</strong> n = 3
+<strong>Output:</strong> ["((()))","(()())","(())()","()(())","()()()"]
+</pre><p><strong class=example>Example 2:</strong><pre><strong>Input:</strong> n = 1
+<strong>Output:</strong> ["()"]
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= n &lt;= 8</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// We solve this by dynamic programming, our intuition goes as follow
+</span><span style=color:#928374;font-style:italic>// 0 => [ "" ]
+</span><span style=color:#928374;font-style:italic>// 1 => [ "()" ]
+</span><span style=color:#928374;font-style:italic>// ...
+</span><span style=color:#928374;font-style:italic>// n => [ "(" + dp[i] + ")" + dp[n-i-1] for i in 0..n ]
+</span><span style=color:#928374;font-style:italic>// Of course the real tranform equation here is way more complicate
+</span><span style=color:#928374;font-style:italic>// but you get the idea, and why does this work?
+</span><span style=color:#928374;font-style:italic>// There are two things to consider here: uniqueness and completeness
+</span><span style=color:#928374;font-style:italic>// Why is every combination unique?
+</span><span style=color:#928374;font-style:italic>// Because the combinations are unique at 0 and 1, and uniqueness
+</span><span style=color:#928374;font-style:italic>// passes all the way down, when every combinations in dp[0..n]
+</span><span style=color:#928374;font-style:italic>// are unique, the combinations in dp[n] are unique as well.
+</span><span style=color:#928374;font-style:italic>// Why is this complete?
+</span><span style=color:#928374;font-style:italic>// Because every valid combination can be written in the form of
+</span><span style=color:#928374;font-style:italic>// &lt; "(" + combo1 + ")" + combo2 >, when we allow combo to be empty.
+</span><span style=color:#928374;font-style:italic>// With this method, we will collect all the combinations in this form,
+</span><span style=color:#928374;font-style:italic>// so our answer is complete.
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>generate_parenthesis</span><span>(</span><span style=color:#fdf4c1>n</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>String</span><span>> {
+</span><span>        </span><span style=color:#928374;font-style:italic>// case 0 and 1
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> dp </span><span style=color:#fe8019>=
+</span><span>            </span><span style=color:#fabd2f>vec!</span><span>[</span><span style=color:#fabd2f>vec!</span><span>[</span><span style=color:#fabd2f>String</span><span>::from(</span><span style=color:#b8bb26>""</span><span>)], </span><span style=color:#fabd2f>vec!</span><span>[</span><span style=color:#fabd2f>String</span><span>::from(</span><span style=color:#b8bb26>"()"</span><span>)]];
+</span><span>        </span><span style=color:#928374;font-style:italic>// iterate through 2 => n
+</span><span>        </span><span style=color:#fa5c4b>for </span><span style=color:#fe8019>_ in </span><span style=color:#d3869b>2</span><span style=color:#fe8019>..=</span><span>n {
+</span><span>            </span><span style=color:#928374;font-style:italic>// dp...
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[];
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> forward </span><span style=color:#fe8019>=</span><span> dp.</span><span style=color:#fabd2f>iter</span><span>();
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> backword </span><span style=color:#fe8019>=</span><span> dp.</span><span style=color:#fabd2f>iter</span><span>().</span><span style=color:#fabd2f>rev</span><span>();
+</span><span>            </span><span style=color:#fa5c4b>while let </span><span style=color:#fabd2f>Some</span><span>((left, right)) </span><span style=color:#fe8019>=
+</span><span>                forward.</span><span style=color:#fabd2f>next</span><span>().</span><span style=color:#fabd2f>zip</span><span>(backword.</span><span style=color:#fabd2f>next</span><span>())
+</span><span>            {
+</span><span>                </span><span style=color:#fa5c4b>for</span><span> l </span><span style=color:#fe8019>in</span><span> left {
+</span><span>                    </span><span style=color:#fa5c4b>for</span><span> r </span><span style=color:#fe8019>in</span><span> right {
+</span><span>                        ans.</span><span style=color:#fabd2f>push</span><span>(</span><span style=color:#fabd2f>format!</span><span>(</span><span style=color:#b8bb26>"(</span><span style=color:#fdf4c1>{}</span><span style=color:#b8bb26>)</span><span style=color:#fdf4c1>{}</span><span style=color:#b8bb26>"</span><span>, l, r));
+</span><span>                    }
+</span><span>                }
+</span><span>            }
+</span><span>            dp.</span><span style=color:#fabd2f>push</span><span>(ans);
+</span><span>        }
+</span><span>        dp.</span><span style=color:#fabd2f>pop</span><span>().</span><span style=color:#fabd2f>unwrap_or_default</span><span>()
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>
