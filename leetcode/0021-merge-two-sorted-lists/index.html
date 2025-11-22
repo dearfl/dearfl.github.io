@@ -1,0 +1,51 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0021 - Merge Two Sorted Lists</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0021 - Merge Two Sorted Lists</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/merge-two-sorted-lists/ rel=noopener target=_blank>problem</a></h3><p>You are given the heads of two sorted linked lists <code>list1</code> and <code>list2</code>.<p>Merge the two lists into one <strong>sorted</strong> list. The list should be made by splicing together the nodes of the first two lists.<p>Return <em>the head of the merged linked list</em>.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/10/03/merge_ex1.jpg style=width:662px;height:302px><pre>
+<strong>Input:</strong> list1 = [1,2,4], list2 = [1,3,4]
+<strong>Output:</strong> [1,1,2,3,4,4]
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> list1 = [], list2 = []
+<strong>Output:</strong> []
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> list1 = [], list2 = [0]
+<strong>Output:</strong> [0]
+</pre><p> <p><strong>Constraints:</strong><ul><li>The number of nodes in both lists is in the range <code>[0, 50]</code>.<li><code>-100 &lt;= Node.val &lt;= 100</code><li>Both <code>list1</code> and <code>list2</code> are sorted in <strong>non-decreasing</strong> order.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// Definition for singly-linked list.
+</span><span style=color:#928374;font-style:italic>// #[derive(PartialEq, Eq, Clone, Debug)]
+</span><span style=color:#928374;font-style:italic>// pub struct ListNode {
+</span><span style=color:#928374;font-style:italic>//   pub val: i32,
+</span><span style=color:#928374;font-style:italic>//   pub next: Option&lt;Box&lt;ListNode>>
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#928374;font-style:italic>// 
+</span><span style=color:#928374;font-style:italic>// impl ListNode {
+</span><span style=color:#928374;font-style:italic>//   #[inline]
+</span><span style=color:#928374;font-style:italic>//   fn new(val: i32) -> Self {
+</span><span style=color:#928374;font-style:italic>//     ListNode {
+</span><span style=color:#928374;font-style:italic>//       next: None,
+</span><span style=color:#928374;font-style:italic>//       val
+</span><span style=color:#928374;font-style:italic>//     }
+</span><span style=color:#928374;font-style:italic>//   }
+</span><span style=color:#928374;font-style:italic>// }
+</span><span>
+</span><span style=color:#928374;font-style:italic>// easier to solve with recursion
+</span><span style=color:#928374;font-style:italic>// pick the smaller node and merge the rest recursively
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>merge_two_lists</span><span>(
+</span><span>        </span><span style=color:#fdf4c1>list1</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>>,
+</span><span>        </span><span style=color:#fdf4c1>list2</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>>,
+</span><span>    ) -> </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>> {
+</span><span>        </span><span style=color:#928374;font-style:italic>// unfortunately we can't simplify this with let-else
+</span><span>        </span><span style=color:#fa5c4b>match </span><span>(list1, list2) {
+</span><span>            (</span><span style=color:#fabd2f>Some</span><span>(list1), </span><span style=color:#fabd2f>Some</span><span>(list2)) </span><span style=color:#fe8019>=> </span><span>{
+</span><span>                </span><span style=color:#928374;font-style:italic>// choose a smaller node as head
+</span><span>                </span><span style=color:#928374;font-style:italic>// recursively merge the rest
+</span><span>                </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> min, max) </span><span style=color:#fe8019>= </span><span style=color:#fa5c4b>match</span><span> list1.val </span><span style=color:#fe8019>&lt;</span><span> list2.val {
+</span><span>                    </span><span style=color:#d3869b>true </span><span style=color:#fe8019>=> </span><span>(list1, list2),
+</span><span>                    </span><span style=color:#d3869b>false </span><span style=color:#fe8019>=> </span><span>(list2, list1),
+</span><span>                };
+</span><span>                min.next </span><span style=color:#fe8019>= </span><span style=color:#fa5c4b>Self</span><span>::merge_two_lists(min.next, </span><span style=color:#fabd2f>Some</span><span>(max));
+</span><span>                </span><span style=color:#fabd2f>Some</span><span>(min)
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// both Option::xor & Option::or works here
+</span><span>            (list1, list2) </span><span style=color:#fe8019>=></span><span> list1.</span><span style=color:#fabd2f>xor</span><span>(list2),
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

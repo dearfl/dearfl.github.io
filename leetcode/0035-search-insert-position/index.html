@@ -1,0 +1,50 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0035 - Search Insert Position</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0035 - Search Insert Position</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/search-insert-position/ rel=noopener target=_blank>problem</a></h3><p>Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.<p>You must write an algorithm with <code>O(log n)</code> runtime complexity.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [1,3,5,6], target = 5
+<strong>Output:</strong> 2
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [1,3,5,6], target = 2
+<strong>Output:</strong> 1
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> nums = [1,3,5,6], target = 7
+<strong>Output:</strong> 4
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= nums.length &lt;= 10<sup>4</sup></code><li><code>-10<sup>4</sup> &lt;= nums[i] &lt;= 10<sup>4</sup></code><li><code>nums</code> contains <strong>distinct</strong> values sorted in <strong>ascending</strong> order.<li><code>-10<sup>4</sup> &lt;= target &lt;= 10<sup>4</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// standard way to write a binary search use [left, right) range
+</span><span style=color:#928374;font-style:italic>// thanks to the great Dijkstra
+</span><span style=color:#928374;font-style:italic>// this can handle empty range, no exact match, multiple match
+</span><span style=color:#928374;font-style:italic>// this is how it works
+</span><span style=color:#928374;font-style:italic>// we define [left, right) is a range separate the whole range
+</span><span style=color:#928374;font-style:italic>// into 3 parts
+</span><span style=color:#928374;font-style:italic>// [0, left) => every number in this range is less than target
+</span><span style=color:#928374;font-style:italic>// [left, right) => could either be less/equal/greater than target
+</span><span style=color:#928374;font-style:italic>// [right, len) => greater or equal than target
+</span><span style=color:#928374;font-style:italic>// our goal is to keep shrinking the [left, right) range until it
+</span><span style=color:#928374;font-style:italic>// is empty. why? because
+</span><span style=color:#928374;font-style:italic>//  1. the origin range could be empty
+</span><span style=color:#928374;font-style:italic>//  2. when it is empty, left == right, the origin range is essentially
+</span><span style=color:#928374;font-style:italic>//     splitted into 2 parts with left/right also point to the start of
+</span><span style=color:#928374;font-style:italic>//     the last range, which is what we want
+</span><span style=color:#928374;font-style:italic>// Initially, we don't know anything, so left = 0, right = len
+</span><span style=color:#928374;font-style:italic>// each step, we check the number in the mid of [left, right), if:
+</span><span style=color:#928374;font-style:italic>//  nums[mid] &lt; target: every number in [left, mid] is less than target
+</span><span style=color:#928374;font-style:italic>//  nums[mid] >= target: every number in [mid, right) is greater or equal
+</span><span style=color:#928374;font-style:italic>//                       than target
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>search_insert</span><span>(</span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>, </span><span style=color:#fdf4c1>target</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// init condition
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> left </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span style=color:#fa5c4b>usize</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> right </span><span style=color:#fe8019>=</span><span> nums.</span><span style=color:#fabd2f>len</span><span>();
+</span><span>        </span><span style=color:#928374;font-style:italic>// we want to shrink [left, right) to empty, so "&lt;" is fine
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> left </span><span style=color:#fe8019>&lt;</span><span> right {
+</span><span>            </span><span style=color:#928374;font-style:italic>// avoid integer overflow
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> mid </span><span style=color:#fe8019>=</span><span> left </span><span style=color:#fe8019>+ </span><span>(right </span><span style=color:#fe8019>-</span><span> left) </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span>;
+</span><span>            </span><span style=color:#928374;font-style:italic>// we want to split into lt/ge parts, so "&lt;" here too
+</span><span>            </span><span style=color:#fa5c4b>if</span><span> nums[mid] </span><span style=color:#fe8019>&lt;</span><span> target {
+</span><span>                </span><span style=color:#928374;font-style:italic>// we know for sure nums[mid] is not target
+</span><span>                left </span><span style=color:#fe8019>=</span><span> mid </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>;
+</span><span>            } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                right </span><span style=color:#fe8019>=</span><span> mid;
+</span><span>            }
+</span><span>        }
+</span><span>        left </span><span style=color:#fe8019>as _
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,24 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2942 - Find Words Containing Character</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2942 - Find Words Containing Character</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/find-words-containing-character/ rel=noopener target=_blank>problem</a></h3><p>You are given a <strong>0-indexed</strong> array of strings <code>words</code> and a character <code>x</code>.<p>Return <em>an <strong>array of indices</strong> representing the words that contain the character </em><code>x</code>.<p><strong>Note</strong> that the returned array may be in <strong>any</strong> order.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> words = ["leet","code"], x = "e"
+<strong>Output:</strong> [0,1]
+<strong>Explanation:</strong> "e" occurs in both words: "l<strong><u>ee</u></strong>t", and "cod<u><strong>e</strong></u>". Hence, we return indices 0 and 1.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> words = ["abc","bcd","aaaa","cbc"], x = "a"
+<strong>Output:</strong> [0,2]
+<strong>Explanation:</strong> "a" occurs in "<strong><u>a</u></strong>bc", and "<u><strong>aaaa</strong></u>". Hence, we return indices 0 and 2.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> words = ["abc","bcd","aaaa","cbc"], x = "z"
+<strong>Output:</strong> []
+<strong>Explanation:</strong> "z" does not occur in any of the words. Hence, we return an empty array.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= words.length &lt;= 50</code><li><code>1 &lt;= words[i].length &lt;= 50</code><li><code>x</code> is a lowercase English letter.<li><code>words[i]</code> consists only of lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// simple rust iterator solution
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>find_words_containing</span><span>(</span><span style=color:#fdf4c1>words</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>String</span><span>>, </span><span style=color:#fdf4c1>x</span><span>: </span><span style=color:#fa5c4b>char</span><span>) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>> {
+</span><span>        words
+</span><span>            .</span><span style=color:#fabd2f>iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>enumerate</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>filter_map</span><span>(|(</span><span style=color:#fdf4c1>idx</span><span>, </span><span style=color:#fdf4c1>s</span><span>)| s.</span><span style=color:#fabd2f>contains</span><span>(x).</span><span style=color:#fabd2f>then_some</span><span>(idx </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>))
+</span><span>            .</span><span style=color:#fabd2f>collect</span><span>()
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,24 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1518 - Water Bottles</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1518 - Water Bottles</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/water-bottles/ rel=noopener target=_blank>problem</a></h3><p>There are <code>numBottles</code> water bottles that are initially full of water. You can exchange <code>numExchange</code> empty water bottles from the market with one full water bottle.<p>The operation of drinking a full water bottle turns it into an empty bottle.<p>Given the two integers <code>numBottles</code> and <code>numExchange</code>, return <em>the <strong>maximum</strong> number of water bottles you can drink</em>.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/07/01/sample_1_1875.png style=width:500px;height:245px><pre>
+<strong>Input:</strong> numBottles = 9, numExchange = 3
+<strong>Output:</strong> 13
+<strong>Explanation:</strong> You can exchange 3 empty bottles to get 1 full water bottle.
+Number of water bottles you can drink: 9 + 3 + 1 = 13.
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/07/01/sample_2_1875.png style=width:500px;height:183px><pre>
+<strong>Input:</strong> numBottles = 15, numExchange = 4
+<strong>Output:</strong> 19
+<strong>Explanation:</strong> You can exchange 4 empty bottles to get 1 full water bottle. 
+Number of water bottles you can drink: 15 + 3 + 1 = 19.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= numBottles &lt;= 100</code><li><code>2 &lt;= numExchange &lt;= 100</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// we could solve this by simulate and it is absolutely ok
+</span><span>    </span><span style=color:#928374;font-style:italic>// however this is a much clever solution
+</span><span>    </span><span style=color:#928374;font-style:italic>// think a full bottle as 1 bottle + 1 water
+</span><span>    </span><span style=color:#928374;font-style:italic>// we exchange k bottle to 1 bottle + 1 water
+</span><span>    </span><span style=color:#928374;font-style:italic>// effectively we have: (k - 1) bottle = 1 water
+</span><span>    </span><span style=color:#928374;font-style:italic>// after the process, we'll have at least 1 bottle
+</span><span>    </span><span style=color:#928374;font-style:italic>// initially we have n water and n bottle, so
+</span><span>    </span><span style=color:#928374;font-style:italic>// we have: n + floor((n - 1) / (k - 1))
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>num_water_bottles</span><span>(</span><span style=color:#fdf4c1>n</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>k</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        n </span><span style=color:#fe8019>+ </span><span>(n </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>/ </span><span>(k </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>)
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,38 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0072 - Edit Distance</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0072 - Edit Distance</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/edit-distance/ rel=noopener target=_blank>problem</a></h3><p>Given two strings <code>word1</code> and <code>word2</code>, return <em>the minimum number of operations required to convert <code>word1</code> to <code>word2</code></em>.<p>You have the following three operations permitted on a word:<ul><li>Insert a character<li>Delete a character<li>Replace a character</ul><p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> word1 = "horse", word2 = "ros"
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> 
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> word1 = "intention", word2 = "execution"
+<strong>Output:</strong> 5
+<strong>Explanation:</strong> 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>0 &lt;= word1.length, word2.length &lt;= 500</code><li><code>word1</code> and <code>word2</code> consist of lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// dynamic programming
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>min_distance</span><span>(</span><span style=color:#fdf4c1>word1</span><span>: String, </span><span style=color:#fdf4c1>word2</span><span>: String) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> dp </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#d3869b>0</span><span style=color:#fe8019>..=</span><span>word1.</span><span style=color:#fabd2f>len</span><span>())
+</span><span>            .</span><span style=color:#fabd2f>map</span><span>(|</span><span style=color:#fdf4c1>i</span><span>| (</span><span style=color:#d3869b>0</span><span style=color:#fe8019>..=</span><span>word2.</span><span style=color:#fabd2f>len</span><span>())
+</span><span>                .</span><span style=color:#fabd2f>map</span><span>(</span><span style=color:#fa5c4b>move </span><span style=color:#fe8019>|</span><span>j</span><span style=color:#fe8019>|</span><span> i.</span><span style=color:#fabd2f>max</span><span>(j))
+</span><span>                .collect::&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fe8019>_</span><span>>>()
+</span><span>            )
+</span><span>            .collect::&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fe8019>_</span><span>>>();
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(i, b1) </span><span style=color:#fe8019>in</span><span> word1.</span><span style=color:#fabd2f>bytes</span><span>().</span><span style=color:#fabd2f>enumerate</span><span>() {
+</span><span>            </span><span style=color:#fa5c4b>for </span><span>(j, b2) </span><span style=color:#fe8019>in</span><span> word2.</span><span style=color:#fabd2f>bytes</span><span>().</span><span style=color:#fabd2f>enumerate</span><span>() {
+</span><span>                </span><span style=color:#928374;font-style:italic>// if b1 == b2, no extra replace operation is needed
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> extra </span><span style=color:#fe8019>= </span><span style=color:#fa5c4b>if</span><span> b1 </span><span style=color:#fe8019>==</span><span> b2 { </span><span style=color:#d3869b>0 </span><span>} </span><span style=color:#fa5c4b>else </span><span>{ </span><span style=color:#d3869b>1 </span><span>};
+</span><span>                dp[i </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>][j </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>= </span><span>(dp[i][j </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#928374;font-style:italic>// delete 1
+</span><span>                    .</span><span style=color:#fabd2f>min</span><span>(dp[i </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>][j] </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#928374;font-style:italic>// insert 1
+</span><span>                    .</span><span style=color:#fabd2f>min</span><span>(dp[i][j] </span><span style=color:#fe8019>+</span><span> extra); </span><span style=color:#928374;font-style:italic>// replace 1 if needed
+</span><span>            }
+</span><span>        }
+</span><span>        dp[word1.</span><span style=color:#fabd2f>len</span><span>()][word2.</span><span style=color:#fabd2f>len</span><span>()] </span><span style=color:#fe8019>as _
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

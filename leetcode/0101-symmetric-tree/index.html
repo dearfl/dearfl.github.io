@@ -1,0 +1,61 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0101 - Symmetric Tree</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0101 - Symmetric Tree</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/symmetric-tree/ rel=noopener target=_blank>problem</a></h3><p>Given the <code>root</code> of a binary tree, <em>check whether it is a mirror of itself</em> (i.e., symmetric around its center).<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/02/19/symtree1.jpg style=width:354px;height:291px><pre>
+<strong>Input:</strong> root = [1,2,2,3,4,4,3]
+<strong>Output:</strong> true
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/02/19/symtree2.jpg style=width:308px;height:258px><pre>
+<strong>Input:</strong> root = [1,2,2,null,3,null,3]
+<strong>Output:</strong> false
+</pre><p> <p><strong>Constraints:</strong><ul><li>The number of nodes in the tree is in the range <code>[1, 1000]</code>.<li><code>-100 &lt;= Node.val &lt;= 100</code></ul><p> </p><strong>Follow up:</strong> Could you solve it both recursively and iteratively? <hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// Definition for a binary tree node.
+</span><span style=color:#928374;font-style:italic>// #[derive(Debug, PartialEq, Eq)]
+</span><span style=color:#928374;font-style:italic>// pub struct TreeNode {
+</span><span style=color:#928374;font-style:italic>//   pub val: i32,
+</span><span style=color:#928374;font-style:italic>//   pub left: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>//   pub right: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#928374;font-style:italic>// 
+</span><span style=color:#928374;font-style:italic>// impl TreeNode {
+</span><span style=color:#928374;font-style:italic>//   #[inline]
+</span><span style=color:#928374;font-style:italic>//   pub fn new(val: i32) -> Self {
+</span><span style=color:#928374;font-style:italic>//     TreeNode {
+</span><span style=color:#928374;font-style:italic>//       val,
+</span><span style=color:#928374;font-style:italic>//       left: None,
+</span><span style=color:#928374;font-style:italic>//       right: None
+</span><span style=color:#928374;font-style:italic>//     }
+</span><span style=color:#928374;font-style:italic>//   }
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#fa5c4b>use </span><span>std::rc::Rc;
+</span><span style=color:#fa5c4b>use </span><span>std::cell::RefCell;
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// we solve this by iterate through symmertric pair of nodes
+</span><span>    </span><span style=color:#928374;font-style:italic>// a pair of symmertric node should have the same value and
+</span><span>    </span><span style=color:#928374;font-style:italic>// mirrored children nodes
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>is_symmetric</span><span>(</span><span style=color:#fdf4c1>root</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;Rc&lt;RefCell&lt;TreeNode>>>) -> </span><span style=color:#fa5c4b>bool </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> nodes </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[];
+</span><span>        </span><span style=color:#928374;font-style:italic>// add the first pair
+</span><span>        </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(node) </span><span style=color:#fe8019>=</span><span> root {
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> node </span><span style=color:#fe8019>=</span><span> node.</span><span style=color:#fabd2f>borrow</span><span>();
+</span><span>            nodes.</span><span style=color:#fabd2f>push</span><span>((node.left.</span><span style=color:#fabd2f>clone</span><span>(), node.right.</span><span style=color:#fabd2f>clone</span><span>()));
+</span><span>        }
+</span><span>        </span><span style=color:#fa5c4b>while let </span><span style=color:#fabd2f>Some</span><span>((left, right)) </span><span style=color:#fe8019>=</span><span> nodes.</span><span style=color:#fabd2f>pop</span><span>() {
+</span><span>            </span><span style=color:#fa5c4b>match </span><span>(left, right) {
+</span><span>                </span><span style=color:#928374;font-style:italic>// both nodes not empty
+</span><span>                (</span><span style=color:#fabd2f>Some</span><span>(left), </span><span style=color:#fabd2f>Some</span><span>(right)) </span><span style=color:#fe8019>=> </span><span>{
+</span><span>                    </span><span style=color:#fa5c4b>let</span><span> left </span><span style=color:#fe8019>=</span><span> left.</span><span style=color:#fabd2f>borrow</span><span>();
+</span><span>                    </span><span style=color:#fa5c4b>let</span><span> right </span><span style=color:#fe8019>=</span><span> right.</span><span style=color:#fabd2f>borrow</span><span>();
+</span><span>                    </span><span style=color:#928374;font-style:italic>// check value
+</span><span>                    </span><span style=color:#fa5c4b>if</span><span> left.val </span><span style=color:#fe8019>!=</span><span> right.val {
+</span><span>                        </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>                    }
+</span><span>                    </span><span style=color:#928374;font-style:italic>// push mirrored children
+</span><span>                    nodes.</span><span style=color:#fabd2f>push</span><span>((left.left.</span><span style=color:#fabd2f>clone</span><span>(), right.right.</span><span style=color:#fabd2f>clone</span><span>()));
+</span><span>                    nodes.</span><span style=color:#fabd2f>push</span><span>((left.right.</span><span style=color:#fabd2f>clone</span><span>(), right.left.</span><span style=color:#fabd2f>clone</span><span>()));
+</span><span>                }
+</span><span>                </span><span style=color:#928374;font-style:italic>// both empty, skip
+</span><span>                (</span><span style=color:#fabd2f>None</span><span>, </span><span style=color:#fabd2f>None</span><span>) </span><span style=color:#fe8019>=> </span><span>{}
+</span><span>                </span><span style=color:#928374;font-style:italic>// any other case should return false
+</span><span>                </span><span style=color:#fe8019>_ => </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>,
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style=color:#d3869b>true
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>
