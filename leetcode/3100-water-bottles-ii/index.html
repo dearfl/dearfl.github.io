@@ -1,0 +1,27 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 3100 - Water Bottles II</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>3100 - Water Bottles II</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/water-bottles-ii/ rel=noopener target=_blank>problem</a></h3><p>You are given two integers <code>numBottles</code> and <code>numExchange</code>.<p><code>numBottles</code> represents the number of full water bottles that you initially have. In one operation, you can perform one of the following operations:<ul><li>Drink any number of full water bottles turning them into empty bottles.<li>Exchange <code>numExchange</code> empty bottles with one full water bottle. Then, increase <code>numExchange</code> by one.</ul><p>Note that you cannot exchange multiple batches of empty bottles for the same value of <code>numExchange</code>. For example, if <code>numBottles == 3</code> and <code>numExchange == 1</code>, you cannot exchange <code>3</code> empty water bottles for <code>3</code> full bottles.<p>Return <em>the <strong>maximum</strong> number of water bottles you can drink</em>.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2024/01/28/exampleone1.png style=background:#fff;border-radius:.5rem;width:948px;height:482px;padding:10px><pre>
+<strong>Input:</strong> numBottles = 13, numExchange = 6
+<strong>Output:</strong> 15
+<strong>Explanation:</strong> The table above shows the number of full water bottles, empty water bottles, the value of numExchange, and the number of bottles drunk.
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2024/01/28/example231.png style=background:#fff;border-radius:.5rem;width:990px;height:642px;padding:10px><pre>
+<strong>Input:</strong> numBottles = 10, numExchange = 3
+<strong>Output:</strong> 13
+<strong>Explanation:</strong> The table above shows the number of full water bottles, empty water bottles, the value of numExchange, and the number of bottles drunk.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= numBottles &lt;= 100 </code><li><code>1 &lt;= numExchange &lt;= 100</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// just simulate, exchange and drink it immediately
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>max_bottles_drunk</span><span>(
+</span><span>        </span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>num_bottles</span><span>: </span><span style=color:#fa5c4b>i32</span><span>,
+</span><span>        </span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>num_exchange</span><span>: </span><span style=color:#fa5c4b>i32</span><span>,
+</span><span>    ) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> drinks </span><span style=color:#fe8019>=</span><span> num_bottles;
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> num_bottles </span><span style=color:#fe8019>>=</span><span> num_exchange {
+</span><span>            </span><span style=color:#928374;font-style:italic>// exchange and drink
+</span><span>            num_bottles </span><span style=color:#fe8019>-=</span><span> num_exchange </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>;
+</span><span>            drinks </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            </span><span style=color:#928374;font-style:italic>// raise exchange price
+</span><span>            num_exchange </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>        }
+</span><span>        drinks
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

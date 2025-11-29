@@ -1,0 +1,55 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1091 - Shortest Path in Binary Matrix</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1091 - Shortest Path in Binary Matrix</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/shortest-path-in-binary-matrix/ rel=noopener target=_blank>problem</a></h3><p>Given an <code>n x n</code> binary matrix <code>grid</code>, return <em>the length of the shortest <strong>clear path</strong> in the matrix</em>. If there is no clear path, return <code>-1</code>.<p>A <strong>clear path</strong> in a binary matrix is a path from the <strong>top-left</strong> cell (i.e., <code>(0, 0)</code>) to the <strong>bottom-right</strong> cell (i.e., <code>(n - 1, n - 1)</code>) such that:<ul><li>All the visited cells of the path are <code>0</code>.<li>All the adjacent cells of the path are <strong>8-directionally</strong> connected (i.e., they are different and they share an edge or a corner).</ul><p>The <strong>length of a clear path</strong> is the number of visited cells of this path.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/02/18/example1_1.png style=width:500px;height:234px><pre>
+<strong>Input:</strong> grid = [[0,1],[1,0]]
+<strong>Output:</strong> 2
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/02/18/example2_1.png style=width:500px;height:216px><pre>
+<strong>Input:</strong> grid = [[0,0,0],[1,1,0],[1,1,0]]
+<strong>Output:</strong> 4
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> grid = [[1,0,0],[1,1,0],[1,1,0]]
+<strong>Output:</strong> -1
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>n == grid.length</code><li><code>n == grid[i].length</code><li><code>1 &lt;= n &lt;= 100</code><li><code>grid[i][j] is 0 or 1</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// BFS with double queue
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>shortest_path_binary_matrix</span><span>(</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>grid</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// 8 directions
+</span><span>        #[</span><span style=color:#fdf4c1>rustfmt</span><span>::</span><span style=color:#fdf4c1>skip</span><span>]
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> dirs </span><span style=color:#fe8019>= </span><span>[
+</span><span>            [</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#d3869b>1</span><span>], [</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>1</span><span>], [</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>0</span><span>], [</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>],
+</span><span>            [</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>], [</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>], [</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>0</span><span>], [</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#d3869b>1</span><span>],
+</span><span>        ];
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> n </span><span style=color:#fe8019>=</span><span> grid.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>;
+</span><span>        </span><span style=color:#928374;font-style:italic>// double "queue", order doesn't matter here
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> queue, </span><span style=color:#fa5c4b>mut</span><span> swp) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#fabd2f>vec!</span><span>[], </span><span style=color:#fabd2f>vec!</span><span>[]);
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> steps </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        queue.</span><span style=color:#fabd2f>push</span><span>((</span><span style=color:#d3869b>0</span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#d3869b>0</span><span style=color:#fa5c4b>i32</span><span>));
+</span><span>        </span><span style=color:#928374;font-style:italic>// helper lambda to check range & visited
+</span><span>        </span><span style=color:#928374;font-style:italic>// this has the side effect of marking grid[x][y] as visited
+</span><span>        </span><span style=color:#fa5c4b>let mut </span><span style=color:#8ec07c>out_of_range_or_visited </span><span style=color:#fe8019>= </span><span>|</span><span style=color:#fdf4c1>x</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>y</span><span>: </span><span style=color:#fa5c4b>i32</span><span>| {
+</span><span>            </span><span style=color:#fe8019>!</span><span>(x </span><span style=color:#fe8019>>= </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&&</span><span> x </span><span style=color:#fe8019>&lt;</span><span> n </span><span style=color:#fe8019>&&</span><span> y </span><span style=color:#fe8019>>= </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>&&</span><span> y </span><span style=color:#fe8019>&lt;</span><span> n)
+</span><span>                </span><span style=color:#fe8019>|| </span><span>std::mem::replace(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> grid[x </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>][y </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>], </span><span style=color:#d3869b>1</span><span>)
+</span><span>                    </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0
+</span><span>        };
+</span><span>        </span><span style=color:#fa5c4b>while </span><span style=color:#fe8019>!</span><span>queue.</span><span style=color:#fabd2f>is_empty</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// keep track of steps
+</span><span>            steps </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>while let </span><span style=color:#fabd2f>Some</span><span>((x, y)) </span><span style=color:#fe8019>=</span><span> queue.</span><span style=color:#fabd2f>pop</span><span>() {
+</span><span>                </span><span style=color:#928374;font-style:italic>// check range and value and mark visited
+</span><span>                </span><span style=color:#fa5c4b>if </span><span style=color:#fabd2f>out_of_range_or_visited</span><span>(x, y) {
+</span><span>                    </span><span style=color:#fa5c4b>continue</span><span>;
+</span><span>                }
+</span><span>                </span><span style=color:#928374;font-style:italic>// reach destination, return
+</span><span>                </span><span style=color:#fa5c4b>if</span><span> x </span><span style=color:#fe8019>==</span><span> n </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1 </span><span style=color:#fe8019>&&</span><span> y </span><span style=color:#fe8019>==</span><span> n </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1 </span><span>{
+</span><span>                    </span><span style=color:#fa5c4b>return</span><span> steps;
+</span><span>                }
+</span><span>                </span><span style=color:#928374;font-style:italic>// push adjacent cells to another queue
+</span><span>                </span><span style=color:#fa5c4b>for </span><span>[dx, dy] </span><span style=color:#fe8019>in</span><span> dirs {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>((x </span><span style=color:#fe8019>+</span><span> dx, y </span><span style=color:#fe8019>+</span><span> dy));
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// alternate between two queues
+</span><span>            std::mem::swap(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> queue, </span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> swp);
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// unreachable
+</span><span>        </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,48 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1024 - Video Stitching</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1024 - Video Stitching</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/video-stitching/ rel=noopener target=_blank>problem</a></h3><p>You are given a series of video clips from a sporting event that lasted <code>time</code> seconds. These video clips can be overlapping with each other and have varying lengths.<p>Each video clip is described by an array <code>clips</code> where <code>clips[i] = [start<sub>i</sub>, end<sub>i</sub>]</code> indicates that the ith clip started at <code>start<sub>i</sub></code> and ended at <code>end<sub>i</sub></code>.<p>We can cut these clips into segments freely.<ul><li>For example, a clip <code>[0, 7]</code> can be cut into segments <code>[0, 1] + [1, 3] + [3, 7]</code>.</ul><p>Return <em>the minimum number of clips needed so that we can cut the clips into segments that cover the entire sporting event</em> <code>[0, time]</code>. If the task is impossible, return <code>-1</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> clips = [[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], time = 10
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> We take the clips [0,2], [8,10], [1,9]; a total of 3 clips.
+Then, we can reconstruct the sporting event as follows:
+We cut [1,9] into segments [1,2] + [2,8] + [8,9].
+Now we have segments [0,2] + [2,8] + [8,10] which cover the sporting event [0, 10].
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> clips = [[0,1],[1,2]], time = 5
+<strong>Output:</strong> -1
+<strong>Explanation:</strong> We cannot cover [0,5] with only [0,1] and [1,2].
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> clips = [[0,1],[6,8],[0,2],[5,6],[0,4],[0,3],[6,7],[1,3],[4,7],[1,4],[2,5],[2,6],[3,4],[4,5],[5,7],[6,9]], time = 9
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> We can take clips [0,4], [4,7], and [6,9].
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= clips.length &lt;= 100</code><li><code>0 &lt;= start<sub>i</sub> &lt;= end<sub>i</sub> &lt;= 100</code><li><code>1 &lt;= time &lt;= 100</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// sort and iterate and simulate steps
+</span><span style=color:#928374;font-style:italic>// I can't come up with an elegant solution
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>video_stitching</span><span>(</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>clips</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>>, </span><span style=color:#fdf4c1>time</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// sort by start is enough
+</span><span>        clips.</span><span style=color:#fabd2f>sort</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> end </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> idx </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> idx </span><span style=color:#fe8019>&lt;</span><span> clips.</span><span style=color:#fabd2f>len</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// we search for the farthest time we
+</span><span>            </span><span style=color:#928374;font-style:italic>// can reach each step
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> right </span><span style=color:#fe8019>=</span><span> end;
+</span><span>            </span><span style=color:#fa5c4b>while</span><span> idx </span><span style=color:#fe8019>&lt;</span><span> clips.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>&&</span><span> clips[idx][</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>&lt;=</span><span> end {
+</span><span>                right </span><span style=color:#fe8019>=</span><span> right.</span><span style=color:#fabd2f>max</span><span>(clips[idx][</span><span style=color:#d3869b>1</span><span>]);
+</span><span>                idx </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// if we reach time or we can't go forward, break
+</span><span>            </span><span style=color:#fa5c4b>if</span><span> right </span><span style=color:#fe8019>&lt;=</span><span> end </span><span style=color:#fe8019>||</span><span> end </span><span style=color:#fe8019>>=</span><span> time {
+</span><span>                </span><span style=color:#fa5c4b>break</span><span>;
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// take one clip
+</span><span>            ans </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            end </span><span style=color:#fe8019>=</span><span> right;
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// check completeness
+</span><span>        </span><span style=color:#fa5c4b>match</span><span> end </span><span style=color:#fe8019>>=</span><span> time {
+</span><span>            </span><span style=color:#d3869b>true </span><span style=color:#fe8019>=></span><span> ans,
+</span><span>            </span><span style=color:#d3869b>false </span><span style=color:#fe8019>=> -</span><span style=color:#d3869b>1</span><span>,
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

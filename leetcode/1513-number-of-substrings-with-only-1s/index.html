@@ -1,0 +1,33 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1513 - Number of Substrings With Only 1s</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1513 - Number of Substrings With Only 1s</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/number-of-substrings-with-only-1s/ rel=noopener target=_blank>problem</a></h3><p>Given a binary string <code>s</code>, return <em>the number of substrings with all characters</em> <code>1</code><em>'s</em>. Since the answer may be too large, return it modulo <code>10<sup>9</sup> + 7</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "0110111"
+<strong>Output:</strong> 9
+<strong>Explanation:</strong> There are 9 substring in total with only 1's characters.
+"1" -> 5 times.
+"11" -> 3 times.
+"111" -> 1 time.</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "101"
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> Substring "1" is shown 2 times in s.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "111111"
+<strong>Output:</strong> 21
+<strong>Explanation:</strong> Each substring contains only 1's characters.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= s.length &lt;= 10<sup>5</sup></code><li><code>s[i]</code> is either <code>'0'</code> or <code>'1'</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// should be straight forward enough
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>num_sub</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        (s.</span><span style=color:#fabd2f>as_bytes</span><span>()
+</span><span>            </span><span style=color:#928374;font-style:italic>// chunk by different bytes
+</span><span>            .</span><span style=color:#fabd2f>chunk_by</span><span>(|</span><span style=color:#fdf4c1>a</span><span>, </span><span style=color:#fdf4c1>b</span><span>| a </span><span style=color:#fe8019>==</span><span> b)
+</span><span>            .</span><span style=color:#fabd2f>filter_map</span><span>(|</span><span style=color:#fdf4c1>chunk</span><span>| {
+</span><span>                </span><span style=color:#928374;font-style:italic>// check if this is a chunk of '1's
+</span><span>                </span><span style=color:#fabd2f>matches!</span><span>(chunk, </span><span style=color:#fe8019>&</span><span>[</span><span style=color:#fa5c4b>b</span><span style=color:#b8bb26>'1'</span><span>, </span><span style=color:#fe8019>..</span><span>])
+</span><span>                    .</span><span style=color:#fabd2f>then</span><span>(|| {
+</span><span>                        </span><span style=color:#928374;font-style:italic>// contribution of this chunk
+</span><span>                        chunk.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>* </span><span>(chunk.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>% </span><span style=color:#d3869b>1000000007
+</span><span>                    })
+</span><span>            })
+</span><span>            </span><span style=color:#928374;font-style:italic>// accumulate
+</span><span>            .sum::&lt;</span><span style=color:#fa5c4b>usize</span><span>>() </span><span style=color:#fe8019>% </span><span style=color:#d3869b>1000000007</span><span>) </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>
