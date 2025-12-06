@@ -1,0 +1,55 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0104 - Maximum Depth of Binary Tree</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0104 - Maximum Depth of Binary Tree</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/maximum-depth-of-binary-tree/ rel=noopener target=_blank>problem</a></h3><p>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.<p>A binary tree's <strong>maximum depth</strong> is the number of nodes along the longest path from the root node down to the farthest leaf node.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/11/26/tmp-tree.jpg style=width:400px;height:277px><pre>
+<strong>Input:</strong> root = [3,9,20,null,null,15,7]
+<strong>Output:</strong> 3
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> root = [1,null,2]
+<strong>Output:</strong> 2
+</pre><p> <p><strong>Constraints:</strong><ul><li>The number of nodes in the tree is in the range <code>[0, 10<sup>4</sup>]</code>.<li><code>-100 &lt;= Node.val &lt;= 100</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// Definition for a binary tree node.
+</span><span style=color:#928374;font-style:italic>// #[derive(Debug, PartialEq, Eq)]
+</span><span style=color:#928374;font-style:italic>// pub struct TreeNode {
+</span><span style=color:#928374;font-style:italic>//   pub val: i32,
+</span><span style=color:#928374;font-style:italic>//   pub left: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>//   pub right: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#928374;font-style:italic>// 
+</span><span style=color:#928374;font-style:italic>// impl TreeNode {
+</span><span style=color:#928374;font-style:italic>//   #[inline]
+</span><span style=color:#928374;font-style:italic>//   pub fn new(val: i32) -> Self {
+</span><span style=color:#928374;font-style:italic>//     TreeNode {
+</span><span style=color:#928374;font-style:italic>//       val,
+</span><span style=color:#928374;font-style:italic>//       left: None,
+</span><span style=color:#928374;font-style:italic>//       right: None
+</span><span style=color:#928374;font-style:italic>//     }
+</span><span style=color:#928374;font-style:italic>//   }
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#fa5c4b>use </span><span>std::rc::Rc;
+</span><span style=color:#fa5c4b>use </span><span>std::cell::RefCell;
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// double queue
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>max_depth</span><span>(</span><span style=color:#fdf4c1>root</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;Rc&lt;RefCell&lt;TreeNode>>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> dq, </span><span style=color:#fa5c4b>mut</span><span> swp) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#fabd2f>Vec</span><span>::new(), </span><span style=color:#fabd2f>Vec</span><span>::new());
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#928374;font-style:italic>// setup, add the first node to queue
+</span><span>        </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(root) </span><span style=color:#fe8019>=</span><span> root {
+</span><span>            dq.</span><span style=color:#fabd2f>push</span><span>(root);
+</span><span>        };
+</span><span>        </span><span style=color:#928374;font-style:italic>// outer loop
+</span><span>        </span><span style=color:#fa5c4b>while </span><span style=color:#fe8019>!</span><span>dq.</span><span style=color:#fabd2f>is_empty</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// we setup the inner loop here, like sum
+</span><span>            ans </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>while let </span><span style=color:#fabd2f>Some</span><span>(node) </span><span style=color:#fe8019>=</span><span> dq.</span><span style=color:#fabd2f>pop</span><span>() {
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> node </span><span style=color:#fe8019>=</span><span> node.</span><span style=color:#fabd2f>borrow</span><span>();
+</span><span>                </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fa5c4b>ref</span><span> n) </span><span style=color:#fe8019>=</span><span> node.left {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>(n.</span><span style=color:#fabd2f>clone</span><span>());
+</span><span>                }
+</span><span>                </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fa5c4b>ref</span><span> n) </span><span style=color:#fe8019>=</span><span> node.right {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>(n.</span><span style=color:#fabd2f>clone</span><span>());
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// alternate between two queues
+</span><span>            std::mem::swap(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> dq, </span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> swp);
+</span><span>        }
+</span><span>        ans
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

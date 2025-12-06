@@ -1,0 +1,29 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2169 - Count Operations to Obtain Zero</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2169 - Count Operations to Obtain Zero</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/count-operations-to-obtain-zero/ rel=noopener target=_blank>problem</a></h3><p>You are given two <strong>non-negative</strong> integers <code>num1</code> and <code>num2</code>.<p>In one <strong>operation</strong>, if <code>num1 >= num2</code>, you must subtract <code>num2</code> from <code>num1</code>, otherwise subtract <code>num1</code> from <code>num2</code>.<ul><li>For example, if <code>num1 = 5</code> and <code>num2 = 4</code>, subtract <code>num2</code> from <code>num1</code>, thus obtaining <code>num1 = 1</code> and <code>num2 = 4</code>. However, if <code>num1 = 4</code> and <code>num2 = 5</code>, after one operation, <code>num1 = 4</code> and <code>num2 = 1</code>.</ul><p>Return <em>the <strong>number of operations</strong> required to make either</em> <code>num1 = 0</code> <em>or</em> <code>num2 = 0</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> num1 = 2, num2 = 3
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> 
+- Operation 1: num1 = 2, num2 = 3. Since num1 &lt; num2, we subtract num1 from num2 and get num1 = 2, num2 = 3 - 2 = 1.
+- Operation 2: num1 = 2, num2 = 1. Since num1 > num2, we subtract num2 from num1.
+- Operation 3: num1 = 1, num2 = 1. Since num1 == num2, we subtract num2 from num1.
+Now num1 = 0 and num2 = 1. Since num1 == 0, we do not need to perform any further operations.
+So the total number of operations required is 3.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> num1 = 10, num2 = 10
+<strong>Output:</strong> 1
+<strong>Explanation:</strong> 
+- Operation 1: num1 = 10, num2 = 10. Since num1 == num2, we subtract num2 from num1 and get num1 = 10 - 10 = 0.
+Now num1 = 0 and num2 = 10. Since num1 == 0, we are done.
+So the total number of operations required is 1.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>0 &lt;= num1, num2 &lt;= 10<sup>5</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// simple and straight forward
+</span><span style=color:#928374;font-style:italic>// just keep the smaller num non-zero
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>count_operations</span><span>(</span><span style=color:#fdf4c1>n1</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>n2</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        std::iter::successors(
+</span><span>            (n1.</span><span style=color:#fabd2f>min</span><span>(n2) </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0</span><span>).</span><span style=color:#fabd2f>then</span><span>(|| (n1.</span><span style=color:#fabd2f>max</span><span>(n2), n1.</span><span style=color:#fabd2f>min</span><span>(n2))),
+</span><span>            |</span><span style=color:#fe8019>&</span><span>(</span><span style=color:#fdf4c1>n1</span><span>, </span><span style=color:#fdf4c1>n2</span><span>)| (n1 </span><span style=color:#fe8019>%</span><span> n2 </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0</span><span>).</span><span style=color:#fabd2f>then</span><span>(|| (n2, n1 </span><span style=color:#fe8019>%</span><span> n2))
+</span><span>        )
+</span><span>        .</span><span style=color:#fabd2f>map</span><span>(|(</span><span style=color:#fdf4c1>n1</span><span>, </span><span style=color:#fdf4c1>n2</span><span>)| n1 </span><span style=color:#fe8019>/</span><span> n2)
+</span><span>        .</span><span style=color:#fabd2f>sum</span><span>()
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>
