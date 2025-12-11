@@ -1,0 +1,71 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1930 - Unique Length-3 Palindromic Subsequences</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1930 - Unique Length-3 Palindromic Subsequences</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/unique-length-3-palindromic-subsequences/ rel=noopener target=_blank>problem</a></h3><p>Given a string <code>s</code>, return <em>the number of <strong>unique palindromes of length three</strong> that are a <strong>subsequence</strong> of </em><code>s</code>.<p>Note that even if there are multiple ways to obtain the same subsequence, it is still only counted <strong>once</strong>.<p>A <strong>palindrome</strong> is a string that reads the same forwards and backwards.<p>A <strong>subsequence</strong> of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.<ul><li>For example, <code>"ace"</code> is a subsequence of <code>"<u>a</u>b<u>c</u>d<u>e</u>"</code>.</ul><p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "aabca"
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> The 3 palindromic subsequences of length 3 are:
+- "aba" (subsequence of "<u>a</u>a<u>b</u>c<u>a</u>")
+- "aaa" (subsequence of "<u>aa</u>bc<u>a</u>")
+- "aca" (subsequence of "<u>a</u>ab<u>ca</u>")
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "adc"
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> There are no palindromic subsequences of length 3 in "adc".
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "bbcbaba"
+<strong>Output:</strong> 4
+<strong>Explanation:</strong> The 4 palindromic subsequences of length 3 are:
+- "bbb" (subsequence of "<u>bb</u>c<u>b</u>aba")
+- "bcb" (subsequence of "<u>b</u>b<u>cb</u>aba")
+- "bab" (subsequence of "<u>b</u>bcb<u>ab</u>a")
+- "aba" (subsequence of "bbcb<u>aba</u>")
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>3 &lt;= s.length &lt;= 10<sup>5</sup></code><li><code>s</code> consists of only lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>count_palindromic_subsequence</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// custom binary search for upper/lower bound
+</span><span>        </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>search</span><span>(</span><span style=color:#fdf4c1>range</span><span>: </span><span style=color:#fe8019>&</span><span>[</span><span style=color:#fa5c4b>usize</span><span>], </span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>f</span><span>: impl FnMut(</span><span style=color:#fdf4c1>usize</span><span>) -> </span><span style=color:#fa5c4b>bool</span><span>) -> </span><span style=color:#fa5c4b>usize </span><span>{
+</span><span>            </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> l, </span><span style=color:#fa5c4b>mut</span><span> r) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#d3869b>0</span><span>, range.</span><span style=color:#fabd2f>len</span><span>());
+</span><span>            </span><span style=color:#fa5c4b>while</span><span> l </span><span style=color:#fe8019>&lt;</span><span> r {
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> mid </span><span style=color:#fe8019>=</span><span> l </span><span style=color:#fe8019>+ </span><span>(r </span><span style=color:#fe8019>-</span><span> l) </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span>;
+</span><span>                </span><span style=color:#fa5c4b>if </span><span style=color:#fe8019>!</span><span style=color:#fabd2f>f</span><span>(range[mid]) {
+</span><span>                    l </span><span style=color:#fe8019>=</span><span> mid </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>;
+</span><span>                } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                    r </span><span style=color:#fe8019>=</span><span> mid;
+</span><span>                }
+</span><span>            }
+</span><span>            l
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// collect indices of each different char
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> indices </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[</span><span style=color:#fabd2f>vec!</span><span>[]; </span><span style=color:#d3869b>26</span><span>];
+</span><span>        s.</span><span style=color:#fabd2f>bytes</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>enumerate</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>for_each</span><span>(|(</span><span style=color:#fdf4c1>idx</span><span>, </span><span style=color:#fdf4c1>byte</span><span>)| {
+</span><span>                indices[(byte </span><span style=color:#fe8019>- </span><span style=color:#fa5c4b>b</span><span style=color:#b8bb26>'a'</span><span>) </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>].</span><span style=color:#fabd2f>push</span><span>(idx);
+</span><span>            });
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>for</span><span> i </span><span style=color:#fe8019>in </span><span style=color:#d3869b>0</span><span style=color:#fe8019>..</span><span style=color:#d3869b>26 </span><span>{
+</span><span>            </span><span style=color:#fa5c4b>let </span><span style=color:#fabd2f>Some</span><span>((</span><span style=color:#fe8019>&</span><span>first, </span><span style=color:#fe8019>&</span><span>last)) </span><span style=color:#fe8019>=</span><span> indices[i].</span><span style=color:#fabd2f>first</span><span>()
+</span><span>                .</span><span style=color:#fabd2f>zip</span><span>(indices[i].</span><span style=color:#fabd2f>last</span><span>()) </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                </span><span style=color:#fa5c4b>continue</span><span>;
+</span><span>            };
+</span><span>            </span><span style=color:#fa5c4b>for</span><span> j </span><span style=color:#fe8019>in </span><span style=color:#d3869b>0</span><span style=color:#fe8019>..</span><span style=color:#d3869b>26 </span><span>{
+</span><span>                </span><span style=color:#928374;font-style:italic>// search upper bound of first and lower bound of last
+</span><span>                </span><span style=color:#928374;font-style:italic>// upper/lower bound make no difference if i != j
+</span><span>                </span><span style=color:#928374;font-style:italic>// however when i == j, we want 3 identical char
+</span><span>                </span><span style=color:#928374;font-style:italic>// which means we are search a indice larger than
+</span><span>                </span><span style=color:#928374;font-style:italic>// first and less than last
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> l </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>search</span><span>(</span><span style=color:#fe8019>&</span><span>indices[j], |</span><span style=color:#fdf4c1>idx</span><span>| idx </span><span style=color:#fe8019>></span><span> first);
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> r </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>search</span><span>(</span><span style=color:#fe8019>&</span><span>indices[j], |</span><span style=color:#fdf4c1>idx</span><span>| idx </span><span style=color:#fe8019>>=</span><span> last);
+</span><span>                </span><span style=color:#928374;font-style:italic>// first == last means we can't have palindrome
+</span><span>                </span><span style=color:#928374;font-style:italic>// we delay the first != last check to make our
+</span><span>                </span><span style=color:#928374;font-style:italic>// code shorter
+</span><span>                </span><span style=color:#928374;font-style:italic>// i == j && l == r, we search 'xxx', and there are
+</span><span>                </span><span style=color:#928374;font-style:italic>// only 2 x in the whole string
+</span><span>                </span><span style=color:#928374;font-style:italic>// i != j && l == r, we search 'xyx', either there are
+</span><span>                </span><span style=color:#928374;font-style:italic>// no y or there exist y but not between the 2 x
+</span><span>                </span><span style=color:#fa5c4b>if</span><span> first </span><span style=color:#fe8019>!=</span><span> last </span><span style=color:#fe8019>&&</span><span> l </span><span style=color:#fe8019>!=</span><span> r {
+</span><span>                    ans </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        ans
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

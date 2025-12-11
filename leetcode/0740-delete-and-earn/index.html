@@ -1,0 +1,45 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0740 - Delete and Earn</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0740 - Delete and Earn</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/delete-and-earn/ rel=noopener target=_blank>problem</a></h3><p>You are given an integer array <code>nums</code>. You want to maximize the number of points you get by performing the following operation any number of times:<ul><li>Pick any <code>nums[i]</code> and delete it to earn <code>nums[i]</code> points. Afterwards, you must delete <b>every</b> element equal to <code>nums[i] - 1</code> and <strong>every</strong> element equal to <code>nums[i] + 1</code>.</ul><p>Return <em>the <strong>maximum number of points</strong> you can earn by applying the above operation some number of times</em>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [3,4,2]
+<strong>Output:</strong> 6
+<strong>Explanation:</strong> You can perform the following operations:
+- Delete 4 to earn 4 points. Consequently, 3 is also deleted. nums = [2].
+- Delete 2 to earn 2 points. nums = [].
+You earn a total of 6 points.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [2,2,3,3,3,4]
+<strong>Output:</strong> 9
+<strong>Explanation:</strong> You can perform the following operations:
+- Delete a 3 to earn 3 points. All 2's and 4's are also deleted. nums = [3,3].
+- Delete a 3 again to earn 3 points. nums = [3].
+- Delete a 3 once more to earn 3 points. nums = [].
+You earn a total of 9 points.</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= nums.length &lt;= 2 * 10<sup>4</sup></code><li><code>1 &lt;= nums[i] &lt;= 10<sup>4</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// we solve this by state machine thinking
+</span><span style=color:#928374;font-style:italic>// first we collect numbers by their value
+</span><span style=color:#928374;font-style:italic>// then we iterate through each of them
+</span><span style=color:#928374;font-style:italic>// in each step, we have several state and corresponding
+</span><span style=color:#928374;font-style:italic>// options
+</span><span style=color:#928374;font-style:italic>// take: we have taken the previous number, we can only skip
+</span><span style=color:#928374;font-style:italic>// the current one, after the current one, we transition to
+</span><span style=color:#928374;font-style:italic>// skip state.
+</span><span style=color:#928374;font-style:italic>// skip: we have not taken the previous number, in turn we can
+</span><span style=color:#928374;font-style:italic>// take the current number, and we must choose take the current
+</span><span style=color:#928374;font-style:italic>// number or not, so we compare take & (skip + current), and
+</span><span style=color:#928374;font-style:italic>// choose the maxmium
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>delete_and_earn</span><span>(</span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// by question constraints, we have 10000
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> cnt </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[</span><span style=color:#d3869b>0</span><span>; </span><span style=color:#d3869b>10001</span><span>];
+</span><span>        </span><span style=color:#fa5c4b>for</span><span> n </span><span style=color:#fe8019>in</span><span> nums {
+</span><span>            cnt[n </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>] </span><span style=color:#fe8019>+=</span><span> n;
+</span><span>        }
+</span><span>        cnt.</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>((</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#d3869b>0</span><span>), |(</span><span style=color:#fdf4c1>skip</span><span>, </span><span style=color:#fdf4c1>take</span><span>), </span><span style=color:#fdf4c1>val</span><span>| {
+</span><span>                </span><span style=color:#928374;font-style:italic>// take -> skip
+</span><span>                </span><span style=color:#928374;font-style:italic>// max(take, skip + val) -> take
+</span><span>                (take, take.</span><span style=color:#fabd2f>max</span><span>(skip </span><span style=color:#fe8019>+</span><span> val))
+</span><span>            })
+</span><span>            .</span><span style=color:#d3869b>1
+</span><span>            </span><span style=color:#928374;font-style:italic>// from our transition we can see take is always
+</span><span>            </span><span style=color:#928374;font-style:italic>// bigger than skip
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

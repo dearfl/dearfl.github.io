@@ -1,0 +1,40 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0011 - Container With Most Water</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0011 - Container With Most Water</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/container-with-most-water/ rel=noopener target=_blank>problem</a></h3><p>You are given an integer array <code>height</code> of length <code>n</code>. There are <code>n</code> vertical lines drawn such that the two endpoints of the <code>i<sup>th</sup></code> line are <code>(i, 0)</code> and <code>(i, height[i])</code>.<p>Find two lines that together with the x-axis form a container, such that the container contains the most water.<p>Return <em>the maximum amount of water a container can store</em>.<p><strong>Notice</strong> that you may not slant the container.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg style=width:600px;height:287px><pre>
+<strong>Input:</strong> height = [1,8,6,2,5,4,8,3,7]
+<strong>Output:</strong> 49
+<strong>Explanation:</strong> The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> height = [1,1]
+<strong>Output:</strong> 1
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>n == height.length</code><li><code>2 &lt;= n &lt;= 10<sup>5</sup></code><li><code>0 &lt;= height[i] &lt;= 10<sup>4</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// area = W x H, if we start at the leftmost and rightmost lines,
+</span><span>    </span><span style=color:#928374;font-style:italic>// and keep shrinking W = (R - L) until it becomes 0, the area can
+</span><span>    </span><span style=color:#928374;font-style:italic>// only increase if H increase, since H = min(H[l], H[r]), we must
+</span><span>    </span><span style=color:#928374;font-style:italic>// always choose the shorter side to shrink at each step.
+</span><span>    </span><span style=color:#928374;font-style:italic>// When H[l] == H[r], choose either side is OK, because if there
+</span><span>    </span><span style=color:#928374;font-style:italic>// is a larger rectangle between l and r, it must have two side
+</span><span>    </span><span style=color:#928374;font-style:italic>// l' and r' satisifing l &lt; l' && H[l'] > H[l] and
+</span><span>    </span><span style=color:#928374;font-style:italic>// r' &lt; r && H[r'] > H[r], meaning eventually we have to move
+</span><span>    </span><span style=color:#928374;font-style:italic>// both sides, so we can't miss it with these steps.
+</span><span>    </span><span style=color:#928374;font-style:italic>// By following these steps, we are searching for the maxium area
+</span><span>    </span><span style=color:#928374;font-style:italic>// within the leftmost and rightmost lines with the best strategy
+</span><span>    </span><span style=color:#928374;font-style:italic>// we can possibly formulate.
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>max_area</span><span>(</span><span style=color:#fdf4c1>height</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#928374;font-style:italic>// with Vec we get a DoubleEndedIterator
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> iter </span><span style=color:#fe8019>=</span><span> height.</span><span style=color:#fabd2f>iter</span><span>().</span><span style=color:#fabd2f>enumerate</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> l </span><span style=color:#fe8019>=</span><span> iter.</span><span style=color:#fabd2f>next</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> r </span><span style=color:#fe8019>=</span><span> iter.</span><span style=color:#fabd2f>next_back</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>while let </span><span>(</span><span style=color:#fabd2f>Some</span><span>((i, h1)), </span><span style=color:#fabd2f>Some</span><span>((j, h2))) </span><span style=color:#fe8019>= </span><span>(l, r) {
+</span><span>            </span><span style=color:#928374;font-style:italic>// record the maxium area
+</span><span>            ans </span><span style=color:#fe8019>=</span><span> ans.</span><span style=color:#fabd2f>max</span><span>(h1.</span><span style=color:#fabd2f>min</span><span>(h2) </span><span style=color:#fe8019>* </span><span>(j </span><span style=color:#fe8019>-</span><span> i) </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>);
+</span><span>            </span><span style=color:#928374;font-style:italic>// push inward on the shorter side
+</span><span>            </span><span style=color:#fa5c4b>if</span><span> h1 </span><span style=color:#fe8019>&lt;</span><span> h2 {
+</span><span>                l </span><span style=color:#fe8019>=</span><span> iter.</span><span style=color:#fabd2f>next</span><span>();
+</span><span>            } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                r </span><span style=color:#fe8019>=</span><span> iter.</span><span style=color:#fabd2f>next_back</span><span>();
+</span><span>            }
+</span><span>        }
+</span><span>        ans
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

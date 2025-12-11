@@ -1,0 +1,36 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1578 - Minimum Time to Make Rope Colorful</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1578 - Minimum Time to Make Rope Colorful</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/minimum-time-to-make-rope-colorful/ rel=noopener target=_blank>problem</a></h3><p>Alice has <code>n</code> balloons arranged on a rope. You are given a <strong>0-indexed</strong> string <code>colors</code> where <code>colors[i]</code> is the color of the <code>i<sup>th</sup></code> balloon.<p>Alice wants the rope to be <strong>colorful</strong>. She does not want <strong>two consecutive balloons</strong> to be of the same color, so she asks Bob for help. Bob can remove some balloons from the rope to make it <strong>colorful</strong>. You are given a <strong>0-indexed</strong> integer array <code>neededTime</code> where <code>neededTime[i]</code> is the time (in seconds) that Bob needs to remove the <code>i<sup>th</sup></code> balloon from the rope.<p>Return <em>the <strong>minimum time</strong> Bob needs to make the rope <strong>colorful</strong></em>.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/12/13/ballon1.jpg style=width:404px;height:243px><pre>
+<strong>Input:</strong> colors = "abaac", neededTime = [1,2,3,4,5]
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> In the above image, 'a' is blue, 'b' is red, and 'c' is green.
+Bob can remove the blue balloon at index 2. This takes 3 seconds.
+There are no longer two consecutive balloons of the same color. Total time = 3.</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/12/13/balloon2.jpg style=width:244px;height:243px><pre>
+<strong>Input:</strong> colors = "abc", neededTime = [1,2,3]
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> The rope is already colorful. Bob does not need to remove any balloons from the rope.
+</pre><p><strong class=example>Example 3:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/12/13/balloon3.jpg style=width:404px;height:243px><pre>
+<strong>Input:</strong> colors = "aabaa", neededTime = [1,2,3,4,1]
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> Bob will remove the balloons at indices 0 and 4. Each balloons takes 1 second to remove.
+There are no longer two consecutive balloons of the same color. Total time = 1 + 1 = 2.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>n == colors.length == neededTime.length</code><li><code>1 &lt;= n &lt;= 10<sup>5</sup></code><li><code>1 &lt;= neededTime[i] &lt;= 10<sup>4</sup></code><li><code>colors</code> contains only lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// iterator solution with fold
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>min_cost</span><span>(</span><span style=color:#fdf4c1>colors</span><span>: String, </span><span style=color:#fdf4c1>needed_time</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        colors
+</span><span>            .</span><span style=color:#fabd2f>into_bytes</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>zip</span><span>(needed_time)
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>(
+</span><span>                (</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#fa5c4b>b</span><span style=color:#b8bb26>' '</span><span>, </span><span style=color:#fa5c4b>i32</span><span>::</span><span style=color:#fdf4c1>MIN</span><span>),
+</span><span>                |(</span><span style=color:#fdf4c1>sum</span><span>, </span><span style=color:#fdf4c1>prev</span><span>, </span><span style=color:#fdf4c1>time</span><span>), (</span><span style=color:#fdf4c1>ch</span><span>, </span><span style=color:#fdf4c1>t</span><span>)| </span><span style=color:#fa5c4b>match </span><span>(prev </span><span style=color:#fe8019>==</span><span> ch, time </span><span style=color:#fe8019>></span><span> t) {
+</span><span>                    </span><span style=color:#928374;font-style:italic>// new chunk
+</span><span>                    (</span><span style=color:#d3869b>false</span><span>, </span><span style=color:#fe8019>_</span><span>) </span><span style=color:#fe8019>=> </span><span>(sum, ch, t),
+</span><span>                    </span><span style=color:#928374;font-style:italic>// same balloon, choose the smaller cost
+</span><span>                    (</span><span style=color:#d3869b>true</span><span>, </span><span style=color:#d3869b>true</span><span>) </span><span style=color:#fe8019>=> </span><span>(sum </span><span style=color:#fe8019>+</span><span> t, ch, time),
+</span><span>                    (</span><span style=color:#d3869b>true</span><span>, </span><span style=color:#d3869b>false</span><span>) </span><span style=color:#fe8019>=> </span><span>(sum </span><span style=color:#fe8019>+</span><span> time, ch, t),
+</span><span>                },
+</span><span>            )
+</span><span>            .</span><span style=color:#d3869b>0
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,22 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0121 - Best Time to Buy and Sell Stock</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0121 - Best Time to Buy and Sell Stock</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/best-time-to-buy-and-sell-stock/ rel=noopener target=_blank>problem</a></h3><p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>i<sup>th</sup></code> day.<p>You want to maximize your profit by choosing a <strong>single day</strong> to buy one stock and choosing a <strong>different day in the future</strong> to sell that stock.<p>Return <em>the maximum profit you can achieve from this transaction</em>. If you cannot achieve any profit, return <code>0</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> prices = [7,1,5,3,6,4]
+<strong>Output:</strong> 5
+<strong>Explanation:</strong> Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> prices = [7,6,4,3,1]
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> In this case, no transactions are done and the max profit = 0.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= prices.length &lt;= 10<sup>5</sup></code><li><code>0 &lt;= prices[i] &lt;= 10<sup>4</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// iterate through prices, keep track of the lowest price so far
+</span><span style=color:#928374;font-style:italic>// keep track of the maxium difference between lowest price and
+</span><span style=color:#928374;font-style:italic>// current price, we can do this by fold
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>max_profit</span><span>(</span><span style=color:#fdf4c1>prices</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        prices.</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>((</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#fa5c4b>i32</span><span>::</span><span style=color:#fdf4c1>MAX</span><span>), |(</span><span style=color:#fdf4c1>ans</span><span>, </span><span style=color:#fdf4c1>min</span><span>), </span><span style=color:#fdf4c1>price</span><span>| {
+</span><span>                (ans.</span><span style=color:#fabd2f>max</span><span>(price </span><span style=color:#fe8019>-</span><span> min), min.</span><span style=color:#fabd2f>min</span><span>(price))
+</span><span>            })
+</span><span>            .</span><span style=color:#d3869b>0
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>
