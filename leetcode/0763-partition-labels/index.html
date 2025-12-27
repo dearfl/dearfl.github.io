@@ -1,0 +1,34 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0763 - Partition Labels</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0763 - Partition Labels</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/partition-labels/ rel=noopener target=_blank>problem</a></h3><p>You are given a string <code>s</code>. We want to partition the string into as many parts as possible so that each letter appears in at most one part. For example, the string <code>"ababcc"</code> can be partitioned into <code>["abab", "cc"]</code>, but partitions such as <code>["aba", "bcc"]</code> or <code>["ab", "ab", "cc"]</code> are invalid.<p>Note that the partition is done so that after concatenating all the parts in order, the resultant string should be <code>s</code>.<p>Return <em>a list of integers representing the size of these parts</em>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "ababcbacadefegdehijhklij"
+<strong>Output:</strong> [9,7,8]
+<strong>Explanation:</strong>
+The partition is "ababcbaca", "defegde", "hijhklij".
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits s into less parts.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "eccbbbbdec"
+<strong>Output:</strong> [10]
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= s.length &lt;= 500</code><li><code>s</code> consists of lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// we solve this by marking last occurrence of each char
+</span><span style=color:#928374;font-style:italic>// we just merge intervals on the way
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>partition_labels</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>> {
+</span><span>        </span><span style=color:#928374;font-style:italic>// this should be right I think?
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> last: std::collections::HashMap&lt;</span><span style=color:#fa5c4b>char</span><span>, </span><span style=color:#fa5c4b>usize</span><span>> </span><span style=color:#fe8019>=
+</span><span>            s.</span><span style=color:#fabd2f>chars</span><span>().</span><span style=color:#fabd2f>enumerate</span><span>().</span><span style=color:#fabd2f>map</span><span>(|(</span><span style=color:#fdf4c1>idx</span><span>, </span><span style=color:#fdf4c1>ch</span><span>)| (ch, idx)).</span><span style=color:#fabd2f>collect</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> start, </span><span style=color:#fa5c4b>mut</span><span> end) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#d3869b>0</span><span>);
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> parts </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[];
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(idx, ch) </span><span style=color:#fe8019>in</span><span> s.</span><span style=color:#fabd2f>chars</span><span>().</span><span style=color:#fabd2f>enumerate</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// update the end index
+</span><span>            </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fe8019>&</span><span>idx) </span><span style=color:#fe8019>=</span><span> last.</span><span style=color:#fabd2f>get</span><span>(</span><span style=color:#fe8019>&</span><span>ch) {
+</span><span>                end </span><span style=color:#fe8019>=</span><span> end.</span><span style=color:#fabd2f>max</span><span>(idx)
+</span><span>            }
+</span><span>            </span><span style=color:#928374;font-style:italic>// we've reached the end
+</span><span>            </span><span style=color:#fa5c4b>if</span><span> idx </span><span style=color:#fe8019>==</span><span> end {
+</span><span>                parts.</span><span style=color:#fabd2f>push</span><span>((end </span><span style=color:#fe8019>-</span><span> start </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>);
+</span><span>                start </span><span style=color:#fe8019>=</span><span> idx </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        parts
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,64 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0102 - Binary Tree Level Order Traversal</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0102 - Binary Tree Level Order Traversal</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/binary-tree-level-order-traversal/ rel=noopener target=_blank>problem</a></h3><p>Given the <code>root</code> of a binary tree, return <em>the level order traversal of its nodes' values</em>. (i.e., from left to right, level by level).<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg style=width:277px;height:302px><pre>
+<strong>Input:</strong> root = [3,9,20,null,null,15,7]
+<strong>Output:</strong> [[3],[9,20],[15,7]]
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> root = [1]
+<strong>Output:</strong> [[1]]
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> root = []
+<strong>Output:</strong> []
+</pre><p> <p><strong>Constraints:</strong><ul><li>The number of nodes in the tree is in the range <code>[0, 2000]</code>.<li><code>-1000 &lt;= Node.val &lt;= 1000</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// Definition for a binary tree node.
+</span><span style=color:#928374;font-style:italic>// #[derive(Debug, PartialEq, Eq)]
+</span><span style=color:#928374;font-style:italic>// pub struct TreeNode {
+</span><span style=color:#928374;font-style:italic>//   pub val: i32,
+</span><span style=color:#928374;font-style:italic>//   pub left: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>//   pub right: Option&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#928374;font-style:italic>// 
+</span><span style=color:#928374;font-style:italic>// impl TreeNode {
+</span><span style=color:#928374;font-style:italic>//   #[inline]
+</span><span style=color:#928374;font-style:italic>//   pub fn new(val: i32) -> Self {
+</span><span style=color:#928374;font-style:italic>//     TreeNode {
+</span><span style=color:#928374;font-style:italic>//       val,
+</span><span style=color:#928374;font-style:italic>//       left: None,
+</span><span style=color:#928374;font-style:italic>//       right: None
+</span><span style=color:#928374;font-style:italic>//     }
+</span><span style=color:#928374;font-style:italic>//   }
+</span><span style=color:#928374;font-style:italic>// }
+</span><span>
+</span><span style=color:#fa5c4b>use </span><span>std::cell::RefCell;
+</span><span style=color:#fa5c4b>use </span><span>std::rc::Rc;
+</span><span style=color:#928374;font-style:italic>// BFS with alternating queues
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>level_order</span><span>(
+</span><span>        </span><span style=color:#fdf4c1>root</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;Rc&lt;RefCell&lt;TreeNode>>>,
+</span><span>    ) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>> {
+</span><span>        </span><span style=color:#928374;font-style:italic>// alternating "queues"
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> queue, </span><span style=color:#fa5c4b>mut</span><span> swp) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#fabd2f>vec!</span><span>[], </span><span style=color:#fabd2f>vec!</span><span>[]);
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[];
+</span><span>        </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(node) </span><span style=color:#fe8019>=</span><span> root {
+</span><span>            queue.</span><span style=color:#fabd2f>push</span><span>(node);
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// outer loop
+</span><span>        </span><span style=color:#fa5c4b>while </span><span style=color:#fe8019>!</span><span>queue.</span><span style=color:#fabd2f>is_empty</span><span>() {
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> level </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>vec!</span><span>[];
+</span><span>            </span><span style=color:#928374;font-style:italic>// we need to reverse the vec since vec is filo
+</span><span>            queue.</span><span style=color:#fabd2f>reverse</span><span>();
+</span><span>            </span><span style=color:#928374;font-style:italic>// inner loop
+</span><span>            </span><span style=color:#fa5c4b>while let </span><span style=color:#fabd2f>Some</span><span>(node) </span><span style=color:#fe8019>=</span><span> queue.</span><span style=color:#fabd2f>pop</span><span>() {
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> node </span><span style=color:#fe8019>=</span><span> node.</span><span style=color:#fabd2f>borrow</span><span>();
+</span><span>                level.</span><span style=color:#fabd2f>push</span><span>(node.val);
+</span><span>                </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(left) </span><span style=color:#fe8019>=</span><span> node.left.</span><span style=color:#fabd2f>clone</span><span>() {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>(left);
+</span><span>                }
+</span><span>                </span><span style=color:#fa5c4b>if let </span><span style=color:#fabd2f>Some</span><span>(right) </span><span style=color:#fe8019>=</span><span> node.right.</span><span style=color:#fabd2f>clone</span><span>() {
+</span><span>                    swp.</span><span style=color:#fabd2f>push</span><span>(right);
+</span><span>                }
+</span><span>            }
+</span><span>            std::mem::swap(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> queue, </span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut</span><span> swp);
+</span><span>            ans.</span><span style=color:#fabd2f>push</span><span>(level);
+</span><span>        }
+</span><span>        ans
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

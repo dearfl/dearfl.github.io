@@ -1,0 +1,23 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0048 - Rotate Image</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0048 - Rotate Image</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/rotate-image/ rel=noopener target=_blank>problem</a></h3><p>You are given an <code>n x n</code> 2D <code>matrix</code> representing an image, rotate the image by <strong>90</strong> degrees (clockwise).<p>You have to rotate the image <a href=https://en.wikipedia.org/wiki/In-place_algorithm target=_blank><strong>in-place</strong></a>, which means you have to modify the input 2D matrix directly. <strong>DO NOT</strong> allocate another 2D matrix and do the rotation.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/08/28/mat1.jpg style=width:500px;height:188px><pre>
+<strong>Input:</strong> matrix = [[1,2,3],[4,5,6],[7,8,9]]
+<strong>Output:</strong> [[7,4,1],[8,5,2],[9,6,3]]
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/08/28/mat2.jpg style=width:500px;height:201px><pre>
+<strong>Input:</strong> matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+<strong>Output:</strong> [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>n == matrix.length == matrix[i].length</code><li><code>1 &lt;= n &lt;= 20</code><li><code>-1000 &lt;= matrix[i][j] &lt;= 1000</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// rotate a NxN matrix is just flip it upside down and tranpose
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>rotate</span><span>(</span><span style=color:#fdf4c1>matrix</span><span>: </span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>>) {
+</span><span>        </span><span style=color:#928374;font-style:italic>// flip
+</span><span>        matrix.</span><span style=color:#fabd2f>reverse</span><span>();
+</span><span>        </span><span style=color:#928374;font-style:italic>// transpose
+</span><span>        </span><span style=color:#fa5c4b>for</span><span> i </span><span style=color:#fe8019>in </span><span style=color:#d3869b>0</span><span style=color:#fe8019>..</span><span>matrix.</span><span style=color:#fabd2f>len</span><span>() {
+</span><span>            </span><span style=color:#fa5c4b>for</span><span> j </span><span style=color:#fe8019>in </span><span style=color:#d3869b>0</span><span style=color:#fe8019>..</span><span>i {
+</span><span>                </span><span style=color:#928374;font-style:italic>// a bit hard to use std::mem::swap
+</span><span>                </span><span style=color:#fa5c4b>let</span><span> tmp </span><span style=color:#fe8019>=</span><span> matrix[j][i];
+</span><span>                matrix[j][i] </span><span style=color:#fe8019>=</span><span> matrix[i][j];
+</span><span>                matrix[i][j] </span><span style=color:#fe8019>=</span><span> tmp;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

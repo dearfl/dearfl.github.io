@@ -1,0 +1,40 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2011 - Final Value of Variable After Performing Operations</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2011 - Final Value of Variable After Performing Operations</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/final-value-of-variable-after-performing-operations/ rel=noopener target=_blank>problem</a></h3><p>There is a programming language with only <strong>four</strong> operations and <strong>one</strong> variable <code>X</code>:<ul><li><code>++X</code> and <code>X++</code> <strong>increments</strong> the value of the variable <code>X</code> by <code>1</code>.<li><code>--X</code> and <code>X--</code> <strong>decrements</strong> the value of the variable <code>X</code> by <code>1</code>.</ul><p>Initially, the value of <code>X</code> is <code>0</code>.<p>Given an array of strings <code>operations</code> containing a list of operations, return <em>the <strong>final </strong>value of </em><code>X</code> <em>after performing all the operations</em>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> operations = ["--X","X++","X++"]
+<strong>Output:</strong> 1
+<strong>Explanation:</strong> The operations are performed as follows:
+Initially, X = 0.
+--X: X is decremented by 1, X =  0 - 1 = -1.
+X++: X is incremented by 1, X = -1 + 1 =  0.
+X++: X is incremented by 1, X =  0 + 1 =  1.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> operations = ["++X","++X","X++"]
+<strong>Output:</strong> 3
+<strong>Explanation: </strong>The operations are performed as follows:
+Initially, X = 0.
+++X: X is incremented by 1, X = 0 + 1 = 1.
+++X: X is incremented by 1, X = 1 + 1 = 2.
+X++: X is incremented by 1, X = 2 + 1 = 3.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> operations = ["X++","++X","--X","X--"]
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> The operations are performed as follows:
+Initially, X = 0.
+X++: X is incremented by 1, X = 0 + 1 = 1.
+++X: X is incremented by 1, X = 1 + 1 = 2.
+--X: X is decremented by 1, X = 2 - 1 = 1.
+X--: X is decremented by 1, X = 1 - 1 = 0.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= operations.length &lt;= 100</code><li><code>operations[i]</code> will be either <code>"++X"</code>, <code>"X++"</code>, <code>"--X"</code>, or <code>"X--"</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// map and sum vs fold
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>final_value_after_operations</span><span>(</span><span style=color:#fdf4c1>operations</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>String</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        operations.</span><span style=color:#fabd2f>iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>map</span><span>(|</span><span style=color:#fdf4c1>op</span><span>| {
+</span><span>                </span><span style=color:#fa5c4b>match</span><span> op.</span><span style=color:#fabd2f>as_str</span><span>() {
+</span><span>                    </span><span style=color:#b8bb26>"X++" </span><span style=color:#fe8019>| </span><span style=color:#b8bb26>"++X" </span><span style=color:#fe8019>=> </span><span style=color:#d3869b>1</span><span>,
+</span><span>                    </span><span style=color:#b8bb26>"X--" </span><span style=color:#fe8019>| </span><span style=color:#b8bb26>"--X" </span><span style=color:#fe8019>=> -</span><span style=color:#d3869b>1</span><span>,
+</span><span>                    </span><span style=color:#fe8019>_ => </span><span style=color:#d3869b>0</span><span>,
+</span><span>                }
+</span><span>            })
+</span><span>            .sum::&lt;</span><span style=color:#fa5c4b>i32</span><span>>()
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

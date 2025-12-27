@@ -1,0 +1,57 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0002 - Add Two Numbers</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0002 - Add Two Numbers</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/add-two-numbers/ rel=noopener target=_blank>problem</a></h3><p>You are given two <strong>non-empty</strong> linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong>, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2020/10/02/addtwonumber1.jpg style=width:483px;height:342px><pre>
+<strong>Input:</strong> l1 = [2,4,3], l2 = [5,6,4]
+<strong>Output:</strong> [7,0,8]
+<strong>Explanation:</strong> 342 + 465 = 807.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> l1 = [0], l2 = [0]
+<strong>Output:</strong> [0]
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+<strong>Output:</strong> [8,9,9,9,0,0,0,1]
+</pre><p> <p><strong>Constraints:</strong><ul><li>The number of nodes in each linked list is in the range <code>[1, 100]</code>.<li><code>0 &lt;= Node.val &lt;= 9</code><li>It is guaranteed that the list represents a number that does not have leading zeros.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// Definition for singly-linked list.
+</span><span style=color:#928374;font-style:italic>// #[derive(PartialEq, Eq, Clone, Debug)]
+</span><span style=color:#928374;font-style:italic>// pub struct ListNode {
+</span><span style=color:#928374;font-style:italic>//   pub val: i32,
+</span><span style=color:#928374;font-style:italic>//   pub next: Option&lt;Box&lt;ListNode>>
+</span><span style=color:#928374;font-style:italic>// }
+</span><span style=color:#928374;font-style:italic>// 
+</span><span style=color:#928374;font-style:italic>// impl ListNode {
+</span><span style=color:#928374;font-style:italic>//   #[inline]
+</span><span style=color:#928374;font-style:italic>//   fn new(val: i32) -> Self {
+</span><span style=color:#928374;font-style:italic>//     ListNode {
+</span><span style=color:#928374;font-style:italic>//       next: None,
+</span><span style=color:#928374;font-style:italic>//       val
+</span><span style=color:#928374;font-style:italic>//     }
+</span><span style=color:#928374;font-style:italic>//   }
+</span><span style=color:#928374;font-style:italic>// }
+</span><span>
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>add_two_numbers</span><span>(
+</span><span>        </span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>l1</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>>,
+</span><span>        </span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>l2</span><span>: </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>>,
+</span><span>    ) -> </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>> {
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> carry </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span style=color:#fa5c4b>i32</span><span>;
+</span><span>        </span><span style=color:#928374;font-style:italic>// this is the core trick of this solution
+</span><span>        </span><span style=color:#928374;font-style:italic>// curr actually point to the tail of added result
+</span><span>        </span><span style=color:#928374;font-style:italic>// so we could keep appending new digit to it
+</span><span>        </span><span style=color:#928374;font-style:italic>// without dummy node and unwrap operations
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> head: </span><span style=color:#fabd2f>Option</span><span>&lt;</span><span style=color:#fabd2f>Box</span><span>&lt;ListNode>> </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>None</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> curr </span><span style=color:#fe8019>= &</span><span style=color:#fa5c4b>mut</span><span> head;
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> l1.</span><span style=color:#fabd2f>is_some</span><span>() </span><span style=color:#fe8019>||</span><span> l2.</span><span style=color:#fabd2f>is_some</span><span>() </span><span style=color:#fe8019>||</span><span> carry </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0 </span><span>{
+</span><span>            </span><span style=color:#928374;font-style:italic>// unify our logic for any situation
+</span><span>            carry </span><span style=color:#fe8019>+=</span><span> l1.</span><span style=color:#fabd2f>as_ref</span><span>().</span><span style=color:#fabd2f>map_or</span><span>(</span><span style=color:#d3869b>0</span><span>, |</span><span style=color:#fdf4c1>n</span><span>| n.val)
+</span><span>                </span><span style=color:#fe8019>+</span><span> l2.</span><span style=color:#fabd2f>as_ref</span><span>().</span><span style=color:#fabd2f>map_or</span><span>(</span><span style=color:#d3869b>0</span><span>, |</span><span style=color:#fdf4c1>n</span><span>| n.val);
+</span><span>            </span><span style=color:#928374;font-style:italic>// append new digit
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> sum_node </span><span style=color:#fe8019>=
+</span><span>                curr.</span><span style=color:#fabd2f>insert</span><span>(</span><span style=color:#fabd2f>Box</span><span>::new(ListNode::new(carry </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10</span><span>)));
+</span><span>            </span><span style=color:#928374;font-style:italic>// update curr
+</span><span>            curr </span><span style=color:#fe8019>= &</span><span style=color:#fa5c4b>mut</span><span> sum_node.next;
+</span><span>            carry </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>            </span><span style=color:#928374;font-style:italic>// update l1 & l2
+</span><span>            l1 </span><span style=color:#fe8019>=</span><span> l1.</span><span style=color:#fabd2f>and_then</span><span>(|</span><span style=color:#fdf4c1>n</span><span>| n.next);
+</span><span>            l2 </span><span style=color:#fe8019>=</span><span> l2.</span><span style=color:#fabd2f>and_then</span><span>(|</span><span style=color:#fdf4c1>n</span><span>| n.next);
+</span><span>        }
+</span><span>        head
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

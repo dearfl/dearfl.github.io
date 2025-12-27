@@ -1,0 +1,33 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0406 - Queue Reconstruction by Height</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0406 - Queue Reconstruction by Height</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/queue-reconstruction-by-height/ rel=noopener target=_blank>problem</a></h3><p>You are given an array of people, <code>people</code>, which are the attributes of some people in a queue (not necessarily in order). Each <code>people[i] = [h<sub>i</sub>, k<sub>i</sub>]</code> represents the <code>i<sup>th</sup></code> person of height <code>h<sub>i</sub></code> with <strong>exactly</strong> <code>k<sub>i</sub></code> other people in front who have a height greater than or equal to <code>h<sub>i</sub></code>.<p>Reconstruct and return <em>the queue that is represented by the input array </em><code>people</code>. The returned queue should be formatted as an array <code>queue</code>, where <code>queue[j] = [h<sub>j</sub>, k<sub>j</sub>]</code> is the attributes of the <code>j<sup>th</sup></code> person in the queue (<code>queue[0]</code> is the person at the front of the queue).<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+<strong>Output:</strong> [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+<strong>Explanation:</strong>
+Person 0 has height 5 with no other people taller or the same height in front.
+Person 1 has height 7 with no other people taller or the same height in front.
+Person 2 has height 5 with two persons taller or the same height in front, which is person 0 and 1.
+Person 3 has height 6 with one person taller or the same height in front, which is person 1.
+Person 4 has height 4 with four people taller or the same height in front, which are people 0, 1, 2, and 3.
+Person 5 has height 7 with one person taller or the same height in front, which is person 1.
+Hence [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]] is the reconstructed queue.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
+<strong>Output:</strong> [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= people.length &lt;= 2000</code><li><code>0 &lt;= h<sub>i</sub> &lt;= 10<sup>6</sup></code><li><code>0 &lt;= k<sub>i</sub> &lt; people.length</code><li>It is guaranteed that the queue can be reconstructed.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// The problem hint we should place person from shortest to highest
+</span><span>    </span><span style=color:#928374;font-style:italic>// the way this works is we place each person at the kth empty place
+</span><span>    </span><span style=color:#928374;font-style:italic>// the tricky part here is how we search for the kth empty place.
+</span><span>    </span><span style=color:#928374;font-style:italic>// An easier solution would be place them from highest to shortest,
+</span><span>    </span><span style=color:#928374;font-style:italic>// since we place the higher person first, we know exactly where to
+</span><span>    </span><span style=color:#928374;font-style:italic>// put them at each step, the caveat here is each insertion is O(n)
+</span><span>    </span><span style=color:#928374;font-style:italic>// which makes our solution overall O(n^2)
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>reconstruct_queue</span><span>(</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>people</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>>) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>> {
+</span><span>        people.</span><span style=color:#fabd2f>sort_by_key</span><span>(|</span><span style=color:#fdf4c1>p</span><span>| (</span><span style=color:#fe8019>-</span><span>p[</span><span style=color:#d3869b>0</span><span>], p[</span><span style=color:#d3869b>1</span><span>]));
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#fabd2f>Vec</span><span>::with_capacity(people.</span><span style=color:#fabd2f>len</span><span>());
+</span><span>        </span><span style=color:#fa5c4b>for</span><span> person </span><span style=color:#fe8019>in</span><span> people {
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> idx </span><span style=color:#fe8019>=</span><span> person[</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>;
+</span><span>            ans.</span><span style=color:#fabd2f>insert</span><span>(idx, person);
+</span><span>        }
+</span><span>        ans
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

@@ -1,0 +1,33 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2125 - Number of Laser Beams in a Bank</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2125 - Number of Laser Beams in a Bank</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/number-of-laser-beams-in-a-bank/ rel=noopener target=_blank>problem</a></h3><p>Anti-theft security devices are activated inside a bank. You are given a <strong>0-indexed</strong> binary string array <code>bank</code> representing the floor plan of the bank, which is an <code>m x n</code> 2D matrix. <code>bank[i]</code> represents the <code>i<sup>th</sup></code> row, consisting of <code>'0'</code>s and <code>'1'</code>s. <code>'0'</code> means the cell is empty, while<code>'1'</code> means the cell has a security device.<p>There is <strong>one</strong> laser beam between any <strong>two</strong> security devices <strong>if both</strong> conditions are met:<ul><li>The two devices are located on two <strong>different rows</strong>: <code>r<sub>1</sub></code> and <code>r<sub>2</sub></code>, where <code>r<sub>1</sub> &lt; r<sub>2</sub></code>.<li>For <strong>each</strong> row <code>i</code> where <code>r<sub>1</sub> &lt; i &lt; r<sub>2</sub></code>, there are <strong>no security devices</strong> in the <code>i<sup>th</sup></code> row.</ul><p>Laser beams are independent, i.e., one beam does not interfere nor join with another.<p>Return <em>the total number of laser beams in the bank</em>.<p> <p><strong class=example>Example 1:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/12/24/laser1.jpg style=width:400px;height:368px><pre>
+<strong>Input:</strong> bank = ["011001","000000","010100","001000"]
+<strong>Output:</strong> 8
+<strong>Explanation:</strong> Between each of the following device pairs, there is one beam. In total, there are 8 beams:
+ * bank[0][1] -- bank[2][1]
+ * bank[0][1] -- bank[2][3]
+ * bank[0][2] -- bank[2][1]
+ * bank[0][2] -- bank[2][3]
+ * bank[0][5] -- bank[2][1]
+ * bank[0][5] -- bank[2][3]
+ * bank[2][1] -- bank[3][2]
+ * bank[2][3] -- bank[3][2]
+Note that there is no beam between any device on the 0<sup>th</sup> row with any on the 3<sup>rd</sup> row.
+This is because the 2<sup>nd</sup> row contains security devices, which breaks the second condition.
+</pre><p><strong class=example>Example 2:</strong></p><img alt src=https://assets.leetcode.com/uploads/2021/12/24/laser2.jpg style=width:244px;height:325px><pre>
+<strong>Input:</strong> bank = ["000","111","000"]
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> There does not exist two devices located on two different rows.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>m == bank.length</code><li><code>n == bank[i].length</code><li><code>1 &lt;= m, n &lt;= 500</code><li><code>bank[i][j]</code> is either <code>'0'</code> or <code>'1'</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// just filter out empty rows
+</span><span style=color:#928374;font-style:italic>// multiply number of devices for each consecutive rows
+</span><span style=color:#928374;font-style:italic>// and add them together
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>number_of_beams</span><span>(</span><span style=color:#fdf4c1>bank</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>String</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> devices: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>> </span><span style=color:#fe8019>=</span><span> bank.</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>map</span><span>(|</span><span style=color:#fdf4c1>row</span><span>| row.</span><span style=color:#fabd2f>bytes</span><span>().</span><span style=color:#fabd2f>filter</span><span>(|</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>ch</span><span>| ch </span><span style=color:#fe8019>== </span><span style=color:#fa5c4b>b</span><span style=color:#b8bb26>'1'</span><span>).</span><span style=color:#fabd2f>count</span><span>() </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>filter</span><span>(|</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>cnt</span><span>| cnt </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>collect</span><span>();
+</span><span>        devices.</span><span style=color:#fabd2f>windows</span><span>(</span><span style=color:#d3869b>2</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>map</span><span>(|</span><span style=color:#fdf4c1>w</span><span>| w[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>*</span><span> w[</span><span style=color:#d3869b>1</span><span>])
+</span><span>            .</span><span style=color:#fabd2f>sum</span><span>()
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

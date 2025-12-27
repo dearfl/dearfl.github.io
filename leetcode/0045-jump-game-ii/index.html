@@ -1,0 +1,39 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0045 - Jump Game II</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0045 - Jump Game II</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/jump-game-ii/ rel=noopener target=_blank>problem</a></h3><p>You are given a <strong>0-indexed</strong> array of integers <code>nums</code> of length <code>n</code>. You are initially positioned at index 0.<p>Each element <code>nums[i]</code> represents the maximum length of a forward jump from index <code>i</code>. In other words, if you are at index <code>i</code>, you can jump to any index <code>(i + j)</code> where:<ul><li><code>0 &lt;= j &lt;= nums[i]</code> and<li><code>i + j &lt; n</code></ul><p>Return <em>the minimum number of jumps to reach index </em><code>n - 1</code>. The test cases are generated such that you can reach index <code>n - 1</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [2,3,1,1,4]
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [2,3,0,1,4]
+<strong>Output:</strong> 2
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= nums.length &lt;= 10<sup>4</sup></code><li><code>0 &lt;= nums[i] &lt;= 1000</code><li>It's guaranteed that you can reach <code>nums[n - 1]</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// BFS solution, this is somewhat easier to understand but still
+</span><span>    </span><span style=color:#928374;font-style:italic>// remains O(n) time complexity and O(1) space
+</span><span>    </span><span style=color:#928374;font-style:italic>// since the range we could jump to is continuous, we could use a
+</span><span>    </span><span style=color:#928374;font-style:italic>// simple [left, right) range to record it.
+</span><span>    </span><span style=color:#928374;font-style:italic>// we update the farthest index we could jump to at each step
+</span><span>    </span><span style=color:#928374;font-style:italic>// and end if n - 1 is inside range [left, right), that is:
+</span><span>    </span><span style=color:#928374;font-style:italic>//    left &lt;= n - 1 && n - 1 &lt; right
+</span><span>    </span><span style=color:#928374;font-style:italic>// or simply: right >= n
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>jump</span><span>(</span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> left, </span><span style=color:#fa5c4b>mut</span><span> right) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#d3869b>0</span><span>, </span><span style=color:#d3869b>1</span><span>);
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> steps </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#928374;font-style:italic>// !(right >= n)
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> right </span><span style=color:#fe8019>&lt;</span><span> nums.</span><span style=color:#fabd2f>len</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// update the farthest index we could jump to
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> reach </span><span style=color:#fe8019>= </span><span>(left</span><span style=color:#fe8019>..</span><span>right).</span><span style=color:#fabd2f>fold</span><span>(right, |</span><span style=color:#fdf4c1>init</span><span>, </span><span style=color:#fdf4c1>val</span><span>| {
+</span><span>                </span><span style=color:#928374;font-style:italic>// don't forget +1 since right is open
+</span><span>                init.</span><span style=color:#fabd2f>max</span><span>(val </span><span style=color:#fe8019>+</span><span> nums[val] </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>)
+</span><span>            });
+</span><span>            </span><span style=color:#928374;font-style:italic>// if we are not guaranteed to reach n - 1, this would
+</span><span>            </span><span style=color:#928374;font-style:italic>// be wrong, assuming this function returns -1 when
+</span><span>            </span><span style=color:#928374;font-style:italic>// unreachable, we could add early return to fix it
+</span><span>            </span><span style=color:#928374;font-style:italic>// if reach &lt;= right {
+</span><span>            </span><span style=color:#928374;font-style:italic>//     return -1;   
+</span><span>            </span><span style=color:#928374;font-style:italic>// }
+</span><span>            (left, right) </span><span style=color:#fe8019>= </span><span>(right, reach);
+</span><span>            steps </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>        }
+</span><span>        steps
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

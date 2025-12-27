@@ -1,0 +1,55 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1898 - Maximum Number of Removable Characters</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1898 - Maximum Number of Removable Characters</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/maximum-number-of-removable-characters/ rel=noopener target=_blank>problem</a></h3><p>You are given two strings <code>s</code> and <code>p</code> where <code>p</code> is a <strong>subsequence </strong>of <code>s</code>. You are also given a <strong>distinct 0-indexed </strong>integer array <code>removable</code> containing a subset of indices of <code>s</code> (<code>s</code> is also <strong>0-indexed</strong>).<p>You want to choose an integer <code>k</code> (<code>0 &lt;= k &lt;= removable.length</code>) such that, after removing <code>k</code> characters from <code>s</code> using the <strong>first</strong> <code>k</code> indices in <code>removable</code>, <code>p</code> is still a <strong>subsequence</strong> of <code>s</code>. More formally, you will mark the character at <code>s[removable[i]]</code> for each <code>0 &lt;= i &lt; k</code>, then remove all marked characters and check if <code>p</code> is still a subsequence.<p>Return <em>the <strong>maximum</strong> </em><code>k</code><em> you can choose such that </em><code>p</code><em> is still a <strong>subsequence</strong> of </em><code>s</code><em> after the removals</em>.<p>A <strong>subsequence</strong> of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "abcacb", p = "ab", removable = [3,1,0]
+<strong>Output:</strong> 2
+<strong>Explanation</strong>: After removing the characters at indices 3 and 1, "a<s><strong>b</strong></s>c<s><strong>a</strong></s>cb" becomes "accb".
+"ab" is a subsequence of "<strong><u>a</u></strong>cc<strong><u>b</u></strong>".
+If we remove the characters at indices 3, 1, and 0, "<s><strong>ab</strong></s>c<s><strong>a</strong></s>cb" becomes "ccb", and "ab" is no longer a subsequence.
+Hence, the maximum k is 2.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "abcbddddd", p = "abcd", removable = [3,2,1,4,5,6]
+<strong>Output:</strong> 1
+<strong>Explanation</strong>: After removing the character at index 3, "abc<s><strong>b</strong></s>ddddd" becomes "abcddddd".
+"abcd" is a subsequence of "<u><strong>abcd</strong></u>dddd".
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "abcab", p = "abc", removable = [0,1,2,3,4]
+<strong>Output:</strong> 0
+<strong>Explanation</strong>: If you remove the first index in the array removable, "abc" is no longer a subsequence.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= p.length &lt;= s.length &lt;= 10<sup>5</sup></code><li><code>0 &lt;= removable.length &lt; s.length</code><li><code>0 &lt;= removable[i] &lt; s.length</code><li><code>p</code> is a <strong>subsequence</strong> of <code>s</code>.<li><code>s</code> and <code>p</code> both consist of lowercase English letters.<li>The elements in <code>removable</code> are <strong>distinct</strong>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>use </span><span>std::collections::HashSet;
+</span><span>
+</span><span style=color:#928374;font-style:italic>// binary search
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>maximum_removals</span><span>(
+</span><span>        </span><span style=color:#fdf4c1>s</span><span>: String,
+</span><span>        </span><span style=color:#fdf4c1>p</span><span>: String,
+</span><span>        </span><span style=color:#fdf4c1>removable</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>,
+</span><span>    ) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>is_subsequence</span><span>(</span><span style=color:#fdf4c1>s</span><span>: </span><span style=color:#fe8019>&</span><span>[</span><span style=color:#fa5c4b>u8</span><span>], </span><span style=color:#fdf4c1>p</span><span>: </span><span style=color:#fe8019>&</span><span>[</span><span style=color:#fa5c4b>u8</span><span>], </span><span style=color:#fdf4c1>r</span><span>: HashSet&lt;</span><span style=color:#fa5c4b>usize</span><span>>) -> </span><span style=color:#fa5c4b>bool </span><span>{
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> idx </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>for </span><span style=color:#fe8019>&</span><span>ch </span><span style=color:#fe8019>in</span><span> p {
+</span><span>                </span><span style=color:#fa5c4b>while</span><span> r.</span><span style=color:#fabd2f>contains</span><span>(</span><span style=color:#fe8019>&</span><span>idx) </span><span style=color:#fe8019>|| </span><span>(idx </span><span style=color:#fe8019>&lt;</span><span> s.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>&&</span><span> s[idx] </span><span style=color:#fe8019>!=</span><span> ch) {
+</span><span>                    idx </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>                }
+</span><span>                idx </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            }
+</span><span>            idx </span><span style=color:#fe8019>&lt;=</span><span> s.</span><span style=color:#fabd2f>len</span><span>()
+</span><span>        }
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> s </span><span style=color:#fe8019>=</span><span> s.</span><span style=color:#fabd2f>as_bytes</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> p </span><span style=color:#fe8019>=</span><span> p.</span><span style=color:#fabd2f>as_bytes</span><span>();
+</span><span>        </span><span style=color:#928374;font-style:italic>// binary search for max k
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> l, </span><span style=color:#fa5c4b>mut</span><span> r) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#d3869b>0</span><span>, removable.</span><span style=color:#fabd2f>len</span><span>());
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> l </span><span style=color:#fe8019>&lt;</span><span> r {
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> mid </span><span style=color:#fe8019>=</span><span> l </span><span style=color:#fe8019>+ </span><span>(r </span><span style=color:#fe8019>-</span><span> l) </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> indices: HashSet&lt;</span><span style=color:#fa5c4b>usize</span><span>> </span><span style=color:#fe8019>=</span><span> removable[</span><span style=color:#d3869b>0</span><span style=color:#fe8019>..=</span><span>mid]
+</span><span>                .</span><span style=color:#fabd2f>iter</span><span>()
+</span><span>                .</span><span style=color:#fabd2f>map</span><span>(|</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>idx</span><span>| idx </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>)
+</span><span>                .</span><span style=color:#fabd2f>collect</span><span>();
+</span><span>            </span><span style=color:#fa5c4b>if </span><span style=color:#fabd2f>is_subsequence</span><span>(s, p, indices) {
+</span><span>                l </span><span style=color:#fe8019>=</span><span> mid </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>;
+</span><span>            } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                r </span><span style=color:#fe8019>=</span><span> mid;
+</span><span>            }
+</span><span>        }
+</span><span>        l </span><span style=color:#fe8019>as _
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

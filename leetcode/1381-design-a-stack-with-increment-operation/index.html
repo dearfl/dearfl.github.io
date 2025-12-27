@@ -1,0 +1,66 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1381 - Design a Stack With Increment Operation</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1381 - Design a Stack With Increment Operation</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/design-a-stack-with-increment-operation/ rel=noopener target=_blank>problem</a></h3><p>Design a stack that supports increment operations on its elements.<p>Implement the <code>CustomStack</code> class:<ul><li><code>CustomStack(int maxSize)</code> Initializes the object with <code>maxSize</code> which is the maximum number of elements in the stack.<li><code>void push(int x)</code> Adds <code>x</code> to the top of the stack if the stack has not reached the <code>maxSize</code>.<li><code>int pop()</code> Pops and returns the top of the stack or <code>-1</code> if the stack is empty.<li><code>void inc(int k, int val)</code> Increments the bottom <code>k</code> elements of the stack by <code>val</code>. If there are less than <code>k</code> elements in the stack, increment all the elements in the stack.</ul><p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input</strong>
+["CustomStack","push","push","pop","push","push","push","increment","increment","pop","pop","pop","pop"]
+[[3],[1],[2],[],[2],[3],[4],[5,100],[2,100],[],[],[],[]]
+<strong>Output</strong>
+[null,null,null,2,null,null,null,null,null,103,202,201,-1]
+<strong>Explanation</strong>
+CustomStack stk = new CustomStack(3); // Stack is Empty []
+stk.push(1);                          // stack becomes [1]
+stk.push(2);                          // stack becomes [1, 2]
+stk.pop();                            // return 2 --> Return top of the stack 2, stack becomes [1]
+stk.push(2);                          // stack becomes [1, 2]
+stk.push(3);                          // stack becomes [1, 2, 3]
+stk.push(4);                          // stack still [1, 2, 3], Do not add another elements as size is 4
+stk.increment(5, 100);                // stack becomes [101, 102, 103]
+stk.increment(2, 100);                // stack becomes [201, 202, 103]
+stk.pop();                            // return 103 --> Return top of the stack 103, stack becomes [201, 202]
+stk.pop();                            // return 202 --> Return top of the stack 202, stack becomes [201]
+stk.pop();                            // return 201 --> Return top of the stack 201, stack becomes []
+stk.pop();                            // return -1 --> Stack is empty return -1.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= maxSize, x, k &lt;= 1000</code><li><code>0 &lt;= val &lt;= 100</code><li>At most <code>1000</code> calls will be made to each method of <code>increment</code>, <code>push</code> and <code>pop</code> each separately.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// simply emulate stack with a Vec
+</span><span style=color:#fa5c4b>struct </span><span style=color:#8ec07c>CustomStack </span><span>{
+</span><span>    </span><span style=color:#fdf4c1>inner</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>,
+</span><span>    </span><span style=color:#fdf4c1>max_size</span><span>: </span><span style=color:#fa5c4b>usize</span><span>,
+</span><span>}
+</span><span>
+</span><span>
+</span><span style=color:#928374;font-style:italic>/** 
+</span><span style=color:#928374;font-style:italic> * `&self` means the method takes an immutable reference.
+</span><span style=color:#928374;font-style:italic> * If you need a mutable reference, change it to `&mut self` instead.
+</span><span style=color:#928374;font-style:italic> */
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>CustomStack </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>new</span><span>(</span><span style=color:#fdf4c1>maxSize</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>Self </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> max_size </span><span style=color:#fe8019>=</span><span> maxSize </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>Self </span><span>{
+</span><span>            inner: </span><span style=color:#fabd2f>Vec</span><span>::with_capacity(max_size),
+</span><span>            max_size,
+</span><span>        }
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>push</span><span>(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>self</span><span>, </span><span style=color:#fdf4c1>x</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) {
+</span><span>        </span><span style=color:#fa5c4b>if </span><span style=color:#fdf4c1>self</span><span>.inner.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>>= </span><span style=color:#fdf4c1>self</span><span>.max_size {
+</span><span>            </span><span style=color:#fa5c4b>return</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#fdf4c1>self</span><span>.inner.</span><span style=color:#fabd2f>push</span><span>(x);
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>pop</span><span>(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>self</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fdf4c1>self</span><span>.inner.</span><span style=color:#fabd2f>pop</span><span>().</span><span style=color:#fabd2f>unwrap_or</span><span>(</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>)
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>increment</span><span>(</span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>self</span><span>, </span><span style=color:#fdf4c1>k</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>val</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) {
+</span><span>        </span><span style=color:#fdf4c1>self</span><span>.inner.</span><span style=color:#fabd2f>iter_mut</span><span>().</span><span style=color:#fabd2f>take</span><span>(k </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>).</span><span style=color:#fabd2f>for_each</span><span>(|</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>num</span><span>| {
+</span><span>            </span><span style=color:#fe8019>*</span><span>num </span><span style=color:#fe8019>+=</span><span> val;
+</span><span>        });
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style=color:#928374;font-style:italic>/**
+</span><span style=color:#928374;font-style:italic> * Your CustomStack object will be instantiated and called as such:
+</span><span style=color:#928374;font-style:italic> * let obj = CustomStack::new(maxSize);
+</span><span style=color:#928374;font-style:italic> * obj.push(x);
+</span><span style=color:#928374;font-style:italic> * let ret_2: i32 = obj.pop();
+</span><span style=color:#928374;font-style:italic> * obj.increment(k, val);
+</span><span style=color:#928374;font-style:italic> */
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

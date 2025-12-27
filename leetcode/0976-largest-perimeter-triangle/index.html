@@ -1,0 +1,33 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0976 - Largest Perimeter Triangle</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0976 - Largest Perimeter Triangle</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/largest-perimeter-triangle/ rel=noopener target=_blank>problem</a></h3><p>Given an integer array <code>nums</code>, return <em>the largest perimeter of a triangle with a non-zero area, formed from three of these lengths</em>. If it is impossible to form any triangle of a non-zero area, return <code>0</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [2,1,2]
+<strong>Output:</strong> 5
+<strong>Explanation:</strong> You can form a triangle with three side lengths: 1, 2, and 2.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [1,2,1,10]
+<strong>Output:</strong> 0
+<strong>Explanation:</strong> 
+You cannot use the side lengths 1, 1, and 2 to form a triangle.
+You cannot use the side lengths 1, 1, and 10 to form a triangle.
+You cannot use the side lengths 1, 2, and 10 to form a triangle.
+As we cannot use any three side lengths to form a triangle of non-zero area, we return 0.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>3 &lt;= nums.length &lt;= 10<sup>4</sup></code><li><code>1 &lt;= nums[i] &lt;= 10<sup>6</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// assume the length of the 3 edges are: a, b, c and
+</span><span style=color:#928374;font-style:italic>// a >= b >= c, to construct a valid triangle, we must
+</span><span style=color:#928374;font-style:italic>// have: a &lt; b + c
+</span><span style=color:#928374;font-style:italic>// sort the array in descending order, to search for
+</span><span style=color:#928374;font-style:italic>// the largest perimeter triangle, we can just search
+</span><span style=color:#928374;font-style:italic>// with a sliding window of size 3, and choose the first
+</span><span style=color:#928374;font-style:italic>// window that can construct a valid triangle.
+</span><span style=color:#928374;font-style:italic>// we could also solve this with binary heap, which have
+</span><span style=color:#928374;font-style:italic>// O(N) time complexity in best case. (O(NlogN) worst case)
+</span><span style=color:#928374;font-style:italic>// apparently construct a binary heap from a vec can be done
+</span><span style=color:#928374;font-style:italic>// in-place and in O(N) time
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>largest_perimeter</span><span>(</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        nums.</span><span style=color:#fabd2f>sort_unstable_by</span><span>(|</span><span style=color:#fdf4c1>l</span><span>, </span><span style=color:#fdf4c1>r</span><span>| r.</span><span style=color:#fabd2f>cmp</span><span>(l));
+</span><span>        nums.</span><span style=color:#fabd2f>windows</span><span>(</span><span style=color:#d3869b>3</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>find</span><span>(|</span><span style=color:#fdf4c1>w</span><span>| w[</span><span style=color:#d3869b>0</span><span>] </span><span style=color:#fe8019>&lt;</span><span> w[</span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>+</span><span> w[</span><span style=color:#d3869b>2</span><span>])
+</span><span>            .</span><span style=color:#fabd2f>map_or</span><span>(</span><span style=color:#d3869b>0</span><span>, |</span><span style=color:#fdf4c1>w</span><span>| w.</span><span style=color:#fabd2f>iter</span><span>().</span><span style=color:#fabd2f>sum</span><span>())
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

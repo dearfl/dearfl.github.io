@@ -1,0 +1,29 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 1221 - Split a String in Balanced Strings</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>1221 - Split a String in Balanced Strings</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/split-a-string-in-balanced-strings/ rel=noopener target=_blank>problem</a></h3><p><strong>Balanced</strong> strings are those that have an equal quantity of <code>'L'</code> and <code>'R'</code> characters.<p>Given a <strong>balanced</strong> string <code>s</code>, split it into some number of substrings such that:<ul><li>Each substring is balanced.</ul><p>Return <em>the <strong>maximum</strong> number of balanced strings you can obtain.</em><p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "RLRRLLRLRL"
+<strong>Output:</strong> 4
+<strong>Explanation:</strong> s can be split into "RL", "RRLL", "RL", "RL", each substring contains same number of 'L' and 'R'.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "RLRRRLLRLL"
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> s can be split into "RL", "RRRLLRLL", each substring contains same number of 'L' and 'R'.
+Note that s cannot be split into "RL", "RR", "RL", "LR", "LL", because the 2<sup>nd</sup> and 5<sup>th</sup> substrings are not balanced.</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "LLLLRRRR"
+<strong>Output:</strong> 1
+<strong>Explanation:</strong> s can be split into "LLLLRRRR".
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>2 &lt;= s.length &lt;= 1000</code><li><code>s[i]</code> is either <code>'L'</code> or <code>'R'</code>.<li><code>s</code> is a <strong>balanced</strong> string.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// one line with scan and filter and count
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>balanced_string_split</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        s.</span><span style=color:#fabd2f>chars</span><span>().</span><span style=color:#fabd2f>scan</span><span>(</span><span style=color:#d3869b>0</span><span>, |</span><span style=color:#fdf4c1>cnt</span><span>, </span><span style=color:#fdf4c1>ch</span><span>| {
+</span><span>            </span><span style=color:#fa5c4b>match</span><span> ch {
+</span><span>                </span><span style=color:#b8bb26>'L' </span><span style=color:#fe8019>=> *</span><span>cnt </span><span style=color:#fe8019>-= </span><span style=color:#d3869b>1</span><span>,
+</span><span>                </span><span style=color:#b8bb26>'R' </span><span style=color:#fe8019>=> *</span><span>cnt </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>,
+</span><span>                </span><span style=color:#fe8019>_ => </span><span style=color:#fabd2f>unreachable!</span><span>(),
+</span><span>            }
+</span><span>            </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fe8019>*</span><span>cnt)
+</span><span>        })
+</span><span>        </span><span style=color:#928374;font-style:italic>// balance split have count 0
+</span><span>        .</span><span style=color:#fabd2f>filter</span><span>(|</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>cnt</span><span>| cnt </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>)
+</span><span>        .</span><span style=color:#fabd2f>count</span><span>() </span><span style=color:#fe8019>as _
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

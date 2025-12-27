@@ -1,0 +1,30 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2275 - Largest Combination With Bitwise AND Greater Than Zero</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2275 - Largest Combination With Bitwise AND Greater Than Zero</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/largest-combination-with-bitwise-and-greater-than-zero/ rel=noopener target=_blank>problem</a></h3><p>The <strong>bitwise AND</strong> of an array <code>nums</code> is the bitwise AND of all integers in <code>nums</code>.<ul><li>For example, for <code>nums = [1, 5, 3]</code>, the bitwise AND is equal to <code>1 & 5 & 3 = 1</code>.<li>Also, for <code>nums = [7]</code>, the bitwise AND is <code>7</code>.</ul><p>You are given an array of positive integers <code>candidates</code>. Compute the <strong>bitwise AND</strong> for all possible <strong>combinations</strong> of elements in the <code>candidates</code> array.<p>Return <em>the size of the <strong>largest</strong> combination of </em><code>candidates</code><em> with a bitwise AND <strong>greater</strong> than </em><code>0</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> candidates = [16,17,71,62,12,24,14]
+<strong>Output:</strong> 4
+<strong>Explanation:</strong> The combination [16,17,62,24] has a bitwise AND of 16 & 17 & 62 & 24 = 16 > 0.
+The size of the combination is 4.
+It can be shown that no combination with a size greater than 4 has a bitwise AND greater than 0.
+Note that more than one combination may have the largest size.
+For example, the combination [62,12,24,14] has a bitwise AND of 62 & 12 & 24 & 14 = 8 > 0.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> candidates = [8,8]
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The largest combination [8,8] has a bitwise AND of 8 & 8 = 8 > 0.
+The size of the combination is 2, so we return 2.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= candidates.length &lt;= 10<sup>5</sup></code><li><code>1 &lt;= candidates[i] &lt;= 10<sup>7</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// the problem description is basically:
+</span><span>    </span><span style=color:#928374;font-style:italic>// Find the highest frequency of a set bit across all bit positions
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>largest_combination</span><span>(</span><span style=color:#fdf4c1>candidates</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// we can actually use array of size 24
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> bits </span><span style=color:#fe8019>= </span><span>[</span><span style=color:#d3869b>0</span><span>; </span><span style=color:#d3869b>32</span><span>];
+</span><span>        </span><span style=color:#fa5c4b>for</span><span> num </span><span style=color:#fe8019>in &</span><span>candidates {
+</span><span>            </span><span style=color:#fa5c4b>for</span><span> u </span><span style=color:#fe8019>in </span><span style=color:#d3869b>0</span><span style=color:#fe8019>..</span><span style=color:#d3869b>32</span><span style=color:#fa5c4b>usize </span><span>{
+</span><span>                </span><span style=color:#fa5c4b>if</span><span> num </span><span style=color:#fe8019>& </span><span>(</span><span style=color:#d3869b>1 </span><span style=color:#fe8019>&lt;&lt;</span><span> u) </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>0 </span><span>{
+</span><span>                    bits[u] </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        bits.</span><span style=color:#fabd2f>into_iter</span><span>().</span><span style=color:#fabd2f>max</span><span>().</span><span style=color:#fabd2f>unwrap_or_default</span><span>()
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

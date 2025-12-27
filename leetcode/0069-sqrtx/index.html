@@ -1,0 +1,28 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0069 - Sqrt(x)</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0069 - Sqrt(x)</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/sqrtx/ rel=noopener target=_blank>problem</a></h3><p>Given a non-negative integer <code>x</code>, return <em>the square root of </em><code>x</code><em> rounded down to the nearest integer</em>. The returned integer should be <strong>non-negative</strong> as well.<p>You <strong>must not use</strong> any built-in exponent function or operator.<ul><li>For example, do not use <code>pow(x, 0.5)</code> in c++ or <code>x ** 0.5</code> in python.</ul><p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> x = 4
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The square root of 4 is 2, so we return 2.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> x = 8
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>0 &lt;= x &lt;= 2<sup>31</sup> - 1</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// binary search, we search the first number l that
+</span><span style=color:#928374;font-style:italic>// (l + 1) * (l + 1) > x
+</span><span style=color:#928374;font-style:italic>// then the answer is l
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>my_sqrt</span><span>(</span><span style=color:#fdf4c1>x</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let </span><span>(</span><span style=color:#fa5c4b>mut</span><span> l, </span><span style=color:#fa5c4b>mut</span><span> r) </span><span style=color:#fe8019>= </span><span>(</span><span style=color:#d3869b>0</span><span>, x);
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> l </span><span style=color:#fe8019>&lt;</span><span> r {
+</span><span>            </span><span style=color:#928374;font-style:italic>// +1 here
+</span><span>            </span><span style=color:#fa5c4b>let</span><span> mid </span><span style=color:#fe8019>=</span><span> l </span><span style=color:#fe8019>+ </span><span>(r </span><span style=color:#fe8019>-</span><span> l) </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>;
+</span><span>            </span><span style=color:#928374;font-style:italic>// simple trick to avoid i64
+</span><span>            </span><span style=color:#fa5c4b>if</span><span> mid </span><span style=color:#fe8019>&lt;=</span><span> x </span><span style=color:#fe8019>/</span><span> mid {
+</span><span>                l </span><span style=color:#fe8019>=</span><span> mid;
+</span><span>            } </span><span style=color:#fa5c4b>else </span><span>{
+</span><span>                r </span><span style=color:#fe8019>=</span><span> mid </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        l
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

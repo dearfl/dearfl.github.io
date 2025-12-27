@@ -1,0 +1,19 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0058 - Length of Last Word</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0058 - Length of Last Word</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/length-of-last-word/ rel=noopener target=_blank>problem</a></h3><p>Given a string <code>s</code> consisting of words and spaces, return <em>the length of the <strong>last</strong> word in the string.</em><p>A <strong>word</strong> is a maximal <span data-keyword=substring-nonempty>substring</span> consisting of non-space characters only.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "Hello World"
+<strong>Output:</strong> 5
+<strong>Explanation:</strong> The last word is "World" with length 5.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "   fly me   to   the moon  "
+<strong>Output:</strong> 4
+<strong>Explanation:</strong> The last word is "moon" with length 4.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "luffy is still joyboy"
+<strong>Output:</strong> 6
+<strong>Explanation:</strong> The last word is "joyboy" with length 6.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= s.length &lt;= 10<sup>4</sup></code><li><code>s</code> consists of only English letters and spaces <code>' '</code>.<li>There will be at least one word in <code>s</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>length_of_last_word</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// reverse iterator, count non-space chars
+</span><span>        s.</span><span style=color:#fabd2f>trim_end</span><span>().</span><span style=color:#fabd2f>chars</span><span>().</span><span style=color:#fabd2f>rev</span><span>().</span><span style=color:#fabd2f>take_while</span><span>(|</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>c</span><span>| c </span><span style=color:#fe8019>!= </span><span style=color:#b8bb26>' '</span><span>).</span><span style=color:#fabd2f>count</span><span>() </span><span style=color:#fe8019>as _
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

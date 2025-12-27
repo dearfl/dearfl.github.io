@@ -1,0 +1,34 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0260 - Single Number III</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0260 - Single Number III</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/single-number-iii/ rel=noopener target=_blank>problem</a></h3><p>Given an integer array <code>nums</code>, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once. You can return the answer in <strong>any order</strong>.<p>You must write an algorithm that runs in linear runtime complexity and uses only constant extra space.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [1,2,1,3,2,5]
+<strong>Output:</strong> [3,5]
+<strong>Explanation: </strong> [5, 3] is also a valid answer.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [-1,0]
+<strong>Output:</strong> [-1,0]
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> nums = [0,1]
+<strong>Output:</strong> [1,0]
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>2 &lt;= nums.length &lt;= 3 * 10<sup>4</sup></code><li><code>-2<sup>31</sup> &lt;= nums[i] &lt;= 2<sup>31</sup> - 1</code><li>Each integer in <code>nums</code> will appear twice, only two integers will appear once.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// we solve this in two passes
+</span><span style=color:#928374;font-style:italic>// the first pass is the same as single number
+</span><span style=color:#928374;font-style:italic>// let say what we search is a and b, and a != b
+</span><span style=color:#928374;font-style:italic>// we XOR all the numbers and get xor = a ^ b
+</span><span style=color:#928374;font-style:italic>// a != b -> xor != 0
+</span><span style=color:#928374;font-style:italic>// in the second pass, we separate numbers into
+</span><span style=color:#928374;font-style:italic>// two groups, one with a and another with b
+</span><span style=color:#928374;font-style:italic>// how? by check a single set bit in xor
+</span><span style=color:#928374;font-style:italic>// if a bit is set in xor, a and b must have different
+</span><span style=color:#928374;font-style:italic>// value in this bit, and rest pairs must fallen into
+</span><span style=color:#928374;font-style:italic>// either group and won't affect us.
+</span><span style=color:#928374;font-style:italic>// we then XOR each group and get what we want
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>single_number</span><span>(</span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>> {
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> mask </span><span style=color:#fe8019>=</span><span> nums.</span><span style=color:#fabd2f>iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>(</span><span style=color:#d3869b>0</span><span>, std::ops::BitXor::bitxor);
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> distinguishing_bit </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1 </span><span style=color:#fe8019>&lt;&lt;</span><span> mask.</span><span style=color:#fabd2f>trailing_zeros</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> first </span><span style=color:#fe8019>=</span><span> nums.</span><span style=color:#fabd2f>iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>filter</span><span>(|</span><span style=color:#fe8019>&&</span><span style=color:#fdf4c1>v</span><span>| v </span><span style=color:#fe8019>&</span><span> distinguishing_bit </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>(</span><span style=color:#d3869b>0</span><span>, std::ops::BitXor::bitxor);
+</span><span>        </span><span style=color:#fabd2f>vec!</span><span>[first, first </span><span style=color:#fe8019>^</span><span> mask]
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

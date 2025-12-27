@@ -1,0 +1,30 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0009 - Palindrome Number</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0009 - Palindrome Number</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/palindrome-number/ rel=noopener target=_blank>problem</a></h3><p>Given an integer <code>x</code>, return <code>true</code><em> if </em><code>x</code><em> is a </em><span data-keyword=palindrome-integer><em><strong>palindrome</strong></em></span><em>, and </em><code>false</code><em> otherwise</em>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> x = 121
+<strong>Output:</strong> true
+<strong>Explanation:</strong> 121 reads as 121 from left to right and from right to left.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> x = -121
+<strong>Output:</strong> false
+<strong>Explanation:</strong> From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> x = 10
+<strong>Output:</strong> false
+<strong>Explanation:</strong> Reads 01 from right to left. Therefore it is not a palindrome.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>-2<sup>31</sup> &lt;= x &lt;= 2<sup>31</sup> - 1</code></ul><p> </p><strong>Follow up:</strong> Could you solve it without converting the integer to a string? <hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>is_palindrome</span><span>(</span><span style=color:#fdf4c1>x</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>bool </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> reverse </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> tmp </span><span style=color:#fe8019>=</span><span> x;
+</span><span>        </span><span style=color:#928374;font-style:italic>// if x is negative, it is not palindrome
+</span><span>        </span><span style=color:#fa5c4b>if</span><span> x </span><span style=color:#fe8019>&lt; </span><span style=color:#d3869b>0 </span><span>{
+</span><span>            </span><span style=color:#fa5c4b>return </span><span style=color:#d3869b>false</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// construct a reversed number
+</span><span>        </span><span style=color:#fa5c4b>while</span><span> tmp </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span>{
+</span><span>            reverse </span><span style=color:#fe8019>=</span><span> reverse </span><span style=color:#fe8019>* </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>+</span><span> tmp </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10</span><span>;
+</span><span>            tmp </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// by definition
+</span><span>        reverse </span><span style=color:#fe8019>==</span><span> x
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

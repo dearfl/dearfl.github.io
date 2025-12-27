@@ -1,0 +1,48 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2566 - Maximum Difference by Remapping a Digit</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2566 - Maximum Difference by Remapping a Digit</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/maximum-difference-by-remapping-a-digit/ rel=noopener target=_blank>problem</a></h3><p>You are given an integer <code>num</code>. You know that Bob will sneakily <strong>remap</strong> one of the <code>10</code> possible digits (<code>0</code> to <code>9</code>) to another digit.<p>Return <em>the difference between the maximum and minimum values Bob can make by remapping <strong>exactly</strong> <strong>one</strong> digit in </em><code>num</code>.<p><strong>Notes:</strong><ul><li>When Bob remaps a digit <font face=monospace>d1</font> to another digit <font face=monospace>d2</font>, Bob replaces all occurrences of <code>d1</code> in <code>num</code> with <code>d2</code>.<li>Bob can remap a digit to itself, in which case <code>num</code> does not change.<li>Bob can remap different digits for obtaining minimum and maximum values respectively.<li>The resulting number after remapping can contain leading zeroes.</ul><p> <p><strong>Example 1:</strong><pre>
+<strong>Input:</strong> num = 11891
+<strong>Output:</strong> 99009
+<strong>Explanation:</strong> 
+To achieve the maximum value, Bob can remap the digit 1 to the digit 9 to yield 99899.
+To achieve the minimum value, Bob can remap the digit 1 to the digit 0, yielding 890.
+The difference between these two numbers is 99009.
+</pre><p><strong>Example 2:</strong><pre>
+<strong>Input:</strong> num = 90
+<strong>Output:</strong> 99
+<strong>Explanation:</strong>
+The maximum value that can be returned by the function is 99 (if 0 is replaced by 9) and the minimum value that can be returned by the function is 0 (if 9 is replaced by 0).
+Thus, we return 99.</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= num &lt;= 10<sup>8</sup></code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// max value after remap: remap the first non-9 digit to 9
+</span><span>    </span><span style=color:#928374;font-style:italic>// min value after remap: remap the first digit to 0
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>min_max_difference</span><span>(</span><span style=color:#fdf4c1>num</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let </span><span style=color:#8ec07c>remap </span><span style=color:#fe8019>= </span><span>|</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>num</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>o</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>r</span><span>: </span><span style=color:#fa5c4b>i32</span><span>| {
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> ans </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> weight </span><span style=color:#fe8019>= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>while</span><span> num </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span>{
+</span><span>                ans </span><span style=color:#fe8019>+=</span><span> weight </span><span style=color:#fe8019>* </span><span style=color:#fa5c4b>if</span><span> num </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>==</span><span> o { r } </span><span style=color:#fa5c4b>else </span><span>{ num </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10 </span><span>};
+</span><span>                num </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>                weight </span><span style=color:#fe8019>*= </span><span style=color:#d3869b>10</span><span>;
+</span><span>            }
+</span><span>            ans
+</span><span>        };
+</span><span>        </span><span style=color:#fa5c4b>let </span><span style=color:#8ec07c>first_digit </span><span style=color:#fe8019>= </span><span>|</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>num</span><span>: </span><span style=color:#fa5c4b>i32</span><span>| {
+</span><span>            </span><span style=color:#fa5c4b>while</span><span> num </span><span style=color:#fe8019>>= </span><span style=color:#d3869b>10 </span><span>{
+</span><span>                num </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>            }
+</span><span>            num
+</span><span>        };
+</span><span>        </span><span style=color:#fa5c4b>let </span><span style=color:#8ec07c>first_non_nine_digit </span><span style=color:#fe8019>= </span><span>|</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>num</span><span>: </span><span style=color:#fa5c4b>i32</span><span>| {
+</span><span>            </span><span style=color:#fa5c4b>let mut</span><span> digit </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>            </span><span style=color:#fa5c4b>while</span><span> num </span><span style=color:#fe8019>> </span><span style=color:#d3869b>0 </span><span>{
+</span><span>                </span><span style=color:#fa5c4b>if</span><span> num </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10 </span><span style=color:#fe8019>!= </span><span style=color:#d3869b>9 </span><span>{
+</span><span>                    digit </span><span style=color:#fe8019>=</span><span> num </span><span style=color:#fe8019>% </span><span style=color:#d3869b>10</span><span>;
+</span><span>                }
+</span><span>                num </span><span style=color:#fe8019>/= </span><span style=color:#d3869b>10</span><span>;
+</span><span>            }
+</span><span>            digit
+</span><span>        };
+</span><span>        </span><span style=color:#fabd2f>remap</span><span>(num, </span><span style=color:#fabd2f>first_non_nine_digit</span><span>(num), </span><span style=color:#d3869b>9</span><span>)
+</span><span>            </span><span style=color:#fe8019>- </span><span style=color:#fabd2f>remap</span><span>(num, </span><span style=color:#fabd2f>first_digit</span><span>(num), </span><span style=color:#d3869b>0</span><span>)
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

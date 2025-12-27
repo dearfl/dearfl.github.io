@@ -1,0 +1,37 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0717 - 1-bit and 2-bit Characters</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0717 - 1-bit and 2-bit Characters</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/1-bit-and-2-bit-characters/ rel=noopener target=_blank>problem</a></h3><p>We have two special characters:<ul><li>The first character can be represented by one bit <code>0</code>.<li>The second character can be represented by two bits (<code>10</code> or <code>11</code>).</ul><p>Given a binary array <code>bits</code> that ends with <code>0</code>, return <code>true</code> if the last character must be a one-bit character.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> bits = [1,0,0]
+<strong>Output:</strong> true
+<strong>Explanation:</strong> The only way to decode it is two-bit character and one-bit character.
+So the last character is one-bit character.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> bits = [1,1,1,0]
+<strong>Output:</strong> false
+<strong>Explanation:</strong> The only way to decode it is two-bit character and two-bit character.
+So the last character is not one-bit character.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= bits.length &lt;= 1000</code><li><code>bits[i]</code> is either <code>0</code> or <code>1</code>.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>is_one_bit_character</span><span>(</span><span style=color:#fdf4c1>bits</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>bool </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// solution count 1s from the right end
+</span><span>        bits.</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>rev</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>skip</span><span>(</span><span style=color:#d3869b>1</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>take_while</span><span>(|</span><span style=color:#fe8019>&</span><span style=color:#fdf4c1>b</span><span>| b </span><span style=color:#fe8019>== </span><span style=color:#d3869b>1</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>count</span><span>() </span><span style=color:#fe8019>% </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0
+</span><span>        </span><span style=color:#928374;font-style:italic>// my original solution with state machine
+</span><span>        </span><span style=color:#928374;font-style:italic>// enum State {
+</span><span>        </span><span style=color:#928374;font-style:italic>//     None,
+</span><span>        </span><span style=color:#928374;font-style:italic>//     Current2Bit,
+</span><span>        </span><span style=color:#928374;font-style:italic>//     Last1Bit,
+</span><span>        </span><span style=color:#928374;font-style:italic>//     Last2Bit,
+</span><span>        </span><span style=color:#928374;font-style:italic>// }
+</span><span>        </span><span style=color:#928374;font-style:italic>// matches!(
+</span><span>        </span><span style=color:#928374;font-style:italic>//     bits.into_iter()
+</span><span>        </span><span style=color:#928374;font-style:italic>//         .fold(State::None, |s, v| match (s, v) {
+</span><span>        </span><span style=color:#928374;font-style:italic>//             (State::Current2Bit, _) => State::Last2Bit,
+</span><span>        </span><span style=color:#928374;font-style:italic>//             (_, 0) => State::Last1Bit,
+</span><span>        </span><span style=color:#928374;font-style:italic>//             _ => State::Current2Bit,
+</span><span>        </span><span style=color:#928374;font-style:italic>//         }),
+</span><span>        </span><span style=color:#928374;font-style:italic>//     State::Last1Bit
+</span><span>        </span><span style=color:#928374;font-style:italic>// )
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

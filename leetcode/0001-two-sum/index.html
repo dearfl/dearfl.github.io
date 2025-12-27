@@ -1,0 +1,27 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0001 - Two Sum</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0001 - Two Sum</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/two-sum/ rel=noopener target=_blank>problem</a></h3><p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>.<p>You may assume that each input would have <strong><em>exactly</em> one solution</strong>, and you may not use the <em>same</em> element twice.<p>You can return the answer in any order.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [2,7,11,15], target = 9
+<strong>Output:</strong> [0,1]
+<strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [3,2,4], target = 6
+<strong>Output:</strong> [1,2]
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> nums = [3,3], target = 6
+<strong>Output:</strong> [0,1]
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>2 &lt;= nums.length &lt;= 10<sup>4</sup></code><li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code><li><code>-10<sup>9</sup> &lt;= target &lt;= 10<sup>9</sup></code><li><strong>Only one valid answer exists.</strong></ul><p> </p><strong>Follow-up: </strong>Can you come up with an algorithm that is less than <code>O(n<sup>2</sup>)</code><font face=monospace> </font>time complexity? <hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>two_sum</span><span>(</span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>, </span><span style=color:#fdf4c1>target</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>> {
+</span><span>        </span><span style=color:#928374;font-style:italic>// caching visited numbers and corresponding indices
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> cache </span><span style=color:#fe8019>= </span><span>std::collections::HashMap::new();
+</span><span>        </span><span style=color:#fa5c4b>for </span><span>(idx, num) </span><span style=color:#fe8019>in</span><span> nums.</span><span style=color:#fabd2f>iter</span><span>().</span><span style=color:#fabd2f>enumerate</span><span>() {
+</span><span>            </span><span style=color:#fa5c4b>match</span><span> cache.</span><span style=color:#fabd2f>get</span><span>(num) {
+</span><span>                </span><span style=color:#928374;font-style:italic>// found cached index, return
+</span><span>                </span><span style=color:#fabd2f>Some</span><span>(</span><span style=color:#fe8019>&</span><span>pos) </span><span style=color:#fe8019>=> </span><span style=color:#fa5c4b>return </span><span style=color:#fabd2f>vec!</span><span>[idx </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>, pos],
+</span><span>                </span><span style=color:#928374;font-style:italic>// not found, cache it
+</span><span>                </span><span style=color:#fabd2f>None </span><span style=color:#fe8019>=></span><span> cache.</span><span style=color:#fabd2f>insert</span><span>(target </span><span style=color:#fe8019>-</span><span> num, idx </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>i32</span><span>),
+</span><span>            };
+</span><span>        }
+</span><span>        </span><span style=color:#928374;font-style:italic>// !unreachable
+</span><span>        </span><span style=color:#fabd2f>vec!</span><span>[</span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>, </span><span style=color:#fe8019>-</span><span style=color:#d3869b>1</span><span>]
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

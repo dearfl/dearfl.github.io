@@ -1,0 +1,33 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2894 - Divisible and Non-divisible Sums Difference</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2894 - Divisible and Non-divisible Sums Difference</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/divisible-and-non-divisible-sums-difference/ rel=noopener target=_blank>problem</a></h3><p>You are given positive integers <code>n</code> and <code>m</code>.<p>Define two integers as follows:<ul><li><code>num1</code>: The sum of all integers in the range <code>[1, n]</code> (both <strong>inclusive</strong>) that are <strong>not divisible</strong> by <code>m</code>.<li><code>num2</code>: The sum of all integers in the range <code>[1, n]</code> (both <strong>inclusive</strong>) that are <strong>divisible</strong> by <code>m</code>.</ul><p>Return <em>the integer</em> <code>num1 - num2</code>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> n = 10, m = 3
+<strong>Output:</strong> 19
+<strong>Explanation:</strong> In the given example:
+- Integers in the range [1, 10] that are not divisible by 3 are [1,2,4,5,7,8,10], num1 is the sum of those integers = 37.
+- Integers in the range [1, 10] that are divisible by 3 are [3,6,9], num2 is the sum of those integers = 18.
+We return 37 - 18 = 19 as the answer.
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> n = 5, m = 6
+<strong>Output:</strong> 15
+<strong>Explanation:</strong> In the given example:
+- Integers in the range [1, 5] that are not divisible by 6 are [1,2,3,4,5], num1 is the sum of those integers = 15.
+- Integers in the range [1, 5] that are divisible by 6 are [], num2 is the sum of those integers = 0.
+We return 15 - 0 = 15 as the answer.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> n = 5, m = 1
+<strong>Output:</strong> -15
+<strong>Explanation:</strong> In the given example:
+- Integers in the range [1, 5] that are not divisible by 1 are [], num1 is the sum of those integers = 0.
+- Integers in the range [1, 5] that are divisible by 1 are [1,2,3,4,5], num2 is the sum of those integers = 15.
+We return 0 - 15 = -15 as the answer.
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= n, m &lt;= 1000</code></ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#928374;font-style:italic>// math
+</span><span>    </span><span style=color:#928374;font-style:italic>// num1 + num2 = n * (n + 1) / 2
+</span><span>    </span><span style=color:#928374;font-style:italic>// num1 - num2 = n * (n + 1) / 2 - 2 * num2
+</span><span>    </span><span style=color:#928374;font-style:italic>// num2 = m * (n / m) * (n / m + 1) / 2
+</span><span>    </span><span style=color:#928374;font-style:italic>// so:
+</span><span>    </span><span style=color:#928374;font-style:italic>// n * (n + 1) / 2 - m * (n / m) * (n / m + 1)
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>difference_of_sums</span><span>(</span><span style=color:#fdf4c1>n</span><span>: </span><span style=color:#fa5c4b>i32</span><span>, </span><span style=color:#fdf4c1>m</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        n </span><span style=color:#fe8019>* </span><span>(n </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>/ </span><span style=color:#d3869b>2 </span><span style=color:#fe8019>-</span><span> m </span><span style=color:#fe8019>* </span><span>(n </span><span style=color:#fe8019>/</span><span> m) </span><span style=color:#fe8019>* </span><span>(n </span><span style=color:#fe8019>/</span><span> m </span><span style=color:#fe8019>+ </span><span style=color:#d3869b>1</span><span>)
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

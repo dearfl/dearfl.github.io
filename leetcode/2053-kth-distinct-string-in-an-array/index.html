@@ -1,0 +1,50 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 2053 - Kth Distinct String in an Array</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>2053 - Kth Distinct String in an Array</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/kth-distinct-string-in-an-array/ rel=noopener target=_blank>problem</a></h3><p>A <strong>distinct string</strong> is a string that is present only <strong>once</strong> in an array.<p>Given an array of strings <code>arr</code>, and an integer <code>k</code>, return <em>the </em><code>k<sup>th</sup></code><em> <strong>distinct string</strong> present in </em><code>arr</code>. If there are <strong>fewer</strong> than <code>k</code> distinct strings, return <em>an <strong>empty string </strong></em><code>""</code>.<p>Note that the strings are considered in the <strong>order in which they appear</strong> in the array.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> arr = ["d","b","c","b","c","a"], k = 2
+<strong>Output:</strong> "a"
+<strong>Explanation:</strong>
+The only distinct strings in arr are "d" and "a".
+"d" appears 1<sup>st</sup>, so it is the 1<sup>st</sup> distinct string.
+"a" appears 2<sup>nd</sup>, so it is the 2<sup>nd</sup> distinct string.
+Since k == 2, "a" is returned. 
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> arr = ["aaa","aa","a"], k = 1
+<strong>Output:</strong> "aaa"
+<strong>Explanation:</strong>
+All strings in arr are distinct, so the 1<sup>st</sup> string "aaa" is returned.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> arr = ["a","b","a"], k = 3
+<strong>Output:</strong> ""
+<strong>Explanation:</strong>
+The only distinct string is "b". Since there are fewer than 3 distinct strings, we return an empty string "".
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= k &lt;= arr.length &lt;= 1000</code><li><code>1 &lt;= arr[i].length &lt;= 5</code><li><code>arr[i]</code> consists of lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// one line just for fun
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>kth_distinct</span><span>(</span><span style=color:#fdf4c1>arr</span><span>: </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fabd2f>String</span><span>>, </span><span style=color:#fdf4c1>k</span><span>: </span><span style=color:#fa5c4b>i32</span><span>) -> String {
+</span><span>        arr.</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>enumerate</span><span>()
+</span><span>            </span><span style=color:#928374;font-style:italic>// collect every indices of a string
+</span><span>            .</span><span style=color:#fabd2f>fold</span><span>(
+</span><span>                std::collections::HashMap::&lt;</span><span style=color:#fabd2f>String</span><span>, </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>usize</span><span>>>::new(),
+</span><span>                |</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>indices</span><span>, (</span><span style=color:#fdf4c1>idx</span><span>, </span><span style=color:#fdf4c1>s</span><span>)| {
+</span><span>                    indices.</span><span style=color:#fabd2f>entry</span><span>(s).</span><span style=color:#fabd2f>or_default</span><span>().</span><span style=color:#fabd2f>push</span><span>(idx);
+</span><span>                    indices
+</span><span>                }
+</span><span>            )
+</span><span>            .</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            </span><span style=color:#928374;font-style:italic>// filter with pattern matching
+</span><span>            .</span><span style=color:#fabd2f>filter_map</span><span>(|(</span><span style=color:#fdf4c1>s</span><span>, </span><span style=color:#fdf4c1>indices</span><span>)| {
+</span><span>                </span><span style=color:#fa5c4b>match </span><span style=color:#fe8019>&</span><span>indices[</span><span style=color:#fe8019>..</span><span>] {
+</span><span>                    </span><span style=color:#fe8019>&</span><span>[idx] </span><span style=color:#fe8019>=> </span><span style=color:#fabd2f>Some</span><span>((idx, s)),
+</span><span>                    </span><span style=color:#fe8019>_ => </span><span style=color:#fabd2f>None</span><span>,
+</span><span>                }
+</span><span>            })
+</span><span>            </span><span style=color:#928374;font-style:italic>// sort with binary heap
+</span><span>            .collect::&lt;std::collections::BinaryHeap&lt;(</span><span style=color:#fa5c4b>usize</span><span>, String)>>()
+</span><span>            .</span><span style=color:#fabd2f>into_sorted_vec</span><span>()
+</span><span>            .</span><span style=color:#fabd2f>into_iter</span><span>()
+</span><span>            </span><span style=color:#928374;font-style:italic>// take the k - 1 one
+</span><span>            .</span><span style=color:#fabd2f>nth</span><span>((k </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>) </span><span style=color:#fe8019>as </span><span style=color:#fa5c4b>usize</span><span>)
+</span><span>            .</span><span style=color:#fabd2f>map</span><span>(|(_, </span><span style=color:#fdf4c1>s</span><span>)| s)
+</span><span>            .</span><span style=color:#fabd2f>unwrap_or_default</span><span>()
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

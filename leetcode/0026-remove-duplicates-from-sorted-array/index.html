@@ -1,0 +1,36 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0026 - Remove Duplicates from Sorted Array</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0026 - Remove Duplicates from Sorted Array</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/remove-duplicates-from-sorted-array/ rel=noopener target=_blank>problem</a></h3><p>Given an integer array <code>nums</code> sorted in <strong>non-decreasing order</strong>, remove the duplicates <a href=https://en.wikipedia.org/wiki/In-place_algorithm target=_blank><strong>in-place</strong></a> such that each unique element appears only <strong>once</strong>. The <strong>relative order</strong> of the elements should be kept the <strong>same</strong>.<p>Consider the number of <em>unique elements</em> in <code>nums</code> to be <code>k<strong>​​​​​​​</strong></code>​​​​​​​. <meta charset=UTF-8>After removing duplicates, return the number of unique elements <code>k</code>.<p><meta charset=UTF-8>The first <code>k</code> elements of <code>nums</code> should contain the unique numbers in <strong>sorted order</strong>. The remaining elements beyond index <code>k - 1</code> can be ignored.<p><strong>Custom Judge:</strong><p>The judge will test your solution with the following code:<pre>
+int[] nums = [...]; // Input array
+int[] expectedNums = [...]; // The expected answer with correct length
+
+int k = removeDuplicates(nums); // Calls your implementation
+
+assert k == expectedNums.length;
+for (int i = 0; i &lt; k; i++) {
+    assert nums[i] == expectedNums[i];
+}
+</pre><p>If all assertions pass, then your solution will be <strong>accepted</strong>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> nums = [1,1,2]
+<strong>Output:</strong> 2, nums = [1,2,_]
+<strong>Explanation:</strong> Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> nums = [0,0,1,1,1,2,2,3,3,4]
+<strong>Output:</strong> 5, nums = [0,1,2,3,4,_,_,_,_,_]
+<strong>Explanation:</strong> Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= nums.length &lt;= 3 * 10<sup>4</sup></code><li><code>-100 &lt;= nums[i] &lt;= 100</code><li><code>nums</code> is sorted in <strong>non-decreasing</strong> order.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>remove_duplicates</span><span>(</span><span style=color:#fdf4c1>nums</span><span>: </span><span style=color:#fe8019>&</span><span style=color:#fa5c4b>mut </span><span style=color:#fabd2f>Vec</span><span>&lt;</span><span style=color:#fa5c4b>i32</span><span>>) -> </span><span style=color:#fa5c4b>i32 </span><span>{
+</span><span>        </span><span style=color:#fa5c4b>let mut</span><span> kept </span><span style=color:#fe8019>= </span><span style=color:#d3869b>0</span><span>;
+</span><span>        </span><span style=color:#fa5c4b>for</span><span> idx </span><span style=color:#fe8019>in </span><span style=color:#d3869b>0</span><span style=color:#fe8019>..</span><span>nums.</span><span style=color:#fabd2f>len</span><span>() {
+</span><span>            </span><span style=color:#928374;font-style:italic>// the trick here is to compare the current number with
+</span><span>            </span><span style=color:#928374;font-style:italic>// the previous kept number, we keep the current number
+</span><span>            </span><span style=color:#928374;font-style:italic>// if they are not the same or we never kept any number
+</span><span>            </span><span style=color:#fa5c4b>if</span><span> kept </span><span style=color:#fe8019>== </span><span style=color:#d3869b>0 </span><span style=color:#fe8019>||</span><span> nums[kept </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>] </span><span style=color:#fe8019>!=</span><span> nums[idx] {
+</span><span>                nums[kept] </span><span style=color:#fe8019>=</span><span> nums[idx];
+</span><span>                kept </span><span style=color:#fe8019>+= </span><span style=color:#d3869b>1</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>        kept </span><span style=color:#fe8019>as _
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>

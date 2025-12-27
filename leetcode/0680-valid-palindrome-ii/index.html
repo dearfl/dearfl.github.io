@@ -1,0 +1,38 @@
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="index, follow" name=robots><link href=https://flr.me/rss.xml rel=alternate title=RSS type=application/rss+xml><title>dearfl | 0680 - Valid Palindrome II</title><link as=style href=https://flr.me/css/style.css rel=preload><link href=https://flr.me/css/reset-min.css rel=stylesheet><link href=https://flr.me/css/suCSS-min.css rel=stylesheet><link href=https://flr.me/css/style.css rel=stylesheet><link href=https://flr.me/css/custom.css rel=stylesheet><link href=https://flr.me/favicon.ico rel=icon><body><nav id=nav-bar><a href=/> /home/ </a><a href=/post> /post/ </a><a href=/leetcode> /leetcode/ </a><a href=/contact> /contact/ </a><div aria-label="Toggle theme" class=theme-toggle data-icon-base=https://flr.me/icons.svg data-icon-dark=#darkMode data-icon-light=#lightMode data-sound-src=https://flr.me/click.ogg id=theme-toggle role=button tabindex=0><svg class=icon><use id=theme-icon></use></svg></div></nav><main><article class=post><header class=post-header><h1>0680 - Valid Palindrome II</h1></header><div class=post-content><h3 id=problem><a href=https://leetcode.com/problems/valid-palindrome-ii/ rel=noopener target=_blank>problem</a></h3><p>Given a string <code>s</code>, return <code>true</code> <em>if the </em><code>s</code><em> can be palindrome after deleting <strong>at most one</strong> character from it</em>.<p> <p><strong class=example>Example 1:</strong><pre>
+<strong>Input:</strong> s = "aba"
+<strong>Output:</strong> true
+</pre><p><strong class=example>Example 2:</strong><pre>
+<strong>Input:</strong> s = "abca"
+<strong>Output:</strong> true
+<strong>Explanation:</strong> You could delete the character 'c'.
+</pre><p><strong class=example>Example 3:</strong><pre>
+<strong>Input:</strong> s = "abc"
+<strong>Output:</strong> false
+</pre><p> <p><strong>Constraints:</strong><ul><li><code>1 &lt;= s.length &lt;= 10<sup>5</sup></code><li><code>s</code> consists of lowercase English letters.</ul><hr><h3 id=submission>submission</h3><pre class=language-rs data-lang=rs style=color:#fdf4c1aa;background-color:#282828><code class=language-rs data-lang=rs><span style=color:#928374;font-style:italic>// intuition: find the first unmatching pair of chars
+</span><span style=color:#928374;font-style:italic>// remove either of them and check the rest
+</span><span style=color:#fa5c4b>impl </span><span style=color:#8ec07c>Solution </span><span>{
+</span><span>    </span><span style=color:#fa5c4b>pub fn </span><span style=color:#8ec07c>valid_palindrome</span><span>(</span><span style=color:#fdf4c1>s</span><span>: String) -> </span><span style=color:#fa5c4b>bool </span><span>{
+</span><span>        </span><span style=color:#928374;font-style:italic>// remove the matching chars from both side
+</span><span>        </span><span style=color:#928374;font-style:italic>// returns the remaining slice
+</span><span>        </span><span style=color:#fa5c4b>fn </span><span style=color:#8ec07c>unmatch</span><span>(</span><span style=color:#fa5c4b>mut </span><span style=color:#fdf4c1>s</span><span>: </span><span style=color:#fe8019>&</span><span>[</span><span style=color:#fa5c4b>u8</span><span>]) -> </span><span style=color:#fe8019>&</span><span>[</span><span style=color:#fa5c4b>u8</span><span>] {
+</span><span>            </span><span style=color:#fa5c4b>loop </span><span>{
+</span><span>                </span><span style=color:#fa5c4b>match</span><span> s {
+</span><span>                    [l, rest </span><span style=color:#fe8019>@ ..</span><span>, r] </span><span style=color:#fa5c4b>if</span><span> l </span><span style=color:#fe8019>==</span><span> r </span><span style=color:#fe8019>=></span><span> s </span><span style=color:#fe8019>=</span><span> rest,
+</span><span>                    rest </span><span style=color:#fe8019>=> </span><span style=color:#fa5c4b>return</span><span> rest,
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>
+</span><span>        </span><span style=color:#fa5c4b>let</span><span> s </span><span style=color:#fe8019>=</span><span> s.</span><span style=color:#fabd2f>as_bytes</span><span>();
+</span><span>        </span><span style=color:#fa5c4b>match </span><span style=color:#fabd2f>unmatch</span><span>(s) {
+</span><span>            </span><span style=color:#928374;font-style:italic>// length of 0,1,2 means success
+</span><span>            </span><span style=color:#fe8019>&</span><span>[] </span><span style=color:#fe8019>| &</span><span>[</span><span style=color:#fe8019>_</span><span>] </span><span style=color:#fe8019>| &</span><span>[</span><span style=color:#fe8019>_</span><span>, </span><span style=color:#fe8019>_</span><span>] </span><span style=color:#fe8019>=> </span><span style=color:#d3869b>true</span><span>,
+</span><span>            rest </span><span style=color:#fe8019>=> </span><span>{
+</span><span>                </span><span style=color:#928374;font-style:italic>// delete unmatching char from either end and try again
+</span><span>                </span><span style=color:#fabd2f>unmatch</span><span>(</span><span style=color:#fe8019>&</span><span>rest[</span><span style=color:#d3869b>1</span><span style=color:#fe8019>..</span><span>]).</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>&lt; </span><span style=color:#d3869b>2
+</span><span>                    </span><span style=color:#fe8019>|| </span><span style=color:#fabd2f>unmatch</span><span>(</span><span style=color:#fe8019>&</span><span>rest[</span><span style=color:#fe8019>..</span><span>rest.</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>- </span><span style=color:#d3869b>1</span><span>]).</span><span style=color:#fabd2f>len</span><span>() </span><span style=color:#fe8019>&lt; </span><span style=color:#d3869b>2
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre></div></article></main><footer><hr><div id=footer-container><p>Made using <a rel="noopener noreferrer" href=https://github.com/Speyll/anemone target=_blank>anemone</a> Zola theme</div></footer><script defer src=https://flr.me/js/script.js></script>
